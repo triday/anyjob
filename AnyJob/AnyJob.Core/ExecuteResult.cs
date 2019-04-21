@@ -7,16 +7,16 @@ namespace AnyJob
     /// <summary>
     /// 表示Action的执行结果
     /// </summary>
-    public class ActionResult
+    public class ExecuteResult
     {
-        public ActionResult()
+        public ExecuteResult()
         {
 
         }
-        public ActionResult(object result) : this(result, true)
+        public ExecuteResult(object result) : this(result, true)
         {
         }
-        public ActionResult(object result, bool success)
+        public ExecuteResult(object result, bool success)
         {
             this.Result = result;
             this.IsSuccess = success;
@@ -26,7 +26,7 @@ namespace AnyJob
         /// </summary>
         public Exception Error { get; set; }
         /// <summary>
-        /// 执行结果
+        /// Action的运行结果
         /// </summary>
         public object Result { get; set; }
 

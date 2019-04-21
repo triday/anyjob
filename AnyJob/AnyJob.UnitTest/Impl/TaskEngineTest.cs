@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AnyJob.Impl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
@@ -10,9 +11,12 @@ namespace AnyJob.UnitTest.Impl
     class JobEngineTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public  void TestMethod1()
         {
-            
+            using (var engine = new TaskEngine())
+            {
+              //var result= await engine.Execute("core.add", null);
+            }
         }
     }
 }

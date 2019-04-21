@@ -11,6 +11,13 @@ namespace AnyJob
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        void RegisteService<T>(T service) ;
+        void RegisteType<T>(T service) ;
+
+        /// <summary>
+        /// 注册类型
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="factory"></param>
+        void RegisteType<T>(Func<IServiceProvider, T> factory);
     }
 }

@@ -20,7 +20,7 @@ namespace AnyJob.Impl
             }
         }
 
-        public void RegisteService<T>(T service)
+        public void RegisteType<T>(T service)
         {
             if (service == null)
             {

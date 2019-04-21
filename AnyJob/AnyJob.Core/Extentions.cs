@@ -28,11 +28,25 @@ namespace AnyJob
 
         public static IEnumerable<T> GetMultiServices<T>(this IServiceProvider provider)
         {
-            return provider.GetService<IEnumerable<T>>() ?? Enumerable.Empty<T>();
+            return provider.GetInstance<IEnumerable<T>>() ?? Enumerable.Empty<T>();
         }
         public static void RegisteMultiService<T>(this IServiceContainer container, params T[] items)
         {
-            container.RegisteService<IEnumerable<T>>(items ?? new T[0]);
+            container.RegisteType<IEnumerable<T>>(items ?? new T[0]);
+        }
+
+        public static ActionEntry ResolveRequiredAction(this IActionResolverService resolver,string actionRef, ActionParameters parameters)
+        {
+            var actionEntry = resolver.ResolveAction(actionRef, parameters);
+            if (actionEntry == null)
+            {
+                throw new ActionException($"Can not find action \"{actionRef}\".");
+            }
+            else
+            {
+                return actionEntry;
+            }
+           
         }
     }
 }
