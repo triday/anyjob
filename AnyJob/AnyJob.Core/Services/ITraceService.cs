@@ -6,9 +6,9 @@ namespace AnyJob
 {
     public interface ITraceService
     {
-        void Schedule(TraceContext context);
-        void Running(TraceContext context);
-        void Cancel(TraceContext context);
-        void Success(TraceContext context);
+        void Schedule(ExecuteContext context);
+        void Running(ExecuteContext context);
+        void Cancel(ExecuteContext context);
+        void Success(ExecuteContext context);
     }
 }

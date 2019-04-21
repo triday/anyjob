@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Services
+namespace AnyJob
 {
     /// <summary>
     /// 表达式动态求值
