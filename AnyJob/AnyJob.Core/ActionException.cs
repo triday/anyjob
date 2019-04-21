@@ -10,6 +10,5 @@ namespace AnyJob
         public ActionException() { }
         public ActionException(string message) : base(message) { }
         public ActionException(string message, Exception inner) : base(message, inner) { }
-       
     }
 }

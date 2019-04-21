@@ -9,6 +9,6 @@ namespace AnyJob
     /// </summary>
     public interface IAction
     {
-        object Run(IActionContext context);
+        object Run(ActionContext context);
     }
 }

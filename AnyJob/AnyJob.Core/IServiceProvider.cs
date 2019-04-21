@@ -10,10 +10,12 @@ namespace AnyJob
     public interface IServiceProvider
     {
         /// <summary>
-        /// 根据泛型类型获取服务
+        /// 根据泛型类型获取对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        T GetService<T>();
+        T GetInstance<T>();
+
+        
     }
 }
