@@ -10,7 +10,7 @@ namespace AnyJob
 
         public static T GetRequiredService<T>(this IServiceProvider provider)
         {
-            var serviceInstance = provider.GetService<T>();
+            var serviceInstance = provider.GetInstance<T>();
             if (serviceInstance == null)
             {
                 throw new ActionException($"The service \"{typeof(T).AssemblyQualifiedName}\" is required, but not found.");

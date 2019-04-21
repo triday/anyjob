@@ -12,5 +12,10 @@ namespace AnyJob.Default
             
             throw new NotImplementedException();
         }
+
+        public Task<ExecuteResult> Execute(ExecuteContext executeContext)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
