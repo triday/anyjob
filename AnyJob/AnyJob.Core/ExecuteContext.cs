@@ -20,7 +20,7 @@ namespace AnyJob
 
         public ActionEntry ActionEntry { get; set; }
 
-        public T GetInstance<T>()
+        public object GetService(Type serviceType)
         {
             throw new NotImplementedException();
         }

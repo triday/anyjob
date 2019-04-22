@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob
+namespace AnyJob.DI
 {
-    /// <summary>
-    /// 提供获取服务的接口
-    /// </summary>
-    public interface IServiceProvider
+    public interface IInstanceProvider
     {
         /// <summary>
-        /// 根据泛型类型获取对象
+        /// 根据泛型类型获取实例
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         T GetInstance<T>();
-
-        
     }
 }

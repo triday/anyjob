@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace AnyJob
 {
-    public class TaskResult
+    public class Job
     {
-        public string ExecuteId { get; set; }
+        public string JobId { get; set; }
 
         public ActionEntry ActionEntry { get; set; }
 
         public Task<ExecuteResult> Task { get; set; }
 
-        public CancellationToken CancelToken { get; set; }
+        public CancellationTokenSource CancelTokenSource { get; set; }
     }
 }

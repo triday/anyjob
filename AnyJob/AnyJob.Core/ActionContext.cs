@@ -17,12 +17,15 @@ namespace AnyJob
         ActionParameters Parameters { get; }
         ActionMeta Meta { get; }
 
-        public T GetInstance<T>()
+        public T GetService<T>()
         {
             throw new NotImplementedException();
         }
 
-
+        public object GetService(Type serviceType)
+        {
+            throw new NotImplementedException();
+        }
 
         public object GetValue(string key)
         {
