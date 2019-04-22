@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob
+namespace AnyJob.DI
 {
+
     public interface IServiceContainer:IServiceProvider
     {
         /// <summary>
@@ -11,13 +12,8 @@ namespace AnyJob
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        void RegisteType<T>(T service) ;
+        void RegisteService<T>(T service) ;
 
-        /// <summary>
-        /// 注册类型
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="factory"></param>
-        void RegisteType<T>(Func<IServiceProvider, T> factory);
+
     }
 }

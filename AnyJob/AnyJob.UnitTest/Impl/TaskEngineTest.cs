@@ -13,7 +13,7 @@ namespace AnyJob.UnitTest.Impl
         [TestMethod]
         public  void TestMethod1()
         {
-            using (var engine = new TaskEngine())
+            using (var engine = new JobEngine())
             {
               //var result= await engine.Execute("core.add", null);
             }
