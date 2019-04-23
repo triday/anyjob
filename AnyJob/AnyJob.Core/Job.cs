@@ -8,9 +8,11 @@ namespace AnyJob
 {
     public class Job
     {
-        public string JobId { get; set; }
+        public string ExecutionId { get; set; }
 
         public ActionEntry ActionEntry { get; set; }
+
+        public ActionParameters ActionParameters { get; set; }
 
         public Task<ExecuteResult> Task { get; set; }
 

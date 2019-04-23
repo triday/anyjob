@@ -9,7 +9,5 @@ namespace AnyJob
     {
         public IAction Action { get; set; }
         public ActionMeta Meta { get; set; }
-        public ActionParameters Parameters { get; set; }
-        
     }
 }

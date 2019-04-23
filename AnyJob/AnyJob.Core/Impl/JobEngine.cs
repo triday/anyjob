@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AnyJob.DI;
 namespace AnyJob.Impl
@@ -23,47 +24,40 @@ namespace AnyJob.Impl
             }
         }
 
-        public Job Start(string actionRef, ActionParameters actionParameters)
-        {
-            return Start(actionRef, actionParameters, Guid.NewGuid().ToString());
-        }
-
-        public Job Start(string actionRef, ActionParameters actionParameters, string executionId)
-        {
-            if (string.IsNullOrEmpty(executionId))
-            {
-                throw new ArgumentNullException(nameof(executionId));
-            }
-            if (jobs.ContainsKey(executionId))
-            {
-                throw new ActionException($"The execution id \"${executionId}\" is already in the task engine.");
-            }
-            var resolver = this.GetRequiredService<IActionResolverService>();
-            var executer = this.GetRequiredService<IActionExecuterService>();
-
-            ExecuteContext context = new ExecuteContext(this);
-
-            var task = executer.Execute(context);
-            throw new NotImplementedException();
-        }
-
         public Job Start(JobStartInfo jobStartInfo)
         {
+            if (jobStartInfo == null)
+            {
+                throw new ArgumentNullException(nameof(jobStartInfo));
+            }
+
             var resolver = this.GetRequiredService<IActionResolverService>();
             var executer = this.GetRequiredService<IActionExecuterService>();
-
-            var actionEntry = resolver.ResolveAction(jobStartInfo.ActionRef, new ActionParameters(jobStartInfo.Inputs, jobStartInfo.Context));
-
-
-            var job = new Job()
+            var idGen = this.GetRequiredService<IIdGenService>();
+            var executionId = String.IsNullOrEmpty(jobStartInfo.ExecutionId) ? idGen.NewId() : jobStartInfo.ExecutionId;
+            var parameters = jobStartInfo.Parameters ?? new ActionParameters();
+            var actionEntry = resolver.ResolveAction(jobStartInfo.ActionRef);
+            var cancelSource = jobStartInfo.TimeoutSeconds > 0 ? new CancellationTokenSource(jobStartInfo.TimeoutSeconds * 1000) : new CancellationTokenSource();
+            var executerContext = new ExecuteContext(this)
             {
-                JobId = jobStartInfo.JobId,
-                 ActionEntry =actionEntry,
-                 CancelTokenSource =jobStartInfo.CancelTokenSource,
-                 // Task=executer.Execute()
+                ExecutionId = executionId,
+                ActionRef = jobStartInfo.ActionRef,
+                ParentExecutionId = null,
+                RootExecutionId = executionId,
+                ActionParameters = parameters,
+                CancelTokenSource = cancelSource,
             };
 
-            return this.jobs[job.JobId] = job;
+            var task = executer.Execute(executerContext);
+            var job = new Job()
+            {
+                ExecutionId = executionId,
+                ActionEntry = actionEntry,
+                CancelTokenSource = new CancellationTokenSource(),
+                ActionParameters = parameters,
+                Task = task
+            };
+            return this.jobs[executionId] = job;
         }
 
 

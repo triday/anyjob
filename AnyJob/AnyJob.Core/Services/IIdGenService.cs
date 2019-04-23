@@ -4,8 +4,9 @@ using System.Text;
 
 namespace AnyJob
 {
-    public interface IActionResolverService
+    public interface IIdGenService
     {
-        ActionEntry ResolveAction(string actionRef);
+        string NewId();
+        string NewChildId(string parentId);
     }
 }
