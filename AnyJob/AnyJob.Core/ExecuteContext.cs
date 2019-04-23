@@ -2,27 +2,33 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace AnyJob
 {
-    public class ExecuteContext:IServiceProvider
+    public class ExecuteContext : IServiceProvider
     {
         private IServiceProvider serviceProvider;
         public ExecuteContext(IServiceProvider provider)
         {
             this.serviceProvider = provider;
         }
-        public string ExecuteId { get; set; }
 
-        public string ParentId { get; set; }
+        public string ExecutionId { get; set; }
+
+        public string ParentExecutionId { get; set; }
+
+        public string RootExecutionId { get; set; }
 
         public string ActionRef { get; set; }
 
-        public ActionEntry ActionEntry { get; set; }
+        public ActionParameters ActionParameters { get; set; }
+
+        public CancellationTokenSource CancelTokenSource { get; set; }
 
         public object GetService(Type serviceType)
         {
-            throw new NotImplementedException();
+            return this.serviceProvider.GetService(serviceType);
         }
     }
 }
