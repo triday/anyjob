@@ -8,6 +8,6 @@ namespace AnyJob
     public interface IActionExecuterService
     {
         //void PreExecute(ActionEntry entry, ActionContext actionContext);
-        Task<ExecuteResult> Execute(ExecuteContext executeContext);
+        Task<ExecuteResult> Execute(IExecuteContext executeContext);
     }
 }

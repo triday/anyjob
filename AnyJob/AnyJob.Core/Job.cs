@@ -10,12 +10,11 @@ namespace AnyJob
     {
         public string ExecutionId { get; set; }
 
-        public ActionEntry ActionEntry { get; set; }
+        public string ActionRef { get; set; }
 
         public ActionParameters ActionParameters { get; set; }
 
         public Task<ExecuteResult> Task { get; set; }
 
-        public CancellationTokenSource CancelTokenSource { get; set; }
     }
 }

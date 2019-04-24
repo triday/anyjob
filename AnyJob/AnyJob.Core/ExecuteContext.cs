@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace AnyJob
 {
-    public class ExecuteContext : IServiceProvider
+    public class ExecuteContext :  IExecuteContext
     {
         private IServiceProvider serviceProvider;
         public ExecuteContext(IServiceProvider provider)

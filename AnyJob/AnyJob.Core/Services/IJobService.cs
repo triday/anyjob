@@ -7,6 +7,6 @@ namespace AnyJob
     public interface IJobService
     {
         Job Start(JobStartInfo jobStartInfo);
-        bool Cancel(string jobId);
+        bool Cancel(string executionId);
     }
 }

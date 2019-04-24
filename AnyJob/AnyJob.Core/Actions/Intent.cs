@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Impl
+namespace AnyJob.Actions
 {
-    class AssemblyActionResolver : IActionResolverService
+    public class Intent : IAction
     {
-        public ActionEntry ResolveAction(string actionRef)
+        public object Run(IActionContext context)
         {
             throw new NotImplementedException();
         }

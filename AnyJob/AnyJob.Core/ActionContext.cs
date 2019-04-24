@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AnyJob
 {
-    public class ActionContext:IValueProvider,IServiceProvider
+    public class ActionContext : IValueProvider, IServiceProvider, IActionContext
     {
         private IValueProvider valueProvider;
         private IServiceProvider serviceProvider;
@@ -14,8 +14,8 @@ namespace AnyJob
             this.valueProvider = valueProvider;
             this.serviceProvider = serviceProvider;
         }
-        ActionParameters Parameters { get; }
-        ActionMeta Meta { get; }
+        public ActionParameters Parameters { get; }
+        public ActionMeta Meta { get; }
 
         public T GetService<T>()
         {
