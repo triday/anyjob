@@ -9,7 +9,8 @@ namespace AnyJob
     {
         public string ActionRef { get; set; }
         public string ExecutionId { get; set; }
-        public ActionParameters Parameters { get; set; }
+        public Dictionary<string, object> Inputs { get; set; }
+        public Dictionary<string, object> Context { get; set; }
         public int TimeoutSeconds { get; set; }
     }
 }
