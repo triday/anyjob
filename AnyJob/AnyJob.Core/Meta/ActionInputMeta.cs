@@ -10,9 +10,13 @@ namespace AnyJob.Meta
 
         public Type Type { get; set; }
 
+        public string TypeSchame { get; set; }
+
         public object DefaultValue { get; set; }
 
         public bool IsRequired { get; set; }
+
+        public bool IsSecred { get; set; }
 
         public string Description { get; set; }
     }

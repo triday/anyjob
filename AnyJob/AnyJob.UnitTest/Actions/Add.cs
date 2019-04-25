@@ -4,6 +4,7 @@ using System.Text;
 
 namespace AnyJob.UnitTest.Actions
 {
+    
     public class Add : IAction
     {
         public int Num1 { get; set; }
