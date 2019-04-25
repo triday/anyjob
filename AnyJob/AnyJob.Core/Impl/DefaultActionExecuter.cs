@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace AnyJob.Impl
 {
-    public class BaseActionExecuter : IActionExecuterService
+    [ServiceImplClass(typeof(IActionExecuterService))]
+    public class DefaultActionExecuter : IActionExecuterService
     {
         public Task<ExecuteResult> Execute(IExecuteContext executeContext)
         {
