@@ -3,7 +3,7 @@ using System;
 
 namespace AnyJob
 {
-    public interface IActionContext:IServiceProvider
+    public interface IActionContext
     {
         ActionMeta Meta { get; }
         ActionParameters Parameters { get; }

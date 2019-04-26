@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AnyJob
 {
-    public interface IJobEngine:IServiceProvider,IDisposable
+    public interface IJobEngine:IDisposable
     {
         Job Start(JobStartInfo jobStartInfo);
         bool Cancel(string executionId);

@@ -25,7 +25,7 @@ namespace AnyJob.UnitTest.Impl
                 Task.WaitAll(job.Task);
                 var result = job.Task.Result;
                 Assert.AreEqual(result.IsSuccess, true);
-                Assert.AreEqual(result.Result, 3);
+                Assert.AreEqual(result.Result, 0);
             }
         }
     }

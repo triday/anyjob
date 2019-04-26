@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Linq;
 using AnyJob.Meta;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AnyJob.Impl
 {
@@ -11,6 +12,9 @@ namespace AnyJob.Impl
     public class AssemblyActionResolver : IActionResolverService
     {
         static Dictionary<string, Tuple<ActionMeta,Type>> actionMaps = new Dictionary<string, Tuple<ActionMeta, Type>>();
+
+        public int Priority => 10000;
+
         static AssemblyActionResolver() {
             LoadCurrentDomain();
             AppDomain.CurrentDomain.AssemblyLoad += (sender, args) => { LoadAssemblyActions(args.LoadedAssembly); };
@@ -26,7 +30,7 @@ namespace AnyJob.Impl
         static void LoadAssemblyActions(Assembly assembly)
         {
             var datas = from p in assembly.GetTypes()
-                        where p.IsClass && Attribute.IsDefined(p, typeof(ActionAttribute))
+                        where p.IsClass &&!p.IsAbstract && typeof(IAction).IsAssignableFrom(p) && Attribute.IsDefined(p, typeof(ActionAttribute))
                         let attr = ActionAttribute.GetActionMeta(p)
                         select new {
                             Name = attr.Ref,
@@ -40,12 +44,12 @@ namespace AnyJob.Impl
 
         public ActionEntry ResolveAction(string actionRef)
         {
-            if (actionMaps.TryGetValue(actionRef, out var item))
+            if (actionMaps.TryGetValue(actionRef, out var actionInfo))
             {
                 return new ActionEntry()
                 {
-                    Action = Activator.CreateInstance(item.Item2) as IAction,
-                    Meta = item.Item1,
+                    Action = Activator.CreateInstance(actionInfo.Item2) as IAction,
+                    Meta = actionInfo.Item1,
                 };
             }
             else {
@@ -53,8 +57,6 @@ namespace AnyJob.Impl
             }
         }
 
-
-        
        
     }
 }

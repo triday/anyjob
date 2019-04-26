@@ -6,6 +6,7 @@ namespace AnyJob
 {
     public interface IActionResolverService
     {
+        int Priority { get; }
         ActionEntry ResolveAction(string actionRef);
     }
 }
