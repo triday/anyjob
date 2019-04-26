@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace AnyJob
 {
-    public interface IExecuteContext:IServiceProvider
+    public interface IExecuteContext
     {
         ActionParameters ActionParameters { get; }
         string ActionRef { get; }

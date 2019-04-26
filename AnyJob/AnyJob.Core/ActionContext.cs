@@ -5,31 +5,16 @@ using System.Text;
 
 namespace AnyJob
 {
-    public class ActionContext : IValueProvider, IServiceProvider, IActionContext
+    public class ActionContext :  IActionContext
     {
         private IValueProvider valueProvider;
-        private IServiceProvider serviceProvider;
-        public ActionContext(IValueProvider valueProvider,IServiceProvider serviceProvider)
+        public ActionContext()
         {
-            this.valueProvider = valueProvider;
-            this.serviceProvider = serviceProvider;
+            
         }
-        public ActionParameters Parameters { get; }
-        public ActionMeta Meta { get; }
+        public ActionParameters Parameters { get; set; }
+        public ActionMeta Meta { get; set; }
 
-        public T GetService<T>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public object GetService(Type serviceType)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object GetValue(string key)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

@@ -9,18 +9,27 @@ namespace AnyJob.Impl
     [ServiceImplClass(typeof(IActionExecuterService))]
     public class DefaultActionExecuter : IActionExecuterService
     {
+        private IActionFactoryService factory;
+        public DefaultActionExecuter(IActionFactoryService factory)
+        {
+            this.factory = factory;
+        }
+
         public Task<ExecuteResult> Execute(IExecuteContext executeContext)
         {
-            return null;
+            return Task.Run(() =>
+            {
+                return this.OnExecute(executeContext);
+            });
         }
 
         protected virtual ExecuteResult OnExecute(IExecuteContext context)
         {
-            var entry = this.OnResolveEntry(context);
-
             try
             {
-                var result = entry.Action.Run(null);
+                var entry = this.OnResolveEntry(context);
+                var actionContext = this.OnCreateActionContext(entry, context);
+                var result = entry.Action.Run(actionContext);
                 return new ExecuteResult(result, true);
             }
             catch (Exception ex)
@@ -35,8 +44,7 @@ namespace AnyJob.Impl
 
         protected virtual ActionEntry OnResolveEntry(IExecuteContext context)
         {
-            var resolver = context.GetRequiredService<IActionResolverService>();
-            var actionEntry = resolver.ResolveAction(context.ActionRef);
+            var actionEntry = factory.Get(context.ActionRef);
             if (actionEntry == null)
             {
                 throw new ActionException($"Can not find action \"{context.ActionRef}\".");
@@ -45,6 +53,15 @@ namespace AnyJob.Impl
             {
                 return actionEntry;
             }
+        }
+
+        protected virtual IActionContext OnCreateActionContext(ActionEntry entry, IExecuteContext executeContext)
+        {
+            return new ActionContext()
+            {
+                Meta = entry.Meta,
+                Parameters = executeContext.ActionParameters
+            };
         }
     }
 }

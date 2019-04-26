@@ -8,17 +8,19 @@ namespace AnyJob.Impl
 {
     public static class Extentions
     {
-        public static IServiceCollection ConfigAssemblyServices(this IServiceCollection services,Assembly assembly)
+        public static IServiceCollection ConfigAssemblyServices(this IServiceCollection services, Assembly assembly, Func<Type, Type, bool> filter = null)
         {
+            filter = filter == null ? ((a, b) => false) : filter;
             var mapInfos = from p in assembly.GetTypes()
-                                where p.IsClass && !p.IsAbstract && Attribute.IsDefined(p, typeof(ServiceImplClass))
-                                let attr= Attribute.GetCustomAttribute(p, typeof(ServiceImplClass)) as ServiceImplClass
-                                select new
-                                {
-                                    InstanceType = p,
-                                    attr.InjectType,
-                                    attr.Lifetime
-                                };
+                           where p.IsClass && !p.IsAbstract && Attribute.IsDefined(p, typeof(ServiceImplClass))
+                           let attr = Attribute.GetCustomAttribute(p, typeof(ServiceImplClass)) as ServiceImplClass
+                           where !filter(p, attr.InjectType)
+                           select new
+                           {
+                               InstanceType = p,
+                               attr.InjectType,
+                               attr.Lifetime
+                           };
             foreach (var map in mapInfos)
             {
                 switch (map.Lifetime)
@@ -36,7 +38,7 @@ namespace AnyJob.Impl
             }
             return services;
         }
-        public static IServiceCollection ConfigAssemblyServices(this IServiceCollection services, params Assembly[] assemblies)
+        public static IServiceCollection ConfigAssemblyServices(this IServiceCollection services, IEnumerable<Assembly> assemblies, Func<Type, Type, bool> filter = null)
         {
             foreach (var assembly in assemblies)
             {

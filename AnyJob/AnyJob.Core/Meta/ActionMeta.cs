@@ -11,15 +11,16 @@ namespace AnyJob.Meta
     {
         public string Ref { get; set; }
 
+        public string Description { get; set; }
+
+        public string DisplayFormat { get; set; }
         //public ActionKind Kind { get; set; }
 
         public List<ActionInputMeta> InputsMeta { get; set; }
 
         public ActionOutputMeta OutputMeta { get; set; }
 
-        public string DisplayFormat { get; set; }
 
-        public string Description { get; set; }
 
     }
 }
