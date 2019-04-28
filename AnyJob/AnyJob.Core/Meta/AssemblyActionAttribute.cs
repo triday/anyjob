@@ -6,12 +6,12 @@ using System.Text;
 namespace AnyJob.Meta
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    public sealed class ActionAttribute : Attribute
+    public sealed class AssemblyActionAttribute : Attribute
     {
 
         readonly string refName;
 
-        public ActionAttribute(string refName)
+        public AssemblyActionAttribute(string refName)
         {
             this.refName = refName;
         }
@@ -24,24 +24,22 @@ namespace AnyJob.Meta
 
         public string DisplayFormat { get; set; }
 
-        public static ActionMeta GetActionMeta(Type type)
+        public static IActionMeta GetActionMeta(Type type)
         {
-            ActionAttribute actionAttr = Attribute.GetCustomAttribute(type, typeof(ActionAttribute)) as ActionAttribute;
+            AssemblyActionAttribute actionAttr = Attribute.GetCustomAttribute(type, typeof(AssemblyActionAttribute)) as AssemblyActionAttribute;
             if (actionAttr == null) return null;
             var inputs = from p in type.GetProperties()
-                         let v = ActionInputAttribute.GetActionInputMeta(p)
-                         where v != null
-                         select v;
-            var b=typeof(void);
+                         let input = ActionInputAttribute.GetActionInputMeta(p)
+                         where input != null
+                         select input;
             return new ActionMeta()
             {
                 Ref = actionAttr.RefName,
                 Description = actionAttr.Description,
                 DisplayFormat = actionAttr.DisplayFormat,
-                
-                
+                EntryPoint = type.AssemblyQualifiedName,
+                Kind = "assembly"
             };
-
         }
     }
 }

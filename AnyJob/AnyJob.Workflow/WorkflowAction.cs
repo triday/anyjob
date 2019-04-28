@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Actions
+namespace AnyJob.Workflow
 {
-    public class Workflow : IAction
+    public class WorkflowAction : IAction
     {
         public object Run(IActionContext context)
         {
-            return true;
+            return null;
         }
     }
 }

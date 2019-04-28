@@ -5,7 +5,7 @@ namespace AnyJob
 {
     public interface IActionContext
     {
-        ActionMeta Meta { get; }
-        ActionParameters Parameters { get; }
+        IActionMeta Meta { get; }
+        IActionParameters Parameters { get; }
     }
 }

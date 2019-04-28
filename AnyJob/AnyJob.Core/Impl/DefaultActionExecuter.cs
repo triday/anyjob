@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AnyJob.Meta;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +10,14 @@ namespace AnyJob.Impl
     [ServiceImplClass(typeof(IActionExecuterService))]
     public class DefaultActionExecuter : IActionExecuterService
     {
-        private IActionFactoryService factory;
-        public DefaultActionExecuter(IActionFactoryService factory)
+        private IActionResolverService actionResolverService;
+        private IMetaResolverService metaResolverService;
+        private IServiceProvider serviceProvider;
+        public DefaultActionExecuter(IMetaResolverService metaResolverService,IActionResolverService actionResolverService,IServiceProvider serviceProvider)
         {
-            this.factory = factory;
+            this.metaResolverService = metaResolverService;
+            this.actionResolverService = actionResolverService;
+            this.serviceProvider = serviceProvider;
         }
 
         public Task<ExecuteResult> Execute(IExecuteContext executeContext)
@@ -27,9 +32,10 @@ namespace AnyJob.Impl
         {
             try
             {
-                var entry = this.OnResolveEntry(context);
-                var actionContext = this.OnCreateActionContext(entry, context);
-                var result = entry.Action.Run(actionContext);
+                var meta = this.OnResolveMeta(context);
+                var action = this.OnResolveAction(meta,context);
+                var actionContext = this.OnCreateActionContext(meta, context);
+                var result = action.Run(actionContext);
                 return new ExecuteResult(result, true);
             }
             catch (Exception ex)
@@ -42,26 +48,47 @@ namespace AnyJob.Impl
             }
         }
 
-        protected virtual ActionEntry OnResolveEntry(IExecuteContext context)
+        protected virtual IActionMeta OnResolveMeta(IExecuteContext context)
         {
-            var actionEntry = factory.Get(context.ActionRef);
-            if (actionEntry == null)
+            var meta = this.metaResolverService.ResolveMeta(context.ActionRef);
+            if (meta == null)
             {
-                throw new ActionException($"Can not find action \"{context.ActionRef}\".");
+                throw new ActionException($"Can not resolve meta info from \"{context.ActionRef}\"");
             }
-            else
-            {
-                return actionEntry;
-            }
+            return meta;
         }
 
-        protected virtual IActionContext OnCreateActionContext(ActionEntry entry, IExecuteContext executeContext)
+        protected virtual IAction OnResolveAction(IActionMeta meta, IExecuteContext context)
+        {
+            var action = this.actionResolverService.ResolveAction(meta, context.ActionParameters);
+            if (action == null)
+            {
+                throw new ActionException($"Can not resolve action from \"{meta.Ref}\"");
+            }
+            return action;
+        }
+
+        protected virtual IActionContext OnCreateActionContext(IActionMeta meta, IExecuteContext executeContext)
         {
             return new ActionContext()
             {
-                Meta = entry.Meta,
+                Meta = meta,
                 Parameters = executeContext.ActionParameters
             };
+        }
+
+
+        protected class ActionContext : IActionContext
+        {
+            private IValueProvider valueProvider;
+            public ActionContext()
+            {
+
+            }
+            public IActionParameters Parameters { get; set; }
+            public IActionMeta Meta { get; set; }
+
+
         }
     }
 }

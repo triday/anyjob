@@ -12,7 +12,7 @@ namespace AnyJob
 
         public string ActionRef { get; set; }
 
-        public ActionParameters ActionParameters { get; set; }
+        public IActionParameters ActionParameters { get; set; }
 
         public Task<ExecuteResult> Task { get; set; }
 

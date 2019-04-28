@@ -60,7 +60,7 @@ namespace AnyJob.Impl
         {
             var idGen = this.provider.GetRequiredService<IIdGenService>();
             var executionId = string.IsNullOrEmpty(jobStartInfo.ExecutionId) ? idGen.NewId() : jobStartInfo.ExecutionId;
-            var parameters = new ActionParameters(jobStartInfo.Inputs, jobStartInfo.Context);
+            var parameters = new IActionParameters(jobStartInfo.Inputs, jobStartInfo.Context);
             var cancelSource = jobStartInfo.TimeoutSeconds > 0 ? new CancellationTokenSource(jobStartInfo.TimeoutSeconds * 1000) : new CancellationTokenSource();
             return new ExecuteContext
             {
@@ -75,6 +75,22 @@ namespace AnyJob.Impl
 
         public void Dispose()
         {
+        }
+
+        public class ExecuteContext : IExecuteContext
+        {
+            public string ExecutionId { get; set; }
+
+            public string ParentExecutionId { get; set; }
+
+            public string RootExecutionId { get; set; }
+
+            public string ActionRef { get; set; }
+
+            public IActionParameters ActionParameters { get; set; }
+
+            public CancellationTokenSource CancelTokenSource { get; set; }
+
         }
     }
 }

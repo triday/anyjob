@@ -5,9 +5,8 @@ using System.Text;
 
 namespace AnyJob
 {
-    public class ActionEntry
+    public interface IMetaResolverService
     {
-        public IAction Action { get; set; }
-        public ActionMeta Meta { get; set; }
+        IActionMeta ResolveMeta(string refId);
     }
 }
