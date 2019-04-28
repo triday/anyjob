@@ -4,8 +4,8 @@ using System.Text;
 
 namespace AnyJob
 {
-    public interface IActionFactoryService
+    public interface ITypeAliasService
     {
-        ActionEntry Get(string actionRef);
+        string TranslateShortTypeName(string name);
     }
 }

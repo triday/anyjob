@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnyJob.Meta;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,7 +7,6 @@ namespace AnyJob
 {
     public interface IActionResolverService
     {
-        int Priority { get; }
-        ActionEntry ResolveAction(string actionRef);
+        IAction ResolveAction(IActionMeta meta,IActionParameters parameters);
     }
 }

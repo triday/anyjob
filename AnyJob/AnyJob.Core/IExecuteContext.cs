@@ -5,7 +5,7 @@ namespace AnyJob
 {
     public interface IExecuteContext
     {
-        ActionParameters ActionParameters { get; }
+        IActionParameters ActionParameters { get; }
         string ActionRef { get; }
         CancellationTokenSource CancelTokenSource { get; }
         string ExecutionId { get; }

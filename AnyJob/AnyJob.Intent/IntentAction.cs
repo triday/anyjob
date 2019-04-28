@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Actions
+namespace AnyJob.Intent
 {
-    public class Intent : IAction
+    public class IntentAction : IAction
     {
         public object Run(IActionContext context)
         {
