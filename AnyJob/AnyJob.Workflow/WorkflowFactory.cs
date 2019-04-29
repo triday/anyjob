@@ -8,7 +8,7 @@ namespace AnyJob.Workflow
     [ServiceImplClass(typeof(IActionFactory))]
     public class WorkflowFactory : IActionFactory
     {
-        public string ActionType => ConstCode.WORKFLOW_ACTION_TYPE;
+        public string ActionKind => ConstCode.WORKFLOW_ACTION_TYPE;
 
         public IAction CreateAction(IActionMeta meta, IActionParameters parameters)
         {
