@@ -13,7 +13,7 @@ namespace AnyJob.Impl
 
         public DefaultActionResolverService(IEnumerable<IActionFactory> factorys)
         {
-            factoryMaps = factorys.ToDictionary(p => p.ActionType, StringComparer.CurrentCultureIgnoreCase);
+            factoryMaps = factorys.ToDictionary(p => p.ActionKind, StringComparer.CurrentCultureIgnoreCase);
         }
         public IAction ResolveAction(IActionMeta meta, IActionParameters parameters)
         {

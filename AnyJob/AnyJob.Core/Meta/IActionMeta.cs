@@ -16,7 +16,9 @@ namespace AnyJob.Meta
 
         string EntryPoint { get; }
 
+        IEnumerable<IActionInputMeta> InputMetas { get; }
 
+        IActionOutputMeta Output { get; }
 
     }
 }

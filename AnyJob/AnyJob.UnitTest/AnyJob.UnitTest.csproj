@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AnyJob.Assembly\AnyJob.Assembly.csproj" />
     <ProjectReference Include="..\AnyJob.Core\AnyJob.Core.csproj" />
   </ItemGroup>
 

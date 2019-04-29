@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using AnyJob.Meta;
 using AnyJob.Impl;
-namespace AnyJob.Intent
+namespace AnyJob.Assembly
 {
     [ServiceImplClass(typeof(IActionFactory))]
     public class AssemblyActionFactory : IActionFactory
     {
-        public string ActionType => ConstCode.ASSEMBLY_ACTION_TYPE;
+        public string ActionKind => ConstCode.ASSEMBLY_ACTION_TYPE;
 
         public IAction CreateAction(IActionMeta meta, IActionParameters parameters)
         {

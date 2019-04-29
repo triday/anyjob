@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Intent
+namespace AnyJob.Assembly
 {
     static class ConstCode
     {
