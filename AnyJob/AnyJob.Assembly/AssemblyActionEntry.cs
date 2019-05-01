@@ -1,40 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Reflection;
+using System.Text;
+using AnyJob.Assembly.Meta;
 using AnyJob.Meta;
 using System.Linq;
-using AnyJob.Assembly.Meta;
-
 namespace AnyJob.Assembly
 {
-    public class AssemblyMetaFactory : IMetaFactory
+    public class AssemblyActionEntry : IActionEntry
     {
-        private Dictionary<string, IActionMeta> metaMaps = new Dictionary<string, IActionMeta>(StringComparer.CurrentCultureIgnoreCase);
-
-        #region 构造函数
-        public AssemblyMetaFactory()
+        public AssemblyActionEntry(Type actionType)
         {
-            LoadCurrentDomain();
-            AppDomain.CurrentDomain.AssemblyLoad += (sender, args) => { LoadAssemblyActions(args.LoadedAssembly); };
-        }
-        #endregion
-
-        #region 接口实现
-        public int Priority => 99999;
-
-        public IActionMeta GetMeta(string refId)
-        {
-            if (metaMaps.TryGetValue(refId, out var meta))
+            this.ActionType = actionType;
+            var attr = actionType.GetCustomAttribute<ActionAttribute>();
+            var outputMeta = CreateOutput(actionType);
+            var inputMetas = actionType.GetProperties().Where(t => Attribute.IsDefined(t, typeof(ActionInputAttribute))).Select(CreateInput);
+            this.Meta = new ActionMeta()
             {
-                return meta;
-            }
-            return null;
+                Ref = attr.RefName,
+                Description = attr.Description,
+                DisplayFormat = attr.DisplayFormat,
+                Kind = "assembly",
+                Output = outputMeta,
+                InputMetas = inputMetas
+            };
         }
-
-        #endregion
-
-        #region 收集Meta信息
+        public IActionMeta Meta { get; private set; }
+        public Type ActionType { get; set; }
         private IActionOutputMeta CreateOutput(Type actionType)
         {
             var outputAttribute = actionType.GetCustomAttribute<ActionOutputAttribute>();
@@ -72,38 +64,12 @@ namespace AnyJob.Assembly
             };
         }
 
-        private void LoadCurrentDomain()
+        public IAction CreateInstance(IActionParameters parameters)
         {
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                LoadAssemblyActions(assembly);
-            }
-        }
-        private void LoadAssemblyActions(System.Reflection.Assembly assembly)
-        {
-            var datas = from p in assembly.GetTypes()
-                        where p.IsClass && !p.IsAbstract && typeof(IAction).IsAssignableFrom(p) && Attribute.IsDefined(p, typeof(ActionAttribute))
-                        let attr = Attribute.GetCustomAttribute(p, typeof(ActionAttribute)) as ActionAttribute
-                        let outputMeta = CreateOutput(p)
-                        let inputMetas = p.GetProperties().Where(t => Attribute.IsDefined(t, typeof(ActionInputAttribute))).Select(CreateInput)
-                        select new ActionMeta()
-                        {
-                            Ref = attr.RefName,
-                            Description = attr.Description,
-                            DisplayFormat = attr.DisplayFormat,
-                            EntryPoint = p.AssemblyQualifiedName,
-                            Kind = ConstCode.ASSEMBLY_ACTION_TYPE,
-                            Output = outputMeta,
-                            InputMetas = inputMetas
-                        };
-            //foreach (var map in datas)
-            //{
-            //    actionMaps[map.Name] = map.Item;
-            //}
+            var instance = Activator.CreateInstance(this.ActionType);
 
-
+            return instance as IAction;
         }
-        #endregion
 
         #region InnerClass
         public class ActionMeta : IActionMeta
@@ -116,7 +82,6 @@ namespace AnyJob.Assembly
 
             public string Kind { get; set; }
 
-            public string EntryPoint { get; set; }
 
             public IEnumerable<IActionInputMeta> InputMetas { get; set; }
 

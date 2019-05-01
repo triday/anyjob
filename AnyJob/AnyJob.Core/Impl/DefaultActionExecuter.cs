@@ -11,11 +11,9 @@ namespace AnyJob.Impl
     public class DefaultActionExecuter : IActionExecuterService
     {
         private IActionResolverService actionResolverService;
-        private IMetaResolverService metaResolverService;
         private IServiceProvider serviceProvider;
-        public DefaultActionExecuter(IMetaResolverService metaResolverService,IActionResolverService actionResolverService,IServiceProvider serviceProvider)
+        public DefaultActionExecuter(IActionResolverService actionResolverService,IServiceProvider serviceProvider)
         {
-            this.metaResolverService = metaResolverService;
             this.actionResolverService = actionResolverService;
             this.serviceProvider = serviceProvider;
         }
@@ -32,9 +30,9 @@ namespace AnyJob.Impl
         {
             try
             {
-                var meta = this.OnResolveMeta(context);
-                var action = this.OnResolveAction(meta,context);
-                var actionContext = this.OnCreateActionContext(meta, context);
+                var entry = this.OnResolveAction(context);
+                var action = entry.CreateInstance(context.ActionParameters);
+                var actionContext = this.OnCreateActionContext(entry.Meta, context);
                 var result = action.Run(actionContext);
                 return new ExecuteResult(result, true);
             }
@@ -48,9 +46,9 @@ namespace AnyJob.Impl
             }
         }
 
-        protected virtual IActionMeta OnResolveMeta(IExecuteContext context)
+        protected virtual IActionEntry OnResolveAction(IExecuteContext context)
         {
-            var meta = this.metaResolverService.ResolveMeta(context.ActionRef);
+            var meta = this.actionResolverService.ResolveAction(context.ActionRef);
             if (meta == null)
             {
                 throw new ActionException($"Can not resolve meta info from \"{context.ActionRef}\"");
@@ -58,15 +56,7 @@ namespace AnyJob.Impl
             return meta;
         }
 
-        protected virtual IAction OnResolveAction(IActionMeta meta, IExecuteContext context)
-        {
-            var action = this.actionResolverService.ResolveAction(meta, context.ActionParameters);
-            if (action == null)
-            {
-                throw new ActionException($"Can not resolve action from \"{meta.Ref}\"");
-            }
-            return action;
-        }
+
 
         protected virtual IActionContext OnCreateActionContext(IActionMeta meta, IExecuteContext executeContext)
         {

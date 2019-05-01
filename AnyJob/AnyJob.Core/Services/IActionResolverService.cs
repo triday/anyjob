@@ -7,6 +7,6 @@ namespace AnyJob
 {
     public interface IActionResolverService
     {
-        IAction ResolveAction(IActionMeta meta,IActionParameters parameters);
+        IActionEntry ResolveAction(string refName);
     }
 }

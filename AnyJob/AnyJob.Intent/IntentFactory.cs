@@ -8,13 +8,11 @@ namespace AnyJob.Intent
     [ServiceImplClass(typeof(IActionFactory))]
     public class IntentFactory : IActionFactory
     {
-        public string ActionKind => ConstCode.INTENT_ACTION_TYPE;
+        public int Priority => throw new NotImplementedException();
 
-        public IAction CreateAction(IActionMeta meta, IActionParameters parameters)
+        public IActionEntry GetEntry(string refName)
         {
-            IntentAction action = new IntentAction();
-
-            return action;
+            throw new NotImplementedException();
         }
     }
 }
