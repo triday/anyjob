@@ -8,13 +8,11 @@ namespace AnyJob.Workflow
     [ServiceImplClass(typeof(IActionFactory))]
     public class WorkflowFactory : IActionFactory
     {
-        public string ActionKind => ConstCode.WORKFLOW_ACTION_TYPE;
+        public int Priority => 1000;
 
-        public IAction CreateAction(IActionMeta meta, IActionParameters parameters)
+        public IActionEntry GetEntry(string refName)
         {
-            WorkflowAction action = new WorkflowAction();
-
-            return action;
+            throw new NotImplementedException();
         }
     }
 }

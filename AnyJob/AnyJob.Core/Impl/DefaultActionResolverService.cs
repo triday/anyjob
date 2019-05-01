@@ -9,20 +9,20 @@ namespace AnyJob.Impl
     [ServiceImplClass(typeof(IActionResolverService))]
     public class DefaultActionResolverService : IActionResolverService
     {
-        private Dictionary<string, IActionFactory> factoryMaps = new Dictionary<string, IActionFactory>();
+        IEnumerable<IActionFactory> factories;
 
         public DefaultActionResolverService(IEnumerable<IActionFactory> factorys)
         {
-            factoryMaps = factorys.ToDictionary(p => p.ActionKind, StringComparer.CurrentCultureIgnoreCase);
+            this.factories = factories.OrderBy(p => p.Priority);
         }
-        public IAction ResolveAction(IActionMeta meta, IActionParameters parameters)
+        public IActionEntry ResolveAction(string refName)
         {
-            var factory = factoryMaps[meta.Kind];
-            if (factory == null)
+            foreach (var factory in factories)
             {
-                throw new ActionException($"Can not resolve action by action kind \"{meta.Kind}\".");
+                var entry = factory.GetEntry(refName);
+                if (entry != null) return entry;
             }
-            return factory.CreateAction(meta, parameters);
+            return null;
         }
     }
 }

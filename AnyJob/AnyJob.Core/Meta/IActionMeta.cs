@@ -14,8 +14,6 @@ namespace AnyJob.Meta
 
         string DisplayFormat { get; }
 
-        string EntryPoint { get; }
-
         IEnumerable<IActionInputMeta> InputMetas { get; }
 
         IActionOutputMeta Output { get; }

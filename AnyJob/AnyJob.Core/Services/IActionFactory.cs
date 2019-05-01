@@ -6,7 +6,7 @@ namespace AnyJob
 {
     public interface IActionFactory
     {
-        string ActionKind { get; }
-        IAction CreateAction(IActionMeta meta, IActionParameters parameters);
+        int Priority { get; }
+        IActionEntry GetEntry(string refName);
     }
 }
