@@ -14,6 +14,8 @@ namespace AnyJob.Meta
 
         string DisplayFormat { get; }
 
+        bool Enabled { get; }
+
         IEnumerable<IActionInputMeta> InputMetas { get; }
 
         IActionOutputMeta Output { get; }

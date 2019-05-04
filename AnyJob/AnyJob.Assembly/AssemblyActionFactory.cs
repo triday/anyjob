@@ -1,11 +1,12 @@
 ﻿using AnyJob.Assembly.Meta;
+using AnyJob.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 namespace AnyJob.Assembly
 {
+    [ServiceImplClass(typeof(IActionFactory))]
     public class AssemblyActionFactory : IActionFactory
     {
 
@@ -30,11 +31,11 @@ namespace AnyJob.Assembly
         private void LoadAssemblyActions(System.Reflection.Assembly assembly)
         {
             var datas = from p in assembly.GetTypes()
-                        where p.IsClass && !p.IsAbstract && typeof(IAction).IsAssignableFrom(p) && Attribute.IsDefined(p, typeof(ActionAttribute))
+                        where p.HasActionMeta()
                         select new AssemblyActionEntry(p);
             foreach (var map in datas)
             {
-                entryMaps[map.Meta.Ref] = map;
+                entryMaps[map.MetaInfo.Ref] = map;
             }
 
 
