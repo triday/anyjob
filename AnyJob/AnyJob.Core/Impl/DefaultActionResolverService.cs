@@ -11,7 +11,7 @@ namespace AnyJob.Impl
     {
         IEnumerable<IActionFactory> factories;
 
-        public DefaultActionResolverService(IEnumerable<IActionFactory> factorys)
+        public DefaultActionResolverService(IEnumerable<IActionFactory> factories)
         {
             this.factories = factories.OrderBy(p => p.Priority);
         }

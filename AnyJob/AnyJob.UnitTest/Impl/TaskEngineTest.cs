@@ -19,13 +19,13 @@ namespace AnyJob.UnitTest.Impl
                 engine.ConfigServices();
                 var job = engine.Start("test.add",
                      new Dictionary<string, object>() {
-                        { "num1", 1 },
-                        { "num2", 2 },
+                        { "num1", 100 },
+                        { "num2", 200 },
                      });
                 Task.WaitAll(job.Task);
                 var result = job.Task.Result;
                 Assert.AreEqual(result.IsSuccess, true);
-                Assert.AreEqual(result.Result, 0);
+                Assert.AreEqual(result.Result,300);
             }
         }
     }

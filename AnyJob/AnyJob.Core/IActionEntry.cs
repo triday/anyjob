@@ -7,7 +7,7 @@ namespace AnyJob
 {
     public interface IActionEntry
     {
-        IActionMeta Meta { get; }
+        IActionMeta MetaInfo { get; }
 
         IAction CreateInstance(IActionParameters parameters);
     }

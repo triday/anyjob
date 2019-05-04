@@ -32,7 +32,7 @@ namespace AnyJob.Impl
             {
                 var entry = this.OnResolveAction(context);
                 var action = entry.CreateInstance(context.ActionParameters);
-                var actionContext = this.OnCreateActionContext(entry.Meta, context);
+                var actionContext = this.OnCreateActionContext(entry.MetaInfo, context);
                 var result = action.Run(actionContext);
                 return new ExecuteResult(result, true);
             }
@@ -48,12 +48,12 @@ namespace AnyJob.Impl
 
         protected virtual IActionEntry OnResolveAction(IExecuteContext context)
         {
-            var meta = this.actionResolverService.ResolveAction(context.ActionRef);
-            if (meta == null)
+            var entry = this.actionResolverService.ResolveAction(context.ActionRef);
+            if (entry == null)
             {
-                throw new ActionException($"Can not resolve meta info from \"{context.ActionRef}\"");
+                throw new ActionException($"Can not resolve entry info from \"{context.ActionRef}\"");
             }
-            return meta;
+            return entry;
         }
 
 
