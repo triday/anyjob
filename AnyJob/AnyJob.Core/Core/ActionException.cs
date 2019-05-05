@@ -4,6 +4,9 @@ using System.Text;
 
 namespace AnyJob
 {
+    /// <summary>
+    /// 表示Action的异常
+    /// </summary>
     [Serializable]
     public class ActionException : Exception
     {

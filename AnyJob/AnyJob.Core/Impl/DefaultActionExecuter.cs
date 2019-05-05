@@ -60,9 +60,9 @@ namespace AnyJob.Impl
 
         protected virtual IActionContext OnCreateActionContext(IActionMeta meta, IExecuteContext executeContext)
         {
-            return new ActionContext()
+            return new ActionContext(this.serviceProvider)
             {
-                Meta = meta,
+                MetaInfo = meta,
                 Parameters = executeContext.ActionParameters
             };
         }
@@ -71,14 +71,18 @@ namespace AnyJob.Impl
         protected class ActionContext : IActionContext
         {
             private IValueProvider valueProvider;
-            public ActionContext()
+            private IServiceProvider serviceProvider;
+            public ActionContext(IServiceProvider serviceProvider)
             {
-
+                this.serviceProvider = serviceProvider;
             }
             public IActionParameters Parameters { get; set; }
-            public IActionMeta Meta { get; set; }
+            public IActionMeta MetaInfo { get; set; }
 
-
+            public object GetService(Type serviceType)
+            {
+                return this.serviceProvider.GetService(serviceType);
+            }
         }
     }
 }

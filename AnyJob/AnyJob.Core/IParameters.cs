@@ -4,8 +4,7 @@ using System.Text;
 
 namespace AnyJob
 {
-    public interface IConvertService
+    public interface IParameters
     {
-        object Convert(object value, Type targetType);
     }
 }
