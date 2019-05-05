@@ -11,10 +11,11 @@ namespace AnyJob.Assembly
     {
 
         private Dictionary<string, IActionEntry> entryMaps = new Dictionary<string, IActionEntry>(StringComparer.CurrentCultureIgnoreCase);
-
+        private IServiceProvider serviceProvider;
         #region 构造函数
-        public AssemblyActionFactory()
+        public AssemblyActionFactory(IServiceProvider serviceProvider)
         {
+            this.serviceProvider = serviceProvider;
             LoadCurrentDomain();
             AppDomain.CurrentDomain.AssemblyLoad += (sender, args) => { LoadAssemblyActions(args.LoadedAssembly); };
         }
@@ -32,7 +33,7 @@ namespace AnyJob.Assembly
         {
             var datas = from p in assembly.GetTypes()
                         where p.HasActionMeta()
-                        select new AssemblyActionEntry(p);
+                        select new AssemblyActionEntry(p,this.serviceProvider);
             foreach (var map in datas)
             {
                 entryMaps[map.MetaInfo.Ref] = map;

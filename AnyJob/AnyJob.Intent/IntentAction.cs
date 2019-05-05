@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AnyJob.Intent
 {
@@ -14,6 +15,11 @@ namespace AnyJob.Intent
 
         public object Run(IActionContext context)
         {
+            var expressionService = context.GetRequiredService<IExpressionService>();
+            var executerService = context.GetRequiredService<IActionExecuterService>();
+
+            
+
             throw new NotImplementedException();
         }
     }

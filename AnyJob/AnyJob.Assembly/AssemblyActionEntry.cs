@@ -5,14 +5,17 @@ using System.Text;
 using AnyJob.Assembly.Meta;
 using AnyJob.Meta;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 namespace AnyJob.Assembly
 {
     public class AssemblyActionEntry : IActionEntry
     {
         private ActionMeta meta;
         private Dictionary<string, ActionInputMeta> inputs;
-        public AssemblyActionEntry(Type actionType)
+        private IConvertService convertService;
+        public AssemblyActionEntry(Type actionType, IServiceProvider serviceProvider)
         {
+            this.convertService = serviceProvider.GetRequiredService<IConvertService>();
             this.meta = actionType.CreateActionMeta();
             this.inputs = meta.InputMetas.ToDictionary(p => p.Name, StringComparer.CurrentCultureIgnoreCase);
         }
@@ -32,9 +35,9 @@ namespace AnyJob.Assembly
             {
                 if (this.inputs.ContainsKey(kv.Key))
                 {
-                    var convertedValue = kv.Value;
-
-                    this.inputs[kv.Key].Property.SetValue(instance, convertedValue);
+                    var property = this.inputs[kv.Key].Property;
+                    var convertedValue = convertService.Convert(kv.Value,property.PropertyType);
+                    property.SetValue(instance, convertedValue);
                 }
                 else
                 {
