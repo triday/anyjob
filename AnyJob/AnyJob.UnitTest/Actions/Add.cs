@@ -3,6 +3,7 @@ using AnyJob.Meta;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace AnyJob.UnitTest.Actions
 {
@@ -18,6 +19,7 @@ namespace AnyJob.UnitTest.Actions
 
         public object Run(IActionContext context)
         {
+            Thread.Sleep(5000);
             return Num1 + Num2;
         }
     }

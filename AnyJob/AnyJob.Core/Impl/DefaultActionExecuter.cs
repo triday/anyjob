@@ -20,9 +20,23 @@ namespace AnyJob.Impl
 
         public Task<ExecuteResult> Execute(IExecuteContext executeContext)
         {
+            this.OnUpdateState(executeContext, ExecuteState.Schedule);
             return Task.Run(() =>
             {
-                return this.OnExecute(executeContext);
+                this.OnUpdateState(executeContext, ExecuteState.Running);
+                var result= this.OnExecute(executeContext);
+
+                if (result.IsSuccess)
+                {
+                    this.OnUpdateState(executeContext, ExecuteState.Success);
+                }
+                else
+                {
+                    this.OnUpdateState(executeContext, ExecuteState.Failure);
+                }
+
+                return result;
+
             });
         }
 
@@ -34,14 +48,16 @@ namespace AnyJob.Impl
                 var action = entry.CreateInstance(context.ActionParameters);
                 var actionContext = this.OnCreateActionContext(entry.MetaInfo, context);
                 var result = action.Run(actionContext);
-                return new ExecuteResult(result, true);
+                return new ExecuteResult()
+                {
+                     Result=result,
+                };
             }
             catch (Exception ex)
             {
                 return new ExecuteResult()
                 {
-                    Error = ex,
-                    IsSuccess = false
+                    Error = ex
                 };
             }
         }
@@ -68,21 +84,14 @@ namespace AnyJob.Impl
         }
 
 
-        protected class ActionContext : IActionContext
+        protected virtual void OnUpdateState(IExecuteContext context, ExecuteState state)
         {
-            private IValueProvider valueProvider;
-            private IServiceProvider serviceProvider;
-            public ActionContext(IServiceProvider serviceProvider)
+            var traceService = this.serviceProvider.GetService<ITraceService>();
+            if (traceService != null)
             {
-                this.serviceProvider = serviceProvider;
-            }
-            public IActionParameters Parameters { get; set; }
-            public IActionMeta MetaInfo { get; set; }
 
-            public object GetService(Type serviceType)
-            {
-                return this.serviceProvider.GetService(serviceType);
             }
         }
+
     }
 }
