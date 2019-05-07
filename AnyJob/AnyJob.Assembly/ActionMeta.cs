@@ -24,7 +24,7 @@ namespace AnyJob.Assembly
 
         public ActionOutputMeta Output { get; set; }
 
-        IEnumerable<IActionInputMeta> IActionMeta.InputMetas => this.InputMetas;
+        IEnumerable<IActionInputMeta> IActionMeta.Inputs => this.InputMetas;
 
         IActionOutputMeta IActionMeta.Output => this.Output;
     }

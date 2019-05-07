@@ -4,7 +4,9 @@ using System.Text;
 
 namespace AnyJob
 {
-    public interface IParameters
+    public interface IParameters:IValueProvider
     {
+        Dictionary<string, object> ToDictionary();
     }
+
 }

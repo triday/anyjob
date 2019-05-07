@@ -16,7 +16,7 @@ namespace AnyJob.Meta
 
         bool Enabled { get; }
 
-        IEnumerable<IActionInputMeta> InputMetas { get; }
+        IEnumerable<IActionInputMeta> Inputs { get; }
 
         IActionOutputMeta Output { get; }
 

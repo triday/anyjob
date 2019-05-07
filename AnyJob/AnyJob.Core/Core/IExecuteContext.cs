@@ -8,12 +8,17 @@ namespace AnyJob
     /// </summary>
     public interface IExecuteContext
     {
-
+        /// <summary>
+        /// 获取Action的执行参数
+        /// </summary>
         IActionParameters ActionParameters { get; }
         /// <summary>
         /// 或者执行的Action的Ref名称
         /// </summary>
         string ActionRef { get; }
+        /// <summary>
+        /// 取消任务的Token
+        /// </summary>
         CancellationTokenSource CancelTokenSource { get; }
         /// <summary>
         /// 获取执行的Id
