@@ -8,7 +8,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 namespace AnyJob.Impl
 {
-    public class JobEngine :  IJobEngine
+    public class JobEngine : IJobEngine
     {
         public JobEngine()
         {
@@ -29,7 +29,7 @@ namespace AnyJob.Impl
         {
             ConfigServices((services) => services.ConfigAssemblyServices(assemblies));
         }
-        public void ConfigServices(Func<Type,Type,bool> filter=null)
+        public void ConfigServices(Func<Type, Type, bool> filter = null)
         {
             ConfigServices(AppDomain.CurrentDomain.GetAssemblies());
         }
@@ -91,6 +91,9 @@ namespace AnyJob.Impl
 
             public CancellationTokenSource CancelTokenSource { get; set; }
 
+            public int ExecutionDepth { get; set; }
+
+            public int ActionRetryCount { get; set; }
         }
     }
 }

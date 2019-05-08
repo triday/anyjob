@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace AnyJob.UnitTest.Actions
 {
-    [ActionOutput(typeof(int))]
+    [ActionOutput(typeof(void))]
     [Action("test.add", Description = "Test add", DisplayFormat = "${num1}+ ${num2}")]
     public class Add : IAction
     {
@@ -16,10 +16,8 @@ namespace AnyJob.UnitTest.Actions
         [ActionInput( Description = "参数2", Default = 2, IsRequired = true)]
         public int Num2 { get; set; }
 
-
         public object Run(IActionContext context)
         {
-            Thread.Sleep(5000);
             return Num1 + Num2;
         }
     }

@@ -7,7 +7,11 @@ namespace AnyJob
 {
     public interface IActionExecuterService
     {
-        //void PreExecute(ActionEntry entry, ActionContext actionContext);
+        
         Task<ExecuteResult> Execute(IExecuteContext executeContext);
+
+        //void Cancel(string executeId);
     }
+
+
 }

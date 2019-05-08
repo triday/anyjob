@@ -118,15 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="E00001" xml:space="preserve">
-    <value />
+    <value>Action exec error.</value>
   </data>
   <data name="E00002" xml:space="preserve">
     <value />
   </data>
   <data name="E00003" xml:space="preserve">
     <value>Canceled by user.</value>
-  </data>
-  <data name="E00004" xml:space="preserve">
-    <value>Execution time out.</value>
   </data>
 </root>

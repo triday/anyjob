@@ -22,14 +22,14 @@ namespace AnyJob {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ErrorCode {
+    public class ExecuteErrorCode {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ErrorCode() {
+        internal ExecuteErrorCode() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AnyJob {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AnyJob.ErrorCode", typeof(ErrorCode).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AnyJob.ExecuteErrorCode", typeof(ExecuteErrorCode).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace AnyJob {
         }
         
         /// <summary>
-        ///   查找类似  的本地化字符串。
+        ///   查找类似 Action exec error. 的本地化字符串。
         /// </summary>
         public static string E00001 {
             get {
@@ -84,15 +84,6 @@ namespace AnyJob {
         public static string E00003 {
             get {
                 return ResourceManager.GetString("E00003", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Execution time out. 的本地化字符串。
-        /// </summary>
-        public static string E00004 {
-            get {
-                return ResourceManager.GetString("E00004", resourceCulture);
             }
         }
     }

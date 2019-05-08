@@ -1,5 +1,6 @@
 ﻿using AnyJob.Meta;
 using System;
+using System.Threading;
 
 namespace AnyJob
 {
@@ -16,5 +17,7 @@ namespace AnyJob
         /// 获取Action的执行参数
         /// </summary>
         IActionParameters Parameters { get; }
+
+        CancellationToken Token { get; }
     }
 }

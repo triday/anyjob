@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace AnyJob
 {
@@ -15,6 +16,7 @@ namespace AnyJob
         }
         public IActionParameters Parameters { get; set; }
         public IActionMeta MetaInfo { get; set; }
+        public CancellationToken Token { get; set; }
 
         public object GetService(Type serviceType)
         {

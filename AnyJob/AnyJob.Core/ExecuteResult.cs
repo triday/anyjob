@@ -5,7 +5,7 @@ using System.Text;
 namespace AnyJob
 {
     /// <summary>
-    /// 表示Action的执行结果
+    /// 表示执行结果
     /// </summary>
     public class ExecuteResult
     {
@@ -18,6 +18,10 @@ namespace AnyJob
         /// </summary>
         public object Result { get; set; }
         /// <summary>
+        /// 获取或设置失败的代码
+        /// </summary>
+        public string ErrorCode { get; set; }
+        /// <summary>
         /// 获取是否执行成功
         /// </summary>
         public bool IsSuccess
@@ -27,27 +31,6 @@ namespace AnyJob
                 return this.Error == null;
             }
         }
-        /// <summary>
-        /// 获取是否被取消
-        /// </summary>
-        public bool IsCanceled
-        {
-            get
-            {
-                return this.Error != null;
-            }
-        }
-        /// <summary>
-        /// 获取是否超时
-        /// </summary>
-        public bool IsTimeout
-        {
-            get
-            {
-                return this.Error != null; 
-            }
-        }
-
     }
 
 }
