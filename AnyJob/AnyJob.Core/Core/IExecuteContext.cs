@@ -32,5 +32,13 @@ namespace AnyJob
         /// 获取执行的根Id
         /// </summary>
         string RootExecutionId { get; }
+        /// <summary>
+        /// 获取执行的深度
+        /// </summary>
+        int ExecutionDepth { get;  }
+        /// <summary>
+        /// 表示失败重试次数
+        /// </summary>
+        int ActionRetryCount { get; }
     }
 }
