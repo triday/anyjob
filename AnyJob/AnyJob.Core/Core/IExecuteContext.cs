@@ -17,9 +17,9 @@ namespace AnyJob
         /// </summary>
         string ActionRef { get; }
         /// <summary>
-        /// 取消任务的Token
+        /// 获取执行的Spy，用于取消执行
         /// </summary>
-        CancellationTokenSource CancelTokenSource { get; }
+        IExecuteSpy ExecuteSpy { get; set; }
         /// <summary>
         /// 获取执行的Id
         /// </summary>

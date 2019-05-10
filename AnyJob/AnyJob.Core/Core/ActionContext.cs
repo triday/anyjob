@@ -8,7 +8,7 @@ namespace AnyJob
 {
     public class ActionContext : IActionContext
     {
-        private IValueProvider valueProvider;
+        
         private IServiceProvider serviceProvider;
         public ActionContext(IServiceProvider serviceProvider)
         {

@@ -12,7 +12,7 @@ namespace AnyJob
             return jobService.Start(actionRef, arguments, context: new Dictionary<string, object>());
         }
 
-        public static Job Start(this IJobEngine jobService, string actionRef, Dictionary<string, object> inputs, Dictionary<string, object> context, string executionId = null, int timeoutSeconds = 0)
+        public static Job Start(this IJobEngine jobService, string actionRef, Dictionary<string, object> inputs, Dictionary<string, object> context, string executionId = null, int retryCount = 0)
         {
             return jobService.Start(new JobStartInfo()
             {
@@ -20,7 +20,7 @@ namespace AnyJob
                 ExecutionId = executionId,
                 Inputs = inputs,
                 Context = context,
-                TimeoutSeconds = timeoutSeconds,
+                RetryCount = retryCount,
             });
         }
     }

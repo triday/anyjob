@@ -4,19 +4,44 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 namespace AnyJob.Impl
 {
-    public class JobEngine : IJobEngine
+
+
+
+   
+    public class JobEngine : IJobEngine, IDisposable
     {
-        public JobEngine()
+       
+        public JobEngine(bool autoRegisterCurrentDomainServices = true)
         {
-            this.provider = services.BuildServiceProvider();
+            this.currentJobs = new ConcurrentDictionary<string, Job>(StringComparer.CurrentCultureIgnoreCase);
+            this.services = new ServiceCollection();
+            if (autoRegisterCurrentDomainServices)
+            {
+                this.RegisterCurrentDomainServices();
+            }
+            else
+            {
+                this.provider = services.BuildServiceProvider();
+            }
+
         }
-        private ServiceCollection services = new ServiceCollection();
+
+        public event EventHandler<TypeFilterEventArgs> FilterAssemblyType;
+
+        #region 字段
+        private const int MAX_JOB_COUNT = 100;
+        private ConcurrentDictionary<string, Job> currentJobs;
+        private ServiceCollection services;
         private IServiceProvider provider;
-        public void ConfigServices(Action<IServiceCollection> config)
+        #endregion
+
+        #region 注入服务
+        public void RegisterServices(Action<IServiceCollection> config)
         {
             if (config != null)
             {
@@ -24,21 +49,50 @@ namespace AnyJob.Impl
             }
             this.provider = services.BuildServiceProvider();
         }
-
-        public void ConfigServices(Assembly[] assemblies, Func<Type, Type, bool> filter = null)
+        protected void RegisterCurrentDomainServices()
         {
-            ConfigServices((services) => services.ConfigAssemblyServices(assemblies));
-        }
-        public void ConfigServices(Func<Type, Type, bool> filter = null)
-        {
-            ConfigServices(AppDomain.CurrentDomain.GetAssemblies());
-        }
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                RegisterServices((services) =>
+                {
+                    services.ConfigAssemblyServices(assembly, (serviceType, interfaceType) =>
+                    {
+                        var args = new TypeFilterEventArgs(interfaceType, serviceType);
+                        this.OnFilterAssemblyType(args);
+                        return args.Filtered;
+                    });
 
-        public bool Cancel(string jobId)
-        {
-            return false;
+                });
+            }
         }
+        protected virtual void OnFilterAssemblyType(TypeFilterEventArgs e)
+        {
+            if (this.FilterAssemblyType != null)
+            {
+                this.FilterAssemblyType(this, e);
+            }
+        }
+        #endregion
 
+        #region 取消任务
+        public bool Cancel(string executionId)
+        {
+            var logger = this.provider.GetRequiredService<ILogService>();
+            if (currentJobs.TryGetValue(executionId, out var job))
+            {
+                logger.Info($"Begin cancel execution [{executionId}]");
+                job.Spy.Cancel();
+                return true;
+            }
+            else
+            {
+                logger.Warn($"Can not cancel execution [{executionId}]");
+                return false;
+            }
+        }
+        #endregion
+
+        #region 开始任务
         public Job Start(JobStartInfo jobStartInfo)
         {
             if (jobStartInfo == null)
@@ -46,22 +100,43 @@ namespace AnyJob.Impl
                 throw new ArgumentNullException(nameof(jobStartInfo));
             }
             var executer = this.provider.GetRequiredService<IActionExecuterService>();
-            var context = this.OnCreateExecuteContext(jobStartInfo);
-            return new Job()
+            var logger = this.provider.GetRequiredService<ILogService>();
+            lock (this)
             {
-                ExecutionId = context.ExecutionId,
-                ActionRef = context.ActionRef,
-                ActionParameters = context.ActionParameters,
-                Task = executer.Execute(context)
-            };
+                if (this.currentJobs.Count >= MAX_JOB_COUNT)
+                {
+                    logger.Error($"Maximizing jobs limit, total count {this.currentJobs.Count}.");
+                    throw new ActionException("Maximizing the number of jobs.");
+                }
+                var spy = this.OnCreateSpy(jobStartInfo);
+                var context = this.OnCreateExecuteContext(jobStartInfo, spy);
+                var task = executer.Execute(context);
+                var jobinfo = new Job() { ExecutionId=context.ExecutionId, StartInfo = jobStartInfo, Spy = spy, Task = task };
+                currentJobs[context.ExecutionId] = jobinfo;
+                logger.Debug($"Add jobInfo in engine [{context.ExecutionId}]");
+                task.ContinueWith((e) =>
+                {
+                    if (currentJobs.TryRemove(context.ExecutionId, out var job))
+                    {
+                        logger.Debug($"Remove jobInfo in engine [{context.ExecutionId}].");
+                    }
+                    else
+                    {
+                        logger.Warn($"Can not remove job info in engine [{context.ExecutionId}].");
+                    }
+                });
+                return jobinfo;
+            }
         }
-
-        protected virtual IExecuteContext OnCreateExecuteContext(JobStartInfo jobStartInfo)
+        protected virtual IExecuteSpy OnCreateSpy(JobStartInfo jobStartInfo)
+        {
+            return new ExecuteSpy();
+        }
+        protected virtual IExecuteContext OnCreateExecuteContext(JobStartInfo jobStartInfo, IExecuteSpy spy)
         {
             var idGen = this.provider.GetRequiredService<IIdGenService>();
             var executionId = string.IsNullOrEmpty(jobStartInfo.ExecutionId) ? idGen.NewId() : jobStartInfo.ExecutionId;
             var parameters = new IActionParameters(jobStartInfo.Inputs, jobStartInfo.Context);
-            var cancelSource = jobStartInfo.TimeoutSeconds > 0 ? new CancellationTokenSource(jobStartInfo.TimeoutSeconds * 1000) : new CancellationTokenSource();
             return new ExecuteContext
             {
                 ExecutionId = executionId,
@@ -69,31 +144,31 @@ namespace AnyJob.Impl
                 ParentExecutionId = null,
                 RootExecutionId = executionId,
                 ActionParameters = parameters,
-                CancelTokenSource = cancelSource,
+                ExecuteSpy = spy,
+                ExecutionDepth = 1,
+                ActionRetryCount = jobStartInfo.RetryCount
             };
         }
+        #endregion
 
-        public void Dispose()
+        #region 其它
+        void IDisposable.Dispose()
         {
-        }
 
-        public class ExecuteContext : IExecuteContext
+        }
+        #endregion
+
+    }
+
+    public class TypeFilterEventArgs : EventArgs
+    {
+        public TypeFilterEventArgs(Type serviceType, Type interfaceType)
         {
-            public string ExecutionId { get; set; }
-
-            public string ParentExecutionId { get; set; }
-
-            public string RootExecutionId { get; set; }
-
-            public string ActionRef { get; set; }
-
-            public IActionParameters ActionParameters { get; set; }
-
-            public CancellationTokenSource CancelTokenSource { get; set; }
-
-            public int ExecutionDepth { get; set; }
-
-            public int ActionRetryCount { get; set; }
+            this.InterfaceType = interfaceType;
+            this.ServiceType = serviceType;
         }
+        public Type ServiceType { get; private set; }
+        public Type InterfaceType { get; private set; }
+        public bool Filtered { get; set; }
     }
 }

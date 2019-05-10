@@ -42,7 +42,7 @@ namespace AnyJob.Impl
         {
             foreach (var assembly in assemblies)
             {
-                ConfigAssemblyServices(services, assembly);
+                ConfigAssemblyServices(services, assembly,filter);
             }
             return services;
         }
