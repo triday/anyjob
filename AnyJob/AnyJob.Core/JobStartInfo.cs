@@ -27,8 +27,8 @@ namespace AnyJob
         /// </summary>
         public Dictionary<string, object> Context { get; set; }
         /// <summary>
-        /// 获取或设置任务的超时秒数
+        /// 获取或设置任务的重试次数
         /// </summary>
-        public int TimeoutSeconds { get; set; }
+        public int RetryCount { get; set; }
     }
 }

@@ -9,12 +9,8 @@ namespace AnyJob
     public class Job
     {
         public string ExecutionId { get; set; }
-
-        public string ActionRef { get; set; }
-
-        public IActionParameters ActionParameters { get; set; }
-
+        public JobStartInfo StartInfo { get; set; }
+        public IExecuteSpy Spy { get; set; }
         public Task<ExecuteResult> Task { get; set; }
-
     }
 }

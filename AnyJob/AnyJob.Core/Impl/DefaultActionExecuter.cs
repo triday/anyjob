@@ -27,7 +27,7 @@ namespace AnyJob.Impl
 
         public Task<ExecuteResult> Execute(IExecuteContext executeContext)
         {
-            this.OnSafeTraceState(executeContext, ExecuteState.Schedule);
+            this.OnSafeTraceState(executeContext, ExecuteState.Ready);
             return Task.Run(() =>
             {
                 this.OnSafeTraceState(executeContext, ExecuteState.Running);
@@ -95,7 +95,7 @@ namespace AnyJob.Impl
                 }
                 catch (Exception ex)
                 {
-                    logService.Warn("Error in execute action [{0}] {1} time(s).\n{2}", context.MetaInfo.Ref, i,ex);
+                    logService.Warn("Error in execute action [{0}] {1} time(s).\n{2}", context.MetaInfo.Ref, i, ex);
                     error = ex;
                 }
             }
@@ -106,6 +106,7 @@ namespace AnyJob.Impl
         {
             return new ActionContext(this.serviceProvider)
             {
+                Token = executeContext.ExecuteSpy.Token,
                 MetaInfo = meta,
                 Parameters = executeContext.ActionParameters
             };
