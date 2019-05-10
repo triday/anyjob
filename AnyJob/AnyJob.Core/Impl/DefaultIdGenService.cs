@@ -7,7 +7,7 @@ namespace AnyJob.Impl
     [ServiceImplClass(typeof(IIdGenService))]
     public class DefaultIdGenService : IIdGenService
     {
-        Random random = new Random();
+        
         public string NewChildId(string parentId)
         {
             return Guid.NewGuid().ToString();
@@ -15,7 +15,19 @@ namespace AnyJob.Impl
 
         public string NewId()
         {
-            return random.Next(10000, 100000).ToString();
+            return NewSequenceGuid().ToString();
+        }
+
+        private Guid NewSequenceGuid()
+        {
+            byte[] timestampBytes = BitConverter.GetBytes(DateTimeOffset.Now.Ticks);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(timestampBytes);
+            }
+            var byteArray = Guid.NewGuid().ToByteArray();
+            Buffer.BlockCopy(timestampBytes, 0, byteArray, 0, timestampBytes.Length);
+            return new Guid(byteArray);
         }
     }
 }

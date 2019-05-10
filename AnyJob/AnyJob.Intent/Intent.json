@@ -1,28 +1,24 @@
 ﻿{
     "meta": {
-        "name": "demo.num",
-        "description": "数字乘法表",
-        "displayformat": "{val}*{val}乘法表",
-        "inputs": {
-            "val": {
+        "name": "test.add100",
+        "description": "add 100",
+        "displayFormat": "add 100 to current",
+        "inputsDesc": {
+            "other": {
                 "type": "int",
                 "default": 5,
                 "required": true,
                 "description": "参数值"
-            },
-            "1": {
-                "type": "s"
             }
         },
-        "output": {
+        "outputDesc": {
             "type": "object"
         }
     },
-
     "action": "core.bbb",
-    "mapper": {
-        "inputs": {
-
-        }
-    }
+    "inputs": {
+        "num1": "xxx",
+        "num2": 1
+    },
+    "output": "result.toString(\"x2\")"
 }

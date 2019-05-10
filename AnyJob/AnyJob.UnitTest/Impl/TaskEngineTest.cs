@@ -15,7 +15,7 @@ namespace AnyJob.UnitTest.Impl
         public void Test_AddAction()
         {
             using (var engine = new JobEngine())
-            {               
+            {
                 var job = engine.Start("test.add",
                      new Dictionary<string, object>() {
                         { "num1", 100L },
@@ -24,7 +24,7 @@ namespace AnyJob.UnitTest.Impl
                 Task.WaitAll(job.Task);
                 var result = job.Task.Result;
                 Assert.AreEqual(result.IsSuccess, true);
-                Assert.AreEqual(result.Result,300);
+                Assert.AreEqual(result.Result, 300);
             }
         }
         [TestMethod()]
@@ -32,7 +32,7 @@ namespace AnyJob.UnitTest.Impl
         {
             using (var engine = new JobEngine())
             {
-                var job = engine.Start("test.longjob",null);
+                var job = engine.Start("test.longjob", null);
                 Task.Delay(500).ContinueWith((a) =>
                 {
                     engine.Cancel(job.ExecutionId);
