@@ -10,9 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 namespace AnyJob.Impl
 {
 
-
-
-   
     public class JobEngine : IJobEngine, IDisposable
     {
        
@@ -49,7 +46,7 @@ namespace AnyJob.Impl
             }
             this.provider = services.BuildServiceProvider();
         }
-        protected void RegisterCurrentDomainServices()
+        public void RegisterCurrentDomainServices()
         {
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
