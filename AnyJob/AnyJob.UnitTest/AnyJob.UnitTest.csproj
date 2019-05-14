@@ -17,4 +17,10 @@
     <ProjectReference Include="..\AnyJob.Core\AnyJob.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Intents\test\add100.intent.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

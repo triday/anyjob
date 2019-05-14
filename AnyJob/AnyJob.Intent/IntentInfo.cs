@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace AnyJob.Intent
 {
 
-    public class InputType
+    public class InputTypeInfo
     {
         public string type { get; set; }
         public int @default { get; set; }
@@ -15,18 +15,20 @@ namespace AnyJob.Intent
         public string description { get; set; }
     }
 
-    public class OutputType
+    public class OutputTypeInfo
     {
         public string type { get; set; }
     }
 
     public class MetaInfo
     {
-        public string name { get; set; }
+        public string @ref { get; set; }
         public string description { get; set; }
         public string displayFormat { get; set; }
-        public Dictionary<string, InputType> inputsDesc { get; set; }
-        public OutputType outputDesc { get; set; }
+        public bool enabled { get; set; }
+        public string kind { get; set; }
+        public Dictionary<string, InputTypeInfo> inputsDesc { get; set; }
+        public OutputTypeInfo outputDesc { get; set; }
     }
 
     public class IntentInfo

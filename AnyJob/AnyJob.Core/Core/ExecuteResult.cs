@@ -18,10 +18,6 @@ namespace AnyJob
         /// </summary>
         public object Result { get; set; }
         /// <summary>
-        /// 获取或设置失败的代码
-        /// </summary>
-        public string ErrorCode { get; set; }
-        /// <summary>
         /// 获取是否执行成功
         /// </summary>
         public bool IsSuccess

@@ -41,7 +41,7 @@ namespace AnyJob.Impl
                     this.OnSafeTraceState(executeContext, ExecuteState.Failure, result);
                 }
                 return result;
-            });
+            }, executeContext.ExecuteSpy.Token);
         }
 
         protected virtual ExecuteResult OnExecute(IExecuteContext context)
