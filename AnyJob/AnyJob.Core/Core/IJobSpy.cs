@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace AnyJob
 {
-    public interface IExecuteSpy
+    public interface IJobSpy
     {
         void Cancel();
         void CancelAfter(TimeSpan delay);

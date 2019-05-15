@@ -15,9 +15,9 @@ namespace AnyJob.Impl
         public void TraceState(IExecuteContext context, ExecuteState state, ExecuteResult result)
         {
             logService.Info("RootId:{0},ParentId:{1},ExectionId:{2},ActionRef:\"{3}\",State:[{4}]",
-                context.RootExecutionId,
-                context.ParentExecutionId,
-                context.ExecutionId,
+                context.ExecutePath.RootId,
+                context.ExecutePath.ParentId,
+                context.ExecutePath.ExecuteId,
                 context.ActionRef,
                 state);
         }

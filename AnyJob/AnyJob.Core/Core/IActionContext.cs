@@ -21,5 +21,9 @@ namespace AnyJob
         /// 获取取消任务的Token
         /// </summary>
         CancellationToken Token { get; }
+        /// <summary>
+        /// 获取任务执行的路径信息
+        /// </summary>
+        IExecutePath ExecutePath { get; }
     }
 }
