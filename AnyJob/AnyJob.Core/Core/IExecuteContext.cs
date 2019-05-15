@@ -17,25 +17,14 @@ namespace AnyJob
         /// </summary>
         string ActionRef { get; }
         /// <summary>
-        /// 获取执行的Spy，用于取消执行
+        /// 获取取消执行的Token
         /// </summary>
-        IExecuteSpy ExecuteSpy { get; set; }
+        CancellationToken Token { get; }
         /// <summary>
-        /// 获取执行的Id
+        /// 获取执行的路径
         /// </summary>
-        string ExecutionId { get; }
-        /// <summary>
-        /// 获取执行的父Id
-        /// </summary>
-        string ParentExecutionId { get; }
-        /// <summary>
-        /// 获取执行的根Id
-        /// </summary>
-        string RootExecutionId { get; }
-        /// <summary>
-        /// 获取执行的深度
-        /// </summary>
-        int ExecutionDepth { get;  }
+        IExecutePath ExecutePath { get; }
+
         /// <summary>
         /// 表示失败重试次数
         /// </summary>

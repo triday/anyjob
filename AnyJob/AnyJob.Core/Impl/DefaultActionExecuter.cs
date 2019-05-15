@@ -30,6 +30,7 @@ namespace AnyJob.Impl
             this.OnSafeTraceState(executeContext, ExecuteState.Ready);
             return Task.Run(() =>
             {
+                executeContext.Token.ThrowIfCancellationRequested();
                 this.OnSafeTraceState(executeContext, ExecuteState.Running);
                 var result = this.OnExecute(executeContext);
                 if (result.IsSuccess)
@@ -41,7 +42,7 @@ namespace AnyJob.Impl
                     this.OnSafeTraceState(executeContext, ExecuteState.Failure, result);
                 }
                 return result;
-            }, executeContext.ExecuteSpy.Token);
+            }, executeContext.Token);
         }
 
         protected virtual ExecuteResult OnExecute(IExecuteContext context)
@@ -106,7 +107,8 @@ namespace AnyJob.Impl
         {
             return new ActionContext(this.serviceProvider)
             {
-                Token = executeContext.ExecuteSpy.Token,
+                 ExecutePath=executeContext.ExecutePath,
+                Token = executeContext.Token,
                 MetaInfo = meta,
                 Parameters = executeContext.ActionParameters
             };

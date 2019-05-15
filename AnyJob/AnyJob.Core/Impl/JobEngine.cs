@@ -106,43 +106,55 @@ namespace AnyJob.Impl
                     throw new ActionException("Maximizing the number of jobs.");
                 }
                 var spy = this.OnCreateSpy(jobStartInfo);
-                var context = this.OnCreateExecuteContext(jobStartInfo, spy);
+                var executePath = this.OnCreateExecutePath(jobStartInfo);
+                var context = this.OnCreateExecuteContext(jobStartInfo,spy.Token, executePath);
                 var task = executer.Execute(context);
-                var jobinfo = new Job() { ExecutionId=context.ExecutionId, StartInfo = jobStartInfo, Spy = spy, Task = task };
-                currentJobs[context.ExecutionId] = jobinfo;
-                logger.Debug($"Add jobInfo in engine [{context.ExecutionId}]");
+                var jobinfo = new Job() { ExecutionId= executePath.ExecuteId, StartInfo = jobStartInfo, Spy = spy, Task = task };
+                currentJobs[executePath.ExecuteId] = jobinfo;
+                logger.Debug($"Add jobInfo in engine [{ executePath.ExecuteId}]");
                 task.ContinueWith((e) =>
                 {
-                    if (currentJobs.TryRemove(context.ExecutionId, out var job))
+                    if (currentJobs.TryRemove(executePath.ExecuteId, out var job))
                     {
-                        logger.Debug($"Remove jobInfo in engine [{context.ExecutionId}].");
+                        logger.Debug($"Remove jobInfo in engine [{ executePath.ExecuteId}].");
                     }
                     else
                     {
-                        logger.Warn($"Can not remove job info in engine [{context.ExecutionId}].");
+                        logger.Warn($"Can not remove job info in engine [{ executePath.ExecuteId}].");
                     }
                 });
                 return jobinfo;
             }
         }
-        protected virtual IExecuteSpy OnCreateSpy(JobStartInfo jobStartInfo)
+        protected virtual IJobSpy OnCreateSpy(JobStartInfo jobStartInfo)
         {
-            return new ExecuteSpy();
+            return new JobSpy();
         }
-        protected virtual IExecuteContext OnCreateExecuteContext(JobStartInfo jobStartInfo, IExecuteSpy spy)
+
+        protected virtual IExecutePath OnCreateExecutePath(JobStartInfo jobStartInfo)
         {
-            var idGen = this.provider.GetRequiredService<IIdGenService>();
-            var executionId = string.IsNullOrEmpty(jobStartInfo.ExecutionId) ? idGen.NewId() : jobStartInfo.ExecutionId;
+            if (string.IsNullOrEmpty(jobStartInfo.ExecutionId))
+            {
+                var idGen = this.provider.GetRequiredService<IIdGenService>();
+                var newid = idGen.NewId();
+                return new ExecutePath(newid);
+            }
+            else
+            {
+                return new ExecutePath(jobStartInfo.ExecutionId);
+            }
+        }
+
+        protected virtual IExecuteContext OnCreateExecuteContext(JobStartInfo jobStartInfo, CancellationToken token, IExecutePath path)
+        {
+            
             var parameters = new IActionParameters(jobStartInfo.Inputs, jobStartInfo.Context);
             return new ExecuteContext
             {
-                ExecutionId = executionId,
                 ActionRef = jobStartInfo.ActionRef,
-                ParentExecutionId = null,
-                RootExecutionId = executionId,
                 ActionParameters = parameters,
-                ExecuteSpy = spy,
-                ExecutionDepth = 1,
+                ExecutePath=path,
+                Token=token,
                 ActionRetryCount = jobStartInfo.RetryCount
             };
         }

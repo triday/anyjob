@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace AnyJob
 {
-    public class ExecuteSpy:CancellationTokenSource,IExecuteSpy
+    public class JobSpy:CancellationTokenSource,IJobSpy
     {
     }
 }

@@ -19,7 +19,7 @@ namespace AnyJob
         /// <summary>
         /// 获取或设置Spy
         /// </summary>
-        public IExecuteSpy Spy { get; set; }
+        public IJobSpy Spy { get; set; }
         /// <summary>
         /// 获取或设置Task
         /// </summary>
