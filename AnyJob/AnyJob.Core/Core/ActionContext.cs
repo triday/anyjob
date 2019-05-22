@@ -14,7 +14,7 @@ namespace AnyJob
         {
             this.serviceProvider = serviceProvider;
         }
-        public IActionParameters Parameters { get; set; }
+        public ActionParameters Parameters { get; set; }
         public IActionMeta MetaInfo { get; set; }
         public CancellationToken Token { get; set; }
         public IExecutePath ExecutePath { get;set;}

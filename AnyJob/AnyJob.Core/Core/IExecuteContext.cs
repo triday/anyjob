@@ -11,7 +11,7 @@ namespace AnyJob
         /// <summary>
         /// 获取Action的执行参数
         /// </summary>
-        IActionParameters ActionParameters { get; }
+        ActionParameters ActionParameters { get; }
         /// <summary>
         /// 或者执行的Action的Ref名称
         /// </summary>
