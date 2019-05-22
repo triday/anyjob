@@ -16,7 +16,7 @@ namespace AnyJob
         /// <summary>
         /// 获取Action的执行参数
         /// </summary>
-        IActionParameters Parameters { get; }
+        ActionParameters Parameters { get; }
         /// <summary>
         /// 获取取消任务的Token
         /// </summary>

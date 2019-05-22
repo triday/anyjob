@@ -27,7 +27,7 @@ namespace AnyJob.Assembly
             }
         }
 
-        public IAction CreateInstance(IActionParameters parameters)
+        public IAction CreateInstance(ActionParameters parameters)
         {
             var instance = Activator.CreateInstance(this.meta.ActionType);
 

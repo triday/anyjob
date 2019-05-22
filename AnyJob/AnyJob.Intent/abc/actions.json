@@ -1,0 +1,25 @@
+{
+    "namespaces":[
+        "abc",
+        "bcd"
+    ],
+    "actions":{
+        "abc.sendmail": {
+            "type": "assembly",
+            "entry": "abc.dll,xxxxx.xxx.sendmail"
+        },
+        "abc": {
+            "type": "java",
+            "entry": "xxx.xxx.xxx.class"
+        },
+        "node": {
+            "type": "node",
+            "entry": "abc.js"
+        },
+        "wf":{
+            "type":"workflow",
+            "entry":"..."
+        }
+    }
+    
+}

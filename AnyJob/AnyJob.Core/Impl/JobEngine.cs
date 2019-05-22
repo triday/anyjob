@@ -148,7 +148,7 @@ namespace AnyJob.Impl
         protected virtual IExecuteContext OnCreateExecuteContext(JobStartInfo jobStartInfo, CancellationToken token, IExecutePath path)
         {
             
-            var parameters = new IActionParameters(jobStartInfo.Inputs, jobStartInfo.Context);
+            var parameters = new ActionParameters(jobStartInfo.Inputs, jobStartInfo.Context);
             return new ExecuteContext
             {
                 ActionRef = jobStartInfo.ActionRef,

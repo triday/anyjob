@@ -19,6 +19,6 @@ namespace AnyJob
         /// </summary>
         /// <param name="parameters">Action的执行参数</param>
         /// <returns>返回Action实例</returns>
-        IAction CreateInstance(IActionParameters parameters);
+        IAction CreateInstance(ActionParameters parameters);
     }
 }

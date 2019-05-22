@@ -15,19 +15,22 @@ namespace AnyJob.Intent
 
         public Dictionary<string, string> InputMaps { get; set; }
 
-        public object Run(IActionContext context)
+        public virtual object Run(IActionContext context)
         {
-            var expressionService = context.GetRequiredService<IExpressionService>();
             var executerService = context.GetRequiredService<IActionExecuterService>();
-
-            var inputs = GetActualInputs(context, expressionService);
-            var task=executerService.Execute(null);
+            var execContext = this.OnCreateExecuteContext(context);
+            var task = executerService.Execute(execContext);
             Task.WaitAll(task);
             if (task.Result.Error != null)
             {
                 throw task.Result.Error;
             }
-            return task.Result.Result;
+            return this.OnHandlerResult(task.Result.Result);
+        }
+
+        protected virtual object OnHandlerResult(object innerResult)
+        {
+            return innerResult;
         }
         private Dictionary<string, object> GetActualInputs(IActionContext context, IExpressionService expressionService)
         {
@@ -41,6 +44,25 @@ namespace AnyJob.Intent
                 }
             }
             return args;
+        }
+
+        protected virtual IExecuteContext OnCreateExecuteContext(IActionContext actionContext)
+        {
+            var idgenService = actionContext.GetRequiredService<IIdGenService>();
+            var newid = idgenService.NewId();
+            return new ExecuteContext()
+            {
+                ActionRef = this.ActionRef,
+                Token = actionContext.Token,
+                ExecutePath = actionContext.ExecutePath.NewSubPath(newid),
+                ActionRetryCount = 1,
+                ActionParameters = null
+            };
+        }
+
+        protected virtual ActionParameters OnCreateParams(IActionContext actionContext)
+        {
+            return null;
         }
     }
 

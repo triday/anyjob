@@ -8,4 +8,8 @@
     <ProjectReference Include="..\AnyJob.Core\AnyJob.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="abc\" />
+  </ItemGroup>
+
 </Project>

@@ -7,9 +7,9 @@ namespace AnyJob
     /// <summary>
     /// 表示Action的执行参数
     /// </summary>
-    public class IActionParameters
+    public class ActionParameters : IActionParameters
     {
-        public IActionParameters(Dictionary<string, object> inputs = null, Dictionary<string, object> context = null)
+        public ActionParameters(Dictionary<string, object> inputs = null, Dictionary<string, object> context = null)
         {
             if (inputs != null)
             {

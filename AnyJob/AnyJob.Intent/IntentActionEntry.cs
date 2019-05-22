@@ -22,7 +22,7 @@ namespace AnyJob.Intent
         private IntentInfo intentInfo;
         public IActionMeta MetaInfo { get; private set; }
 
-        public IAction CreateInstance(IActionParameters parameters)
+        public IAction CreateInstance(ActionParameters parameters)
         {
             return new IntentAction()
             {
