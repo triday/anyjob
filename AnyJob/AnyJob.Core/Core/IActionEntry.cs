@@ -20,5 +20,9 @@ namespace AnyJob
         /// <param name="parameters">Action的执行参数</param>
         /// <returns>返回Action实例</returns>
         IAction CreateInstance(ActionParameters parameters);
+        /// <summary>
+        /// 获取Action的工作目录
+        /// </summary>
+        string WorkingDirectory { get; }
     }
 }
