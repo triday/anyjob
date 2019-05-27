@@ -17,6 +17,9 @@ namespace AnyJob.Impl
         }
         public IActionEntry ResolveAction(string refName)
         {
+            var actionInfo = Utility.GetActionNameInfoFromRefName(refName);
+
+
             foreach (var factory in factories)
             {
                 var entry = factory.GetEntry(refName);

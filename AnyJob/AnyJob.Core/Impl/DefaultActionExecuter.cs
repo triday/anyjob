@@ -58,13 +58,6 @@ namespace AnyJob.Impl
                     Result = result,
                 };
             }
-            catch (OperationCanceledException ex)
-            {
-                return new ExecuteResult()
-                {
-                    Error = ex,
-                };
-            }
             catch (Exception ex)
             {
                 return new ExecuteResult()
@@ -76,6 +69,7 @@ namespace AnyJob.Impl
 
         protected virtual IActionEntry OnResolveAction(IExecuteContext context)
         {
+            
             var entry = this.actionResolverService.ResolveAction(context.ActionRef);
             if (entry == null)
             {
@@ -117,14 +111,7 @@ namespace AnyJob.Impl
 
         protected virtual void OnSafeTraceState(IExecuteContext context, ExecuteState state, ExecuteResult result = null)
         {
-            try
-            {
                 traceService.TraceState(context, state, result);
-            }
-            catch (Exception ex)
-            {
-                logService.Error("Trace state error: {0}.", ex);
-            }
         }
 
     }
