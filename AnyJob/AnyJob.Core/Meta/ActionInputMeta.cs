@@ -1,10 +1,8 @@
-﻿using AnyJob.Meta;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Reflection;
 
-namespace AnyJob.Assembly
+namespace AnyJob.Meta
 {
     public class ActionInputMeta : IActionInputMeta
     {
@@ -18,8 +16,6 @@ namespace AnyJob.Assembly
 
         public bool IsSecret { get; set; }
 
-        public string Type { get; set; }
-
-        public PropertyInfo Property { get; set; }
+        public IActionType Type { get; set; }
     }
 }

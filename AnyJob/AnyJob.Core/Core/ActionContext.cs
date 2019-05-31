@@ -16,8 +16,10 @@ namespace AnyJob
         }
         public ActionParameters Parameters { get; set; }
         public IActionMeta MetaInfo { get; set; }
+        public IActionEntry EntryInfo { get; set; }
         public CancellationToken Token { get; set; }
         public IExecutePath ExecutePath { get;set;}
+
         public object GetService(Type serviceType)
         {
             return this.serviceProvider.GetService(serviceType);

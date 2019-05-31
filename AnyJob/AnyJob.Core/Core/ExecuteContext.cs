@@ -7,7 +7,7 @@ namespace AnyJob
 {
     public class ExecuteContext : IExecuteContext
     {
-        public string ActionRef { get; set; }
+        public IActionName ActionName { get; set; }
 
         public ActionParameters ActionParameters { get; set; }
 

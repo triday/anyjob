@@ -6,8 +6,8 @@ using AnyJob.Impl;
 
 namespace AnyJob.Intent
 {
-    [ServiceImplClass(typeof(IActionFactory))]
-    public class LocalIntentActionFactory : IActionFactory
+    [ServiceImplClass(typeof(IActionDescFactory))]
+    public class LocalIntentActionFactory : IActionDescFactory
     {
         public LocalIntentActionFactory(ISerializeService serializeService)
         {
@@ -17,7 +17,9 @@ namespace AnyJob.Intent
         const string BASE_INTENT_FOLDER_NAME = "intents";
         public int Priority => 999;
 
-        public IActionEntry GetEntry(string refName)
+        public string ActionKind => throw new NotImplementedException();
+
+        public IActionDesc GetEntry(string refName)
         {
             var actionName = Utility.GetActionNameInfoFromRefName(refName);
             List<string> fullPaths = new List<string>()
@@ -34,6 +36,11 @@ namespace AnyJob.Intent
                 return new IntentActionEntry(entityInfo);
             }
             return null;
+        }
+
+        public IActionDesc GetEntry(IActionName actionName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

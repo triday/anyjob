@@ -6,7 +6,7 @@ namespace AnyJob.Meta
 {
     public interface IActionOutputMeta
     {
-        string Type { get;  }
+        IActionType Type { get;  }
 
         string Description { get;  }
 

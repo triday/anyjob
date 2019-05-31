@@ -16,7 +16,7 @@ namespace AnyJob.Meta
 
         bool IsSecret { get;  }
 
-        string Type { get;  }
+        IActionType Type { get;  }
 
     }
 }

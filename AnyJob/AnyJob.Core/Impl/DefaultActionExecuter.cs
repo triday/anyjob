@@ -51,7 +51,7 @@ namespace AnyJob.Impl
             {
                 var entry = this.OnResolveAction(context);
                 var action = entry.CreateInstance(context.ActionParameters);
-                var actionContext = this.OnCreateActionContext(entry.MetaInfo, context);
+                var actionContext = this.OnCreateActionContext(entry, context);
                 var result = action.Run(actionContext);
                 return new ExecuteResult()
                 {
@@ -67,15 +67,14 @@ namespace AnyJob.Impl
             }
         }
 
-        protected virtual IActionEntry OnResolveAction(IExecuteContext context)
+        protected virtual IActionDesc OnResolveAction(IExecuteContext context)
         {
-            
-            var entry = this.actionResolverService.ResolveAction(context.ActionRef);
-            if (entry == null)
+            var desc = this.actionResolverService.ResolveActionDesc(context.ActionName);
+            if (desc == null)
             {
-                throw new ActionException($"Can not resolve entry info from \"{context.ActionRef}\"");
+                throw new ActionException($"Can not resolve desc info from \"{context.ActionName.FullName}\"");
             }
-            return entry;
+            return desc;
         }
 
         protected virtual object OnRunAction(IAction action, IActionContext context, int retryCount)
@@ -90,7 +89,7 @@ namespace AnyJob.Impl
                 }
                 catch (Exception ex)
                 {
-                    logService.Warn("Error in execute action [{0}] {1} time(s).\n{2}", context.MetaInfo.Ref, i, ex);
+                    logService.Warn("Error in execute action [{0}] {1} time(s).\n{2}", context?.EntryInfo?.ActionName?.FullName, i, ex);
                     error = ex;
                 }
             }
@@ -101,7 +100,7 @@ namespace AnyJob.Impl
         {
             return new ActionContext(this.serviceProvider)
             {
-                 ExecutePath=executeContext.ExecutePath,
+                ExecutePath = executeContext.ExecutePath,
                 Token = executeContext.Token,
                 MetaInfo = meta,
                 Parameters = executeContext.ActionParameters
@@ -111,7 +110,7 @@ namespace AnyJob.Impl
 
         protected virtual void OnSafeTraceState(IExecuteContext context, ExecuteState state, ExecuteResult result = null)
         {
-                traceService.TraceState(context, state, result);
+            traceService.TraceState(context, state, result);
         }
 
     }

@@ -13,9 +13,9 @@ namespace AnyJob
         /// </summary>
         ActionParameters ActionParameters { get; }
         /// <summary>
-        /// 或者执行的Action的Ref名称
+        /// 或者执行的Action的名称
         /// </summary>
-        string ActionRef { get; }
+        IActionName ActionName { get; }
         /// <summary>
         /// 获取取消执行的Token
         /// </summary>

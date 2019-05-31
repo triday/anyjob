@@ -18,7 +18,7 @@ namespace AnyJob.Impl
                 context.ExecutePath.RootId,
                 context.ExecutePath.ParentId,
                 context.ExecutePath.ExecuteId,
-                context.ActionRef,
+                context.ActionName.FullName,
                 state);
         }
     }

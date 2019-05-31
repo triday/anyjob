@@ -5,12 +5,12 @@ using AnyJob.Meta;
 using AnyJob.Impl;
 namespace AnyJob.Workflow
 {
-    [ServiceImplClass(typeof(IActionFactory))]
-    public class WorkflowFactory : IActionFactory
+    [ServiceImplClass(typeof(IActionDescFactory))]
+    public class WorkflowFactory : IActionDescFactory
     {
         public int Priority => 1000;
 
-        public IActionEntry GetEntry(string refName)
+        public IActionDesc GetEntry(string refName)
         {
             throw new NotImplementedException();
         }

@@ -9,23 +9,22 @@ namespace AnyJob.Impl
     [ServiceImplClass(typeof(IActionResolverService))]
     public class DefaultActionResolverService : IActionResolverService
     {
-        IEnumerable<IActionFactory> factories;
-
-        public DefaultActionResolverService(IEnumerable<IActionFactory> factories)
+        Dictionary<string,IActionDescFactory> factories;
+        IActionEntryService actionEntryService;
+        public DefaultActionResolverService(IActionEntryService finderService,IEnumerable<IActionDescFactory> factories)
         {
-            this.factories = factories.OrderBy(p => p.Priority);
+            this.actionEntryService = finderService;
+            this.factories = factories.ToDictionary(p => p.ActionKind, StringComparer.CurrentCultureIgnoreCase);
         }
-        public IActionEntry ResolveAction(string refName)
+        public IActionDesc ResolveActionDesc(IActionName actionName)
         {
-            var actionInfo = Utility.GetActionNameInfoFromRefName(refName);
+            var pack = actionName.Pack;
 
+            var entryInfo = actionEntryService.GetActionEntry(actionName);
 
-            foreach (var factory in factories)
-            {
-                var entry = factory.GetEntry(refName);
-                if (entry != null) return entry;
-            }
-            return null;
+            var factory = this.factories[entryInfo.ActionKind];
+
+            return factory.GetActionDesc(entryInfo);
         }
     }
 }

@@ -151,7 +151,7 @@ namespace AnyJob.Impl
             var parameters = new ActionParameters(jobStartInfo.Inputs, jobStartInfo.Context);
             return new ExecuteContext
             {
-                ActionRef = jobStartInfo.ActionRef,
+                ActionName = new ActionName(jobStartInfo.ActionFullName),
                 ActionParameters = parameters,
                 ExecutePath=path,
                 Token=token,
