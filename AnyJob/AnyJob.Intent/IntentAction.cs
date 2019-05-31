@@ -52,11 +52,11 @@ namespace AnyJob.Intent
             var newid = idgenService.NewId();
             return new ExecuteContext()
             {
-                ActionRef = this.ActionRef,
+                ActionName = new ActionName(this.ActionRef),
                 Token = actionContext.Token,
                 ExecutePath = actionContext.ExecutePath.NewSubPath(newid),
                 ActionRetryCount = 1,
-                ActionParameters = null
+                ActionParameters = null,
             };
         }
 

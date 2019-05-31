@@ -1,10 +1,7 @@
 {
-    "namespaces":[
-        "abc",
-        "bcd"
-    ],
+
     "actions":{
-        "abc.sendmail": {
+        "sendmail": {
             "type": "assembly",
             "entry": "abc.dll,xxxxx.xxx.sendmail"
         },

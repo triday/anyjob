@@ -11,9 +11,9 @@ namespace AnyJob
     public class JobStartInfo
     {
         /// <summary>
-        /// 获取或设置执行任务的Action的Ref名称
+        /// 获取或设置执行任务的Action的全名称
         /// </summary>
-        public string ActionRef { get; set; }
+        public string ActionFullName { get; set; }
         /// <summary>
         /// 或者或设置执行Id
         /// </summary>

@@ -5,7 +5,7 @@ using AnyJob.Meta;
 
 namespace AnyJob.Intent
 {
-    public class IntentActionEntry : IActionEntry
+    public class IntentActionEntry : IActionDesc
     {
         public IntentActionEntry(IntentInfo intentInfo)
         {
