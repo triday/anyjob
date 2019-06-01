@@ -4,9 +4,9 @@ using System.Text;
 using AnyJob.Meta;
 namespace AnyJob
 {
-    public interface IActionDescFactory
+    public interface IActionDefinationFactory
     {
         string ActionKind { get; }
-        IActionDesc GetActionDesc(IActionEntry entryInfo);
+        IActionDefination GetActionDefination(IActionRuntime runtimeInfo, IActionMeta metaInfo);
     }
 }

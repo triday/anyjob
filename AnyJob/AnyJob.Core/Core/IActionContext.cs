@@ -14,9 +14,9 @@ namespace AnyJob
         /// </summary>
         IActionMeta MetaInfo { get; }
         /// <summary>
-        /// 获取Action的入口信息
+        /// 获取运行时的信息
         /// </summary>
-        IActionEntry EntryInfo { get; }
+        IActionRuntime RuntimeInfo { get; }
         /// <summary>
         /// 获取Action的执行参数
         /// </summary>

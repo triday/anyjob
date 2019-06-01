@@ -4,11 +4,11 @@ using System.Text;
 
 namespace AnyJob
 {
-    public interface IActionEntry
+    public interface IActionMeta:IActionName
     {
-        IActionName ActionName { get; }
         string ActionKind { get;}
-        string WorkingDirectory { get; }
+        string Description { get; }
         string EntryPoint { get; }
+        bool Enabled { get; }
     }
 }

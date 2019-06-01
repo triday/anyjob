@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AnyJob.Meta
 {
-    public interface IActionOutputMeta
+    public interface IActionOutputDefination
     {
         IActionType Type { get;  }
 
