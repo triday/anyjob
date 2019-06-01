@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AnyJob.Meta
 {
-    public class ActionInputMeta : IActionInputMeta
+    public class ActionInputMeta : IActionInputDefination
     {
         public string Name { get; set; }
 

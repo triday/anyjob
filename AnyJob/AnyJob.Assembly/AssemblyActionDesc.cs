@@ -7,7 +7,7 @@ using AnyJob.Meta;
 
 namespace AnyJob.Assembly
 {
-    public class AssemblyActionDesc : ActionMeta, IActionDesc
+    public class AssemblyActionDesc : ActionMeta, IActionDefination
     {
         public AssemblyActionDesc(Type actionType,IServiceProvider serviceProvider)
         {

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace AnyJob
 {
-    public interface IActionEntryService
+    public interface IActionRuntimeService
     {
-        IActionEntry GetActionEntry(IActionName actionName);
+        IActionRuntime GetRunTime(IActionName actionName);
     }
 }

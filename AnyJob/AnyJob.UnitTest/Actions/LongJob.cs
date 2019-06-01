@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace AnyJob.UnitTest.Actions
 {
-    [Action("test.longjob")]
+    [Action()]
     public class LongJob : IAction
     {
         public object Run(IActionContext context)

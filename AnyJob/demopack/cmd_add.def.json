@@ -1,0 +1,20 @@
+{
+    "inputs":{
+        "num1":{
+            "type":"number",
+            "description":"the first number",
+            "default":0,
+            "sequence":1
+        },
+        "num2":{
+            "type":"number",
+            "description":"the second number",
+            "default":0,
+            "sequence":2
+        }
+    },
+    "output":{
+        "type":"number",
+        "description":"the result"
+    }
+}

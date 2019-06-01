@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 namespace AnyJob.Assembly
 {
-    [ServiceImplClass(typeof(IActionDescFactory))]
-    public class AssemblyActionDescFactory : IActionDescFactory
+    [ServiceImplClass(typeof(IActionDefinationFactory))]
+    public class AssemblyActionDescFactory : IActionDefinationFactory
     {
         private IServiceProvider serviceProvider;
         public AssemblyActionDescFactory(IServiceProvider serviceProvider)
@@ -16,7 +16,7 @@ namespace AnyJob.Assembly
         }
         public string ActionKind => "assembly";
 
-        public IActionDesc GetActionDesc(IActionEntry entryInfo)
+        public IActionDefination GetActionDefination(IActionMeta entryInfo)
         {
             Type actionType = Type.GetType(entryInfo.EntryPoint);
             if (!typeof(IAction).IsAssignableFrom(actionType))

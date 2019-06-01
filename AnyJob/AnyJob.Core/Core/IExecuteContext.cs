@@ -24,7 +24,6 @@ namespace AnyJob
         /// 获取执行的路径
         /// </summary>
         IExecutePath ExecutePath { get; }
-
         /// <summary>
         /// 表示失败重试次数
         /// </summary>
