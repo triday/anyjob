@@ -8,7 +8,7 @@ namespace AnyJob
     /// <summary>
     /// 表示任务的启动信息
     /// </summary>
-    public class JobStartInfo
+    public class JobStartInfo : IJobStartInfo
     {
         /// <summary>
         /// 获取或设置执行任务的Action的全名称

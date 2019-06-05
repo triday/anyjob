@@ -4,6 +4,9 @@ using System.Text;
 
 namespace AnyJob
 {
+    /// <summary>
+    /// 表示任务执行的状态
+    /// </summary>
     public enum ExecuteState
     {
         Requested=0,

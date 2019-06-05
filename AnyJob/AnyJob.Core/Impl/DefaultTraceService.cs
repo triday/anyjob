@@ -14,11 +14,10 @@ namespace AnyJob.Impl
         }
         public void TraceState(IExecuteContext context, ExecuteState state, ExecuteResult result)
         {
-            logService.Info("RootId:{0},ParentId:{1},ExectionId:{2},ActionRef:\"{3}\",State:[{4}]",
+            logService.Info("{0}...{1} [{2}]",
                 context.ExecutePath.RootId,
-                context.ExecutePath.ParentId,
                 context.ExecutePath.ExecuteId,
-                context.ActionName.FullName,
+                context.ActionFullName,
                 state);
         }
     }

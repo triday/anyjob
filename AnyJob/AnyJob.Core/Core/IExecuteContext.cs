@@ -15,7 +15,7 @@ namespace AnyJob
         /// <summary>
         /// 或者执行的Action的名称
         /// </summary>
-        IActionName ActionName { get; }
+        string ActionFullName { get; }
         /// <summary>
         /// 获取取消执行的Token
         /// </summary>

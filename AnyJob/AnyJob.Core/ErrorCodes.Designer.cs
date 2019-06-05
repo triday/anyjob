@@ -22,14 +22,14 @@ namespace AnyJob {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ExecuteErrorCode {
+    public class ErrorCodes {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ExecuteErrorCode() {
+        internal ErrorCodes() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AnyJob {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AnyJob.ExecuteErrorCode", typeof(ExecuteErrorCode).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AnyJob.ErrorCodes", typeof(ErrorCodes).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace AnyJob {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Action &quot;{0}&quot; is disabled. 的本地化字符串。
+        /// </summary>
+        public static string ActionDisabled {
+            get {
+                return ResourceManager.GetString("ActionDisabled", resourceCulture);
             }
         }
         
@@ -84,6 +93,24 @@ namespace AnyJob {
         public static string E00003 {
             get {
                 return ResourceManager.GetString("E00003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Invalid action name &quot;{0}&quot;. 的本地化字符串。
+        /// </summary>
+        public static string InvalidActionName {
+            get {
+                return ResourceManager.GetString("InvalidActionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The job count limited. 的本地化字符串。
+        /// </summary>
+        public static string JobCountLimit {
+            get {
+                return ResourceManager.GetString("JobCountLimit", resourceCulture);
             }
         }
     }

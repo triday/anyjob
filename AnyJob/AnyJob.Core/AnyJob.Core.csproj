@@ -26,17 +26,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="ExecuteErrorCode.Designer.cs">
+    <Compile Update="ErrorCodes.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ExecuteErrorCode.resx</DependentUpon>
+      <DependentUpon>ErrorCodes.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="ExecuteErrorCode.resx">
+    <EmbeddedResource Update="ErrorCodes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ExecuteErrorCode.Designer.cs</LastGenOutput>
+      <LastGenOutput>ErrorCodes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
