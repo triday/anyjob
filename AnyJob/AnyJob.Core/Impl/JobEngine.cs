@@ -12,7 +12,7 @@ namespace AnyJob.Impl
 
     public class JobEngine : IJobEngine, IDisposable
     {
-       
+
         public JobEngine(bool autoRegisterCurrentDomainServices = true)
         {
             this.currentJobs = new ConcurrentDictionary<string, Job>(StringComparer.CurrentCultureIgnoreCase);
@@ -103,13 +103,13 @@ namespace AnyJob.Impl
                 if (this.currentJobs.Count >= MAX_JOB_COUNT)
                 {
                     logger.Error($"Maximizing jobs limit, total count {this.currentJobs.Count}.");
-                    throw new ActionException("Maximizing the number of jobs.");
+                    throw ActionException.FromErrorCode(nameof(ErrorCodes.JobCountLimit), MAX_JOB_COUNT);    
                 }
                 var spy = this.OnCreateSpy(jobStartInfo);
                 var executePath = this.OnCreateExecutePath(jobStartInfo);
-                var context = this.OnCreateExecuteContext(jobStartInfo,spy.Token, executePath);
+                var context = this.OnCreateExecuteContext(jobStartInfo, spy.Token, executePath);
                 var task = executer.Execute(context);
-                var jobinfo = new Job() { ExecutionId= executePath.ExecuteId, StartInfo = jobStartInfo, Spy = spy, Task = task };
+                var jobinfo = new Job() { ExecutionId = executePath.ExecuteId, StartInfo = jobStartInfo, Spy = spy, Task = task };
                 currentJobs[executePath.ExecuteId] = jobinfo;
                 logger.Debug($"Add jobInfo in engine [{ executePath.ExecuteId}]");
                 task.ContinueWith((e) =>
@@ -147,14 +147,14 @@ namespace AnyJob.Impl
 
         protected virtual IExecuteContext OnCreateExecuteContext(JobStartInfo jobStartInfo, CancellationToken token, IExecutePath path)
         {
-            
+
             var parameters = new ActionParameters(jobStartInfo.Inputs, jobStartInfo.Context);
             return new ExecuteContext
             {
-                ActionName = new ActionName(jobStartInfo.ActionFullName),
+                ActionFullName = jobStartInfo.ActionFullName,
                 ActionParameters = parameters,
-                ExecutePath=path,
-                Token=token,
+                ExecutePath = path,
+                Token = token,
                 ActionRetryCount = jobStartInfo.RetryCount
             };
         }

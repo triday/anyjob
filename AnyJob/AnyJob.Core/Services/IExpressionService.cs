@@ -9,6 +9,6 @@ namespace AnyJob
     /// </summary>
     public interface IExpressionService
     {
-        object Exec(string line, IValueProvider valueProvider);
+        object Exec(string line, Dictionary<string,object> valueProvider);
     }
 }

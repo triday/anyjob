@@ -7,7 +7,7 @@ namespace AnyJob
     /// <summary>
     /// 表示执行结果
     /// </summary>
-    public class ExecuteResult
+    public class ExecuteResult : IExecuteResult
     {
         /// <summary>
         /// 获取或设置执行过程的错误
