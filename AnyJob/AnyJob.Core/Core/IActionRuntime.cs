@@ -8,9 +8,9 @@ namespace AnyJob
     public interface IActionRuntime
     {
         string WorkingDirectory { get; set; }
-        OSPlatform OSPlatForm { get; set; }
-        string NetCoreVersion { get; set; }
-        
+        //OSPlatform OSPlatForm { get; set; }
+        //string NetCoreVersion { get; set; }
+
     }
-   
+
 }

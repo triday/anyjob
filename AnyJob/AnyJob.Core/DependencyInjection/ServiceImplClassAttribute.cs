@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Impl
+namespace AnyJob.DependencyInjection
 {
     [System.AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    public class ServiceImplClass : Attribute
+    public class ServiceImplClassAttribute : Attribute
     {
-        public ServiceImplClass(Type injectType, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
+        public ServiceImplClassAttribute(Type injectType, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             this.InjectType = injectType;
             this.Lifetime = serviceLifetime;

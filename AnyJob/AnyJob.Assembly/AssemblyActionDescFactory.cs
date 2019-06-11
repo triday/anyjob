@@ -1,4 +1,5 @@
 ﻿using AnyJob.Assembly.Meta;
+using AnyJob.DependencyInjection;
 using AnyJob.Impl;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,16 @@ namespace AnyJob.Assembly
         public IActionDefination GetActionDefination(IActionMeta entryInfo)
         {
             Type actionType = Type.GetType(entryInfo.EntryPoint);
-            if (!typeof(IAction).IsAssignableFrom(actionType))
-            {
-                throw new ActionException(string.Format("Action 类型必须实现接口{0}",nameof(IAction)));
-            }
+            //if (!typeof(IAction).IsAssignableFrom(actionType))
+            //{
+            //    throw new ActionException(string.Format("Action 类型必须实现接口{0}",nameof(IAction)));
+            //}
             return new AssemblyActionDesc(actionType, this.serviceProvider);
+        }
+
+        public IActionDefination GetActionDefination(IActionRuntime runtimeInfo, IActionMeta metaInfo)
+        {
+            throw new NotImplementedException();
         }
     }
 }
