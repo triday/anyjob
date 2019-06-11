@@ -23,6 +23,8 @@ namespace AnyJob
 
         public string FullName { get; private set; }
 
+        public string Version => throw new NotImplementedException();
+
         private string BuildFullName(string pack, string name)
         {
             List<string> nameParts = new List<string>(2);

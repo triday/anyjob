@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using AnyJob.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+
 namespace AnyJob.Impl
 {
 
@@ -16,7 +19,10 @@ namespace AnyJob.Impl
         public JobEngine(bool autoRegisterCurrentDomainServices = true)
         {
             this.currentJobs = new ConcurrentDictionary<string, Job>(StringComparer.CurrentCultureIgnoreCase);
+            this.InitConfiguration();
+           
             this.services = new ServiceCollection();
+            this.RegisterCurrentDomainConfigs();
             if (autoRegisterCurrentDomainServices)
             {
                 this.RegisterCurrentDomainServices();
@@ -30,11 +36,25 @@ namespace AnyJob.Impl
 
         public event EventHandler<TypeFilterEventArgs> FilterAssemblyType;
 
+
+
+
         #region 字段
         private const int MAX_JOB_COUNT = 100;
         private ConcurrentDictionary<string, Job> currentJobs;
         private ServiceCollection services;
         private IServiceProvider provider;
+        private IConfiguration configuration;
+        #endregion
+
+        #region 初始化配置
+        private void InitConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", false, true)
+            .AddCommandLine(Environment.GetCommandLineArgs());
+            this.configuration = builder.Build();
+        }
         #endregion
 
         #region 注入服务
@@ -67,6 +87,15 @@ namespace AnyJob.Impl
             if (this.FilterAssemblyType != null)
             {
                 this.FilterAssemblyType(this, e);
+            }
+        }
+        #endregion
+        #region 注入配置
+        public void RegisterCurrentDomainConfigs()
+        {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                this.services.ConfigAssemblyOptions(assembly, this.configuration);
             }
         }
         #endregion
@@ -103,7 +132,7 @@ namespace AnyJob.Impl
                 if (this.currentJobs.Count >= MAX_JOB_COUNT)
                 {
                     logger.Error($"Maximizing jobs limit, total count {this.currentJobs.Count}.");
-                    throw ActionException.FromErrorCode(nameof(ErrorCodes.JobCountLimit), MAX_JOB_COUNT);    
+                    throw ActionException.FromErrorCode(nameof(ErrorCodes.JobCountLimit), MAX_JOB_COUNT);
                 }
                 var spy = this.OnCreateSpy(jobStartInfo);
                 var executePath = this.OnCreateExecutePath(jobStartInfo);

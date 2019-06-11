@@ -4,8 +4,9 @@ using System.Text;
 
 namespace AnyJob
 {
-    public interface IActionMeta:IActionName
+    public interface IActionMeta
     {
+        IActionName Name { get; }
         string ActionKind { get;}
         string Description { get; }
         string EntryPoint { get; }

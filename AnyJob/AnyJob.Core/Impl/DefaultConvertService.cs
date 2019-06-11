@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
+using AnyJob.DependencyInjection;
+
 namespace AnyJob.Impl
 {
     [ServiceImplClass(typeof(IConvertService))]
@@ -17,7 +19,7 @@ namespace AnyJob.Impl
             }
             catch (Exception ex)
             {
-                throw new ActionException("Convert error.", ex);
+                throw ActionException.FromErrorCode(ex, nameof(ErrorCodes.CONV_ERROR));
             }
            
         }

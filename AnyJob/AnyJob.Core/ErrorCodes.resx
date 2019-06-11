@@ -120,6 +120,9 @@
   <data name="ActionDisabled" xml:space="preserve">
     <value>Action "{0}" is disabled.</value>
   </data>
+  <data name="CONV_ERROR" xml:space="preserve">
+    <value>Convert error.</value>
+  </data>
   <data name="E00001" xml:space="preserve">
     <value>Action exec error.</value>
   </data>

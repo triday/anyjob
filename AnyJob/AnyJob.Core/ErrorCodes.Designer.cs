@@ -70,6 +70,15 @@ namespace AnyJob {
         }
         
         /// <summary>
+        ///   查找类似 Convert error. 的本地化字符串。
+        /// </summary>
+        public static string CONV_ERROR {
+            get {
+                return ResourceManager.GetString("CONV_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Action exec error. 的本地化字符串。
         /// </summary>
         public static string E00001 {

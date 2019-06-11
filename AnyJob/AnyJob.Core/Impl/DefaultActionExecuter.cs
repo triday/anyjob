@@ -1,4 +1,5 @@
-﻿using AnyJob.Meta;
+﻿using AnyJob.DependencyInjection;
+using AnyJob.Meta;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -104,7 +105,7 @@ namespace AnyJob.Impl
         {
             if (!actionMeta.Enabled)
             {
-                throw ActionException.FromErrorCode(nameof(ErrorCodes.ActionDisabled), actionMeta.FullName);
+                throw ActionException.FromErrorCode(nameof(ErrorCodes.ActionDisabled), executeContext.ActionFullName);
             }
         }
         protected virtual IActionDefination OnGetActionDefination(IExecuteContext context, IActionRuntime actionRuntime, IActionMeta actionMeta, IActionName actionName)
