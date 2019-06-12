@@ -8,7 +8,6 @@ namespace AnyJob
     {
         string Name { get;  }
         string Pack { get; }
-        string FullName { get; }
         string Version { get; }
     }
 }

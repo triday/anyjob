@@ -7,10 +7,7 @@ namespace AnyJob
 {
     public interface IActionExecuterService
     {
-        
         Task<ExecuteResult> Execute(IExecuteContext executeContext);
-
-        //void Cancel(string executeId);
     }
 
 

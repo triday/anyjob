@@ -2,20 +2,30 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AnyJob.Impl
 {
     public class DefaultActionNameResolveService : IActionNameResolveService
     {
-        private PackOption packOption;
-        public DefaultActionNameResolveService(PackOption packOption)
-        {
-            this.packOption = packOption;
-        }
+        public static Regex ActionFullnameRegex = new Regex(@"^(?<pack>\w+(\.\w+)*)\.(?<name>\w+)(@(?<version>\d+(\.\d+){1,3}))?$", RegexOptions.Compiled);
 
-        public IActionName ResolverName(string fullName)
+        public virtual IActionName ResolverName(string fullName)
         {
-            throw new NotImplementedException();
+            var match = ActionFullnameRegex.Match(fullName);
+            if (match.Success)
+            {
+                return new ActionName
+                {
+                    Pack = match.Groups["pack"].Value,
+                    Name = match.Groups["name"].Value,
+                    Version = match.Groups["version"].Value
+                };
+            }
+            else
+            {
+                throw ActionException.FromErrorCode(nameof(ErrorCodes.InvalidActionName), fullName);
+            }
         }
     }
 }

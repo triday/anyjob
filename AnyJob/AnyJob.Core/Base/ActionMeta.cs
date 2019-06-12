@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AnyJob.Meta;
 
 namespace AnyJob
 {
     public class ActionMeta : IActionMeta
     {
-        public IActionName Name { get; set; }
 
         public string ActionKind { get; set; }
 
@@ -16,5 +16,10 @@ namespace AnyJob
 
         public bool Enabled { get; set; }
 
+        public IReadOnlyList<string> Tags { get; set; }
+
+        public IReadOnlyList<IActionInputDefination> Inputs { get; set; }
+
+        public IActionOutputDefination Output { get; set; }
     }
 }
