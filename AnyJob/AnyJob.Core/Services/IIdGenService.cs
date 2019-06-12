@@ -7,6 +7,5 @@ namespace AnyJob
     public interface IIdGenService
     {
         string NewId();
-        string NewChildId(string parentId);
     }
 }

@@ -1,10 +1,7 @@
 ﻿using AnyJob.DependencyInjection;
-using AnyJob.Meta;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AnyJob.Impl
@@ -61,7 +58,7 @@ namespace AnyJob.Impl
         {
             try
             {
-                var actionName = ActionName.FromFullName(executionContext.ActionFullName);
+                var actionName = new ActionName();// ActionName.FromFullName(executionContext.ActionFullName);
                 //1 get runtime info
                 var runtimeInfo = OnGetActionRuntime(executionContext, actionName);
                 //2 get meta info
@@ -99,7 +96,7 @@ namespace AnyJob.Impl
         }
         protected virtual IActionMeta OnGetActionMeta(IExecuteContext executeContext, IActionRuntime actionRuntime, IActionName actionName)
         {
-            return metaService.GetActionMeta(actionRuntime, actionName);
+            return metaService.GetActionMeta(actionName);
         }
         protected virtual void OnCheckCanbeRun(IExecuteContext executeContext, IActionMeta actionMeta)
         {

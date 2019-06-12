@@ -6,6 +6,6 @@ namespace AnyJob
 {
     public interface IActionMetaService
     {
-        IActionMeta GetActionMeta(IActionRuntime runtimeInfo,IActionName actionName);
+        IActionMeta GetActionMeta(IActionName actionName);
     }
 }
