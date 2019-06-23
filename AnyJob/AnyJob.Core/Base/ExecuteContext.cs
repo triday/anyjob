@@ -16,5 +16,7 @@ namespace AnyJob
         public CancellationToken Token { get; set; }
 
         public IExecutePath ExecutePath { get; set; }
+
+        public string ExecuteName { get; set; }
     }
 }

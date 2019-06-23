@@ -15,40 +15,39 @@ namespace AnyJob.Impl
         private ILogService logService;
         private ITimeService timeService;
         private ITraceService traceService;
-        private Dictionary<string, IActionDefinationFactory> definationFactories;
+        private IActionNameResolveService actionNameResolveService;
+        private Dictionary<string, IActionFactoryService> actionFactoryMap;
         public DefaultActionExecuter(
             ILogService logService,
-            ITimeService timeService,
             ITraceService traceService,
             IActionMetaService metaService,
             IActionRuntimeService runtimeService,
-            IEnumerable<IActionDefinationFactory> definationFactories,
+            IEnumerable<IActionFactoryService> actionFactories,
             IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
             this.logService = logService;
-            this.timeService = timeService;
             this.traceService = traceService;
             this.runtimeService = runtimeService;
             this.metaService = metaService;
-            this.definationFactories = definationFactories.ToDictionary(p => p.ActionKind, StringComparer.CurrentCultureIgnoreCase);
+            this.actionFactoryMap = actionFactories.ToDictionary(p => p.ActionKind, StringComparer.CurrentCultureIgnoreCase);
         }
 
         public Task<ExecuteResult> Execute(IExecuteContext executeContext)
         {
-            this.OnSafeTraceState(executeContext, ExecuteState.Ready);
+            this.OnTraceState(executeContext, ExecuteState.Ready);
             return Task.Run(() =>
             {
                 executeContext.Token.ThrowIfCancellationRequested();
-                this.OnSafeTraceState(executeContext, ExecuteState.Running);
+                this.OnTraceState(executeContext, ExecuteState.Running);
                 var result = this.OnExecute(executeContext);
                 if (result.IsSuccess)
                 {
-                    this.OnSafeTraceState(executeContext, ExecuteState.Success, result);
+                    this.OnTraceState(executeContext, ExecuteState.Success, result);
                 }
                 else
                 {
-                    this.OnSafeTraceState(executeContext, ExecuteState.Failure, result);
+                    this.OnTraceState(executeContext, ExecuteState.Failure, result);
                 }
                 return result;
             }, executeContext.Token);
@@ -58,86 +57,103 @@ namespace AnyJob.Impl
         {
             try
             {
-                var actionName = new ActionName();// ActionName.FromFullName(executionContext.ActionFullName);
-                //1 get runtime info
-                var runtimeInfo = OnGetActionRuntime(executionContext, actionName);
-                //2 get meta info
-                var metaInfo = OnGetActionMeta(executionContext, runtimeInfo, actionName);
-                //3 check canbe run
-                OnCheckCanbeRun(executionContext, metaInfo);
-                //4 get action defination
-                var actionDefination = OnGetActionDefination(executionContext, runtimeInfo, metaInfo, actionName);
-                //5 valid action params
-                OnValidParameters(executionContext, actionDefination);
-                //6 create action instance
-                var action = actionDefination.CreateInstance(executionContext.ActionParameters);
-                //7 create action context
-                var actionContext = OnCreateActionContext(executionContext, runtimeInfo, metaInfo);
-                //8 run action
-                var result = OnRunAction(action, executionContext, actionContext);
+                //1 resolve action name
+                var actionName = this.OnResolveActionName(executionContext.ActionFullName);
+                //2 get runtime info
+                var runtimeInfo = this.OnGetActionRuntime(actionName);
+                //3 get meta info
+                var metaInfo = this.OnGetActionMeta(actionName);
+                //4 resolve action factory 
+                var actionFactory = this.OnResolveActionFactory(metaInfo);
+                //5 create action context
+                var actionContext = this.OnCreateActionContext(executionContext, runtimeInfo, metaInfo);
+                //6 check premission
+                this.OnCheckPremission(actionContext);
+                //7 valid inputs
+                this.OnValidInputs(actionContext);
+                //8 create action instance
+                var actionInstance = this.OnCreateActionInstance(actionFactory, actionContext);
+                //9 run action
+                var result = OnRunAction(actionInstance, executionContext, actionContext);
+                //10 valid output
+                this.OnValidOutput(actionContext, result);
 
-                return new ExecuteResult()
-                {
-                    Result = result,
-                };
+                return ExecuteResult.FromResult(result);
             }
             catch (Exception ex)
             {
-                return new ExecuteResult()
-                {
-                    Error = ex
-                };
+                return ExecuteResult.FromError(ex);
             }
         }
         #region ExecuteSteps
-        protected virtual IActionRuntime OnGetActionRuntime(IExecuteContext executeContext, IActionName actionName)
+
+        protected virtual IActionName OnResolveActionName(string actionFullName)
+        {
+            return this.actionNameResolveService.ResolverName(actionFullName);
+        }
+
+        protected virtual IActionRuntime OnGetActionRuntime(IActionName actionName)
         {
             return runtimeService.GetRunTime(actionName);
         }
-        protected virtual IActionMeta OnGetActionMeta(IExecuteContext executeContext, IActionRuntime actionRuntime, IActionName actionName)
+
+        protected virtual IActionMeta OnGetActionMeta(IActionName actionName)
         {
+            var actionMeta = this.metaService.GetActionMeta(actionName);
+            if (actionMeta == null)
+            {
+
+            }
             return metaService.GetActionMeta(actionName);
         }
-        protected virtual void OnCheckCanbeRun(IExecuteContext executeContext, IActionMeta actionMeta)
-        {
-            if (!actionMeta.Enabled)
-            {
-                throw ActionException.FromErrorCode(nameof(ErrorCodes.ActionDisabled), executeContext.ActionFullName);
-            }
-        }
-        protected virtual IActionDefination OnGetActionDefination(IExecuteContext context, IActionRuntime actionRuntime, IActionMeta actionMeta, IActionName actionName)
-        {
-            var definationFactory = this.definationFactories[actionMeta.ActionKind];
-            var actionDefination = definationFactory.GetActionDefination(actionRuntime, actionMeta);
-            if (actionDefination == null)
-            {
-                //throw new ActionException($"Can not resolve desc info from \"{context.ActionFullName}\"");
-            }
-            return actionDefination;
-        }
-        protected virtual void OnValidParameters(IExecuteContext context, IActionDefination actionDefination)
-        {
 
-        }
-        protected virtual IAction OnCreateAction(IExecuteContext executionContext, IActionDefination actionDefination)
+        protected virtual IActionFactoryService OnResolveActionFactory(IActionMeta actionMeta)
         {
-            return actionDefination.CreateInstance(executionContext.ActionParameters);
+            if (this.actionFactoryMap.TryGetValue(actionMeta.ActionKind, out var actionFactory))
+            {
+                return actionFactory;
+            }
+            else
+            {
+                return null;
+            }
         }
         protected virtual IActionContext OnCreateActionContext(IExecuteContext executeContext, IActionRuntime actionRuntime, IActionMeta actionMeta)
         {
-            if (executeContext == null)
-            {
-                throw new ArgumentNullException(nameof(executeContext));
-            }
-            return new ActionContext(this.serviceProvider)
+            return new ActionContext()
             {
                 ExecutePath = executeContext.ExecutePath,
                 Token = executeContext.Token,
                 MetaInfo = actionMeta,
                 RuntimeInfo = actionRuntime,
+                ExecuteName = executeContext.ExecuteName,
+                ServiceProvider = this.serviceProvider,
                 Parameters = executeContext.ActionParameters
             };
         }
+
+        protected virtual void OnCheckPremission(IActionContext actionContext)
+        {
+            if (!actionContext.MetaInfo.Enabled)
+            {
+
+            }
+        }
+        protected virtual void OnValidInputs(IActionContext actionContext)
+        {
+
+        }
+
+        protected virtual IAction OnCreateActionInstance(IActionFactoryService actionFactoryService, IActionContext actionContext)
+        {
+            var action = actionFactoryService.CreateAction(actionContext);
+            if (action == null)
+            {
+
+            }
+            return action;
+        }
+
         protected virtual object OnRunAction(IAction action, IExecuteContext executeContext, IActionContext actionContext)
         {
             int loopCount = Math.Min(1, executeContext.ActionRetryCount);
@@ -156,11 +172,18 @@ namespace AnyJob.Impl
             }
             throw error;
         }
+
+        protected virtual void OnValidOutput(IActionContext actionContext, object result)
+        {
+
+        }
+
+
         #endregion
 
 
 
-        protected virtual void OnSafeTraceState(IExecuteContext context, ExecuteState state, ExecuteResult result = null)
+        protected virtual void OnTraceState(IExecuteContext context, ExecuteState state, ExecuteResult result = null)
         {
             traceService.TraceState(context, state, result);
         }

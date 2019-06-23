@@ -1,12 +1,15 @@
 ﻿using AnyJob.Config;
-using AnyJob.Meta;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
+using AnyJob.DependencyInjection;
 
 namespace AnyJob.Impl
 {
+    [ServiceImplClass(typeof(IActionMetaService))]
     public class DefaultActionMetaService : IActionMetaService
     {
         private PackOption packOption;
@@ -39,9 +42,9 @@ namespace AnyJob.Impl
         protected IActionMeta ConvertToActionMeta(MetaInfo metaInfo)
         {
             if (metaInfo == null) return null;
-            var inputList= metaInfo.InputDefines ?? new List<InputInfo>();
-            var output = metaInfo.OutputDefine ?? new OutputInfo();
-            
+            var inputList = metaInfo.Inputs ?? new Dictionary<string, InputInfo>();
+            var output = metaInfo.Output ?? new OutputInfo();
+
             return new ActionMeta()
             {
                 ActionKind = metaInfo.ActionKind,
@@ -49,17 +52,30 @@ namespace AnyJob.Impl
                 Enabled = metaInfo.Enabled,
                 EntryPoint = metaInfo.EntryPoint,
                 Tags = metaInfo.Tags,
-
+                Inputs = inputList.Select(p => new { Name = p.Key, Input = ConvertToActionInput(p.Value) }).ToDictionary(p => p.Name, p => p.Input),
+                Output = ConvertToActionOutput(output)
             };
         }
         protected IActionInputDefination ConvertToActionInput(InputInfo input)
         {
-            return null;
+            return new ActionInputDefination()
+            {
+                Default = input.DefaultValue,
+                IsRequired = input.IsRequired,
+                IsSecret = input.IsSecret,
+                Description = input.Description,
+
+            };
         }
 
         protected IActionOutputDefination ConvertToActionOutput(OutputInfo output)
         {
-            return null;
+            return new ActionOutputDefination()
+            {
+                Description = output.Description,
+                IsRequired = output.IsRequired,
+                IsSecret = output.IsSecret
+            };
         }
         public class MetaInfo
         {
@@ -73,15 +89,14 @@ namespace AnyJob.Impl
 
             public List<string> Tags { get; set; }
 
-            public List<InputInfo> InputDefines { get; set; }
+            public Dictionary<string, InputInfo> Inputs { get; set; }
 
-            public OutputInfo OutputDefine { get; set; }
+            public OutputInfo Output { get; set; }
 
         }
 
         public class InputInfo
         {
-            public string Name { get; set; }
 
             public string Description { get; set; }
 
@@ -99,6 +114,10 @@ namespace AnyJob.Impl
             public string Type { get; set; }
 
             public string Description { get; set; }
+
+            public bool IsSecret { get; set; }
+
+            public bool IsRequired { get; set; }
         }
 
     }

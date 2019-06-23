@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Meta
+namespace AnyJob
 {
     public interface IActionType
     {

@@ -50,5 +50,10 @@ namespace AnyJob
             pathList.Add(subExecuteId);
             return new ExecutePath(pathList.ToArray());
         }
+
+        public static ExecutePath RootPath(string rootId)
+        {
+            return new ExecutePath(rootId);
+        }
     }
 }

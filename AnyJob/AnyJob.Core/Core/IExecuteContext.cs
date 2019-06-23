@@ -28,5 +28,10 @@ namespace AnyJob
         /// 表示失败重试次数
         /// </summary>
         int ActionRetryCount { get; }
+        /// <summary>
+        /// 表示执行的名称
+        /// </summary>
+        string ExecuteName { get; }
+
     }
 }

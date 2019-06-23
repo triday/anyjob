@@ -1,4 +1,4 @@
-﻿using AnyJob.Meta;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +12,7 @@ namespace AnyJob
         string EntryPoint { get; }
         bool Enabled { get; }
         IReadOnlyList<string> Tags { get; }
-        IReadOnlyList<IActionInputDefination> Inputs { get; }
+        IReadOnlyDictionary<string, IActionInputDefination> Inputs { get; }
         IActionOutputDefination Output { get; }
     }
 }
