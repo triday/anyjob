@@ -27,6 +27,21 @@ namespace AnyJob
                 return this.Error == null;
             }
         }
+
+        public static ExecuteResult FromError(Exception error)
+        {
+            return new ExecuteResult()
+            {
+                Error = error
+            };
+        }
+        public static ExecuteResult FromResult(object result)
+        {
+            return new ExecuteResult()
+            {
+                Result = result
+            };
+        }
     }
 
 }

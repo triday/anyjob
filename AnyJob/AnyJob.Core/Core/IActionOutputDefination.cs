@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Meta
+namespace AnyJob
 {
     public interface IActionOutputDefination
     {
@@ -10,6 +10,8 @@ namespace AnyJob.Meta
 
         string Description { get;  }
 
-        bool IsRequired { get;  }
+        bool IsSecret { get;  }
+
+        bool IsRequired { get; }
     }
 }

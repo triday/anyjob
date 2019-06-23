@@ -49,9 +49,6 @@ namespace AnyJob.DependencyInjection
             return services;
         }
 
-
-
-
         public static IServiceCollection ConfigAssemblyOptions(this IServiceCollection services, Assembly assembly, IConfiguration configuration)
         {
             var configTypes = from p in assembly.GetTypes()

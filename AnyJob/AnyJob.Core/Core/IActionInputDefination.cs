@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Meta
+namespace AnyJob
 {
     public interface IActionInputDefination
     {
-        string Name { get;  }
-
         string Description { get; }
 
-        object DefaultValue { get;  }
+        object Default { get;  }
 
         bool IsRequired { get;  }
 

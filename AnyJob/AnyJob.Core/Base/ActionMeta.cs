@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AnyJob.Meta;
+
 
 namespace AnyJob
 {
@@ -18,8 +18,9 @@ namespace AnyJob
 
         public IReadOnlyList<string> Tags { get; set; }
 
-        public IReadOnlyList<IActionInputDefination> Inputs { get; set; }
+        public IReadOnlyDictionary<string, IActionInputDefination> Inputs { get; set; }
 
         public IActionOutputDefination Output { get; set; }
+
     }
 }

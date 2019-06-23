@@ -13,6 +13,7 @@ namespace AnyJob.DependencyInjection
             this.InjectType = injectType;
             this.Lifetime = serviceLifetime;
         }
+        public string Key { get; set; }
         public Type InjectType { get; private set; }
         public ServiceLifetime Lifetime { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿using AnyJob.Meta;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +12,10 @@ namespace AnyJob
         public string Description { get; set; }
 
         public bool IsRequired { get; set; }
+
+        
+
+        public bool IsSecret { get; set; }
     }
     
 }

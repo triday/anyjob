@@ -16,7 +16,7 @@ namespace AnyJob.Impl
         private PackOption pack;
         public IActionRuntime GetRunTime(IActionName actionName)
         {
-            string packDir = System.IO.Path.Combine(this.pack.RootDir, actionName.Pack);
+            string packDir = System.IO.Path.Combine(this.pack.RootDir, actionName.Pack, actionName.Version ?? string.Empty);
             return new ActionRuntime()
             {
                 WorkingDirectory = packDir,
