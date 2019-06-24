@@ -1,10 +1,13 @@
-﻿using System;
+﻿using AnyJob.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 namespace AnyJob.Impl
 {
+    [ServiceImplClass(typeof(IFileStoreService))]
+
     public class DefaultFileStoreService : IFileStoreService
     {
         ISerializeService serializeService;

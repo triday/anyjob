@@ -1,4 +1,5 @@
 ﻿using AnyJob.Config;
+using AnyJob.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace AnyJob.Impl
 {
+    [ServiceImplClass(typeof(IActionNameResolveService))]
     public class DefaultActionNameResolveService : IActionNameResolveService
     {
         public static Regex ActionFullnameRegex = new Regex(@"^(?<pack>\w+(\.\w+)*)\.(?<name>\w+)(@(?<version>\d+(\.\d+){1,3}))?$", RegexOptions.Compiled);
