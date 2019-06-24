@@ -7,8 +7,6 @@ namespace AnyJob
 {
     public class ActionContext : IActionContext
     {
-
-
         public IActionParameters Parameters { get; set; }
         public IActionMeta MetaInfo { get; set; }
         public CancellationToken Token { get; set; }
