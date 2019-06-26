@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AnyJob.Meta;
+using AnyJob.DependencyInjection;
 using AnyJob.Impl;
 namespace AnyJob.Workflow
 {
-    [ServiceImplClass(typeof(IActionDescFactory))]
-    public class WorkflowFactory : IActionDescFactory
+    [ServiceImplClass(typeof(IActionFactoryService))]
+    public class WorkflowFactory : IActionFactoryService
     {
-        public int Priority => 1000;
 
-        public IActionDesc GetEntry(string refName)
+        public string ActionKind => throw new NotImplementedException();
+
+        public IAction CreateAction(IActionContext actionContext)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
