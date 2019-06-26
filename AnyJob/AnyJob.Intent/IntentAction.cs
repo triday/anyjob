@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using AnyJob.Meta;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AnyJob.Intent
@@ -48,16 +47,17 @@ namespace AnyJob.Intent
 
         protected virtual IExecuteContext OnCreateExecuteContext(IActionContext actionContext)
         {
-            var idgenService = actionContext.GetRequiredService<IIdGenService>();
-            var newid = idgenService.NewId();
-            return new ExecuteContext()
-            {
-                ActionName = new ActionName(this.ActionRef),
-                Token = actionContext.Token,
-                ExecutePath = actionContext.ExecutePath.NewSubPath(newid),
-                ActionRetryCount = 1,
-                ActionParameters = null,
-            };
+            return null;
+            //var idgenService = actionContext.GetRequiredService<IIdGenService>();
+            //var newid = idgenService.NewId();
+            //return new ExecuteContext()
+            //{
+            //    ActionName = new ActionName(this.ActionRef),
+            //    Token = actionContext.Token,
+            //    ExecutePath = actionContext.ExecutePath.NewSubPath(newid),
+            //    ActionRetryCount = 1,
+            //    ActionParameters = null,
+            //};
         }
 
         protected virtual ActionParameters OnCreateParams(IActionContext actionContext)
@@ -66,20 +66,5 @@ namespace AnyJob.Intent
         }
     }
 
-    public class ActionMeta : IActionMeta
-    {
-        public string Ref { get; set; }
-
-        public string Kind { get; set; }
-
-        public string Description { get; set; }
-
-        public string DisplayFormat { get; set; }
-
-        public bool Enabled { get; set; }
-
-        public IEnumerable<IActionInputMeta> Inputs { get; set; }
-
-        public IActionOutputMeta Output { get; set; }
-    }
+   
 }

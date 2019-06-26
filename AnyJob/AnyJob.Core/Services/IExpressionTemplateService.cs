@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob{
+namespace AnyJob
+{
 
     public interface IExpressionTemplateService
     {
