@@ -19,6 +19,7 @@ namespace AnyJob.Process.UnitTest
             object result = action.Run(actionContext);
             Assert.IsNotNull(result);
         }
+
         [TestMethod]
         public void TestEchoProcess()
         {
@@ -31,8 +32,24 @@ namespace AnyJob.Process.UnitTest
                 }
             };
             string result = action.Run(actionContext) as string;
-            Assert.AreEqual("hello",result);
+            Assert.AreEqual("hello", result);
         }
+
+        [TestMethod]
+        public void TestJavaVersion()
+        {
+            IAction action = new JavaVersionProcessAction();
+            IActionContext actionContext = new ActionContext()
+            {
+                RuntimeInfo = new ActionRuntime()
+                {
+                    WorkingDirectory = System.Environment.CurrentDirectory,
+                }
+            };
+            string result = action.Run(actionContext) as string;
+            // Assert.AreEqual("hello", result);
+        }
+
         class PingProcessAction : ProcessAction
         {
             protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
@@ -40,11 +57,20 @@ namespace AnyJob.Process.UnitTest
                 return ("ping", "127.0.0.1 -n 2");
             }
         }
+
         class EchoProcessAction : ProcessAction
         {
             protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
             {
                 return ("cmd", "/c echo hello");
+            }
+        }
+
+        class JavaVersionProcessAction : ProcessAction
+        {
+            protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
+            {
+                return ("java", "-version");
             }
         }
     }
