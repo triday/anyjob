@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,21 +10,21 @@ namespace AnyJob
     /// </summary>
     public class ActionParameters : IActionParameters
     {
-        public ActionParameters(Dictionary<string, object> inputs = null, Dictionary<string, object> context = null)
+        public ActionParameters(IDictionary<string, object> inputs = null, IDictionary<string, object> context = null)
         {
             if (inputs != null)
             {
-                this.Inputs = inputs;
+                this.Inputs = new ConcurrentDictionary<string, object>(inputs);
             }
             if (context != null)
             {
-                this.Context = context;
+                this.Context = new ConcurrentDictionary<string, object>(inputs);
             }
         }
 
-        public Dictionary<string, object> Inputs { get; private set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> Inputs { get; private set; } = new ConcurrentDictionary<string, object>();
 
-        public Dictionary<string, object> Context { get; private set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> Context { get; private set; } = new ConcurrentDictionary<string, object>();
 
         public void AddInputValue(string name, object value)
         {

@@ -27,6 +27,9 @@ namespace AnyJob.Impl
             return JsonConvert.DeserializeObject<T>(text);
         }
 
-        
+        public object Deserialize(string text, Type type)
+        {
+            return JsonConvert.DeserializeObject(text, type);
+        }
     }
 }

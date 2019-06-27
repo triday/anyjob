@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 
 namespace AnyJob.Process
 {
@@ -19,10 +20,11 @@ namespace AnyJob.Process
             var (fileName, arguments) = this.OnGetCommands(context);
             IDictionary<string, string> envs = this.OnGetEnvironment(context);
             string output = this.OnRunProcess(context, workingDir, fileName, arguments, envs);
-            return OnParseResult(output);
+            
+            return OnParseResult(context, output);
         }
 
-        protected virtual object OnParseResult(string output)
+        protected virtual object OnParseResult(IActionContext context, string output)
         {
             return output;
         }
@@ -37,33 +39,46 @@ namespace AnyJob.Process
         protected virtual string OnRunProcess(IActionContext context, string workingDir, string fileName, string arguments, IDictionary<string, string> envs)
         {
             int timeoutSecond = this.OnGetMaximumTimeSeconds(context);
+            int timeout = timeoutSecond * 1000;
             ProcessStartInfo startInfo = new ProcessStartInfo(fileName, arguments)
             {
                 WorkingDirectory = workingDir,
                 CreateNoWindow = true,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
+
             };
             foreach (var env in envs)
             {
                 startInfo.Environment.Add(env);
             }
-            var process = System.Diagnostics.Process.Start(startInfo);
             StringBuilder outTextBuilder = new StringBuilder();
-            process.OutputDataReceived += (s, e) =>
+            using (var process = System.Diagnostics.Process.Start(startInfo))
             {
-                outTextBuilder.AppendLine(e.Data);
-            };
-            process.BeginOutputReadLine();
-
-            if (process.WaitForExit(timeoutSecond * 1000))
-            {
-                CheckExitCode(context, process.ExitCode);
-                return outTextBuilder.ToString().TrimEnd();
-            }
-            else
-            {
-                throw ErrorFactory.FromCode(nameof(Errors.E80001), timeoutSecond);
+                using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
+                {
+                    process.OutputDataReceived += (s, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            outputWaitHandle.Set();
+                        }
+                        else
+                        {
+                            outTextBuilder.AppendLine(e.Data);
+                        }
+                    };
+                    process.BeginOutputReadLine();
+                    if (process.WaitForExit(timeout) && outputWaitHandle.WaitOne(timeout))
+                    {
+                        CheckExitCode(context, process.ExitCode);
+                        return outTextBuilder.ToString().TrimEnd();
+                    }
+                    else
+                    {
+                        throw ErrorFactory.FromCode(nameof(Errors.E80001), timeoutSecond);
+                    }
+                }
             }
         }
 

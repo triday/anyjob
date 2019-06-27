@@ -9,5 +9,6 @@ namespace AnyJob
         string Kind { get; }
         string Serialize(object obj);
         T Deserialize<T>(string text);
+        object Deserialize(string text, Type type);
     }
 }

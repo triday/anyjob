@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace AnyJob
@@ -33,5 +34,10 @@ namespace AnyJob
         /// 获取服务提供商
         /// </summary>
         IServiceProvider ServiceProvider { get; }
+        /// <summary>
+        /// 获取执行过程中的日志记录器
+        /// </summary>
+        IActionLogger Logger { get; }
+
     }
 }
