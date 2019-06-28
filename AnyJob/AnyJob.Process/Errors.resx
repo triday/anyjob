@@ -123,4 +123,7 @@
   <data name="E80001" xml:space="preserve">
     <value>Process execute time out，maximum time limit of {0} seconds.</value>
   </data>
+  <data name="E80002" xml:space="preserve">
+    <value>Process output invalid format text.</value>
+  </data>
 </root>
