@@ -77,5 +77,14 @@ namespace AnyJob.Process {
                 return ResourceManager.GetString("E80001", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 Process output invalid format text. 的本地化字符串。
+        /// </summary>
+        public static string E80002 {
+            get {
+                return ResourceManager.GetString("E80002", resourceCulture);
+            }
+        }
     }
 }

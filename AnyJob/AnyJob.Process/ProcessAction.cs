@@ -20,7 +20,7 @@ namespace AnyJob.Process
             var (fileName, arguments) = this.OnGetCommands(context);
             IDictionary<string, string> envs = this.OnGetEnvironment(context);
             string output = this.OnRunProcess(context, workingDir, fileName, arguments, envs);
-            
+
             return OnParseResult(context, output);
         }
 
@@ -71,11 +71,20 @@ namespace AnyJob.Process
                     process.BeginOutputReadLine();
                     if (process.WaitForExit(timeout) && outputWaitHandle.WaitOne(timeout))
                     {
-                        CheckExitCode(context, process.ExitCode);
-                        return outTextBuilder.ToString().TrimEnd();
+                        string output = outTextBuilder.ToString();
+                        if (process.ExitCode != 0)
+                        {
+                            //when process exitcode is not zero, we should collect the output text.
+                            context.Logger.WriteLine(output);
+                            ErrorFactory.FromCode(nameof(Errors.E80000), process.ExitCode);
+                        }
+                        return output;
                     }
                     else
                     {
+                        //when time out ,we should collect the output text.
+                        string output = outTextBuilder.ToString();
+                        context.Logger.WriteLine(output);
                         throw ErrorFactory.FromCode(nameof(Errors.E80001), timeoutSecond);
                     }
                 }

@@ -32,7 +32,7 @@ namespace AnyJob.Process.UnitTest
                 }
             };
             string result = action.Run(actionContext) as string;
-            Assert.AreEqual("hello", result);
+            Assert.AreEqual("hello", result.Trim());
         }
 
         [TestMethod]
