@@ -19,10 +19,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Node\add.js">
+    <None Update="global\node\node_modules\globalmodule.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Node\node_wrapper.js">
+    <None Update="node_actions\add.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="global\node\node_wrapper.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="node_actions\global_ref.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="node_actions\pack_ref.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="node_modules\packmodule.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
