@@ -46,16 +46,18 @@ namespace AnyJob.Process
                 CreateNoWindow = true,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
-
+                RedirectStandardError = true,
             };
             foreach (var env in envs)
             {
                 startInfo.Environment.Add(env);
             }
             StringBuilder outTextBuilder = new StringBuilder();
+            StringBuilder errorTextBuilder = new StringBuilder();
             using (var process = System.Diagnostics.Process.Start(startInfo))
             {
                 using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
+                using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
                 {
                     process.OutputDataReceived += (s, e) =>
                     {
@@ -68,8 +70,20 @@ namespace AnyJob.Process
                             outTextBuilder.AppendLine(e.Data);
                         }
                     };
+                    process.ErrorDataReceived += (s, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            errorWaitHandle.Set();
+                        }
+                        else
+                        {
+                            errorTextBuilder.AppendLine(e.Data);
+                        }
+                    };
                     process.BeginOutputReadLine();
-                    if (process.WaitForExit(timeout) && outputWaitHandle.WaitOne(timeout))
+                    process.BeginErrorReadLine();
+                    if (process.WaitForExit(timeout) && outputWaitHandle.WaitOne(timeout) && errorWaitHandle.WaitOne(timeout))
                     {
                         string output = outTextBuilder.ToString();
                         if (process.ExitCode != 0)
