@@ -6,15 +6,16 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using AnyJob.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace AnyJob.Impl
 {
     [ServiceImplClass(typeof(IActionMetaService))]
     public class DefaultActionMetaService : IActionMetaService
     {
-        private PackOption packOption;
+        private IOptions<PackOption> packOption;
         private IFileStoreService fileStoreService;
-        public DefaultActionMetaService(IFileStoreService fileStoreService, PackOption packOption)
+        public DefaultActionMetaService(IFileStoreService fileStoreService, IOptions<PackOption> packOption)
         {
             this.fileStoreService = fileStoreService;
             this.packOption = packOption;
@@ -29,7 +30,7 @@ namespace AnyJob.Impl
         {
             List<string> paths = new List<string>()
             {
-                packOption.RootDir
+                packOption.Value.RootDir
             };
             paths.Add(actionName.Pack);
             if (!string.IsNullOrEmpty(actionName.Version))
@@ -47,7 +48,7 @@ namespace AnyJob.Impl
 
             return new ActionMeta()
             {
-                ActionKind = metaInfo.ActionKind,
+                Kind = metaInfo.Kind,
                 Description = metaInfo.Description,
                 Enabled = metaInfo.Enabled,
                 EntryPoint = metaInfo.EntryPoint,
@@ -79,7 +80,7 @@ namespace AnyJob.Impl
         }
         public class MetaInfo
         {
-            public string ActionKind { get; set; }
+            public string Kind { get; set; }
 
             public string Description { get; set; }
 

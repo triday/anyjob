@@ -16,7 +16,7 @@ namespace AnyJob.Node
                 { "num1" , 100 },
                 { "num2" , 200 }
             });
-            NodeAction nodeAction = new NodeAction(option, "./node_actions/add.js");
+            NodeAction nodeAction = new NodeAction(option, "add.js");
             object res= nodeAction.Run(context);
             Assert.AreEqual(300, Convert.ToInt32(res));
         }
@@ -26,7 +26,7 @@ namespace AnyJob.Node
             var context = this.CreateActionContext(new Dictionary<string, object>()
             {
             });
-            NodeAction nodeAction = new NodeAction(option, "./node_actions/global_ref.js");
+            NodeAction nodeAction = new NodeAction(option, "global_ref.js");
             object res = nodeAction.Run(context);
             Assert.AreEqual("ok", res);
         }
@@ -37,7 +37,7 @@ namespace AnyJob.Node
             var context = this.CreateActionContext(new Dictionary<string, object>()
             {
             });
-            NodeAction nodeAction = new NodeAction(option, "./node_actions/pack_ref.js");
+            NodeAction nodeAction = new NodeAction(option, "pack_ref.js");
             object res = nodeAction.Run(context);
             Assert.AreEqual("ok", res);
         }
@@ -58,7 +58,7 @@ namespace AnyJob.Node
                 Parameters = new ActionParameters(inputs),
                 RuntimeInfo = new ActionRuntime()
                 {
-                     WorkingDirectory=Environment.CurrentDirectory,
+                     WorkingDirectory=System.IO.Path.Combine( Environment.CurrentDirectory,"packs/nodepack"),
                 }
 
 

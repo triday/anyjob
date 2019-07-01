@@ -31,7 +31,7 @@ namespace AnyJob.Node
         protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
         {
             ISerializeService serializeService = context.ServiceProvider.GetService<ISerializeService>();
-            string wrapperPath = System.IO.Path.GetFullPath(Option.WrapperPath, context.RuntimeInfo.WorkingDirectory);
+            string wrapperPath = System.IO.Path.GetFullPath(Option.WrapperPath, Environment.CurrentDirectory);
             string paramsText = serializeService.Serialize(context.Parameters.Inputs ?? new object());
             string entryFile = System.IO.Path.GetFullPath(this.EntryFile, context.RuntimeInfo.WorkingDirectory);
             string[] args = new string[] {

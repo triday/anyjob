@@ -22,6 +22,7 @@ namespace AnyJob.Impl
             ITraceService traceService,
             IActionMetaService metaService,
             IActionRuntimeService runtimeService,
+            IActionNameResolveService actionNameResolveService,
             IEnumerable<IActionFactoryService> actionFactories,
             IServiceProvider serviceProvider)
         {
@@ -30,6 +31,7 @@ namespace AnyJob.Impl
             this.traceService = traceService;
             this.runtimeService = runtimeService;
             this.metaService = metaService;
+            this.actionNameResolveService = actionNameResolveService;
             this.actionFactoryMap = actionFactories.ToDictionary(p => p.ActionKind, StringComparer.CurrentCultureIgnoreCase);
         }
 
@@ -109,7 +111,7 @@ namespace AnyJob.Impl
 
         protected virtual IActionFactoryService OnResolveActionFactory(IActionMeta actionMeta)
         {
-            if (this.actionFactoryMap.TryGetValue(actionMeta.ActionKind, out var actionFactory))
+            if (this.actionFactoryMap.TryGetValue(actionMeta.Kind, out var actionFactory))
             {
                 return actionFactory;
             }

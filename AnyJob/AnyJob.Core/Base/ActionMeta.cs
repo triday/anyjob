@@ -8,7 +8,7 @@ namespace AnyJob
     public class ActionMeta : IActionMeta
     {
 
-        public string ActionKind { get; set; }
+        public string Kind { get; set; }
 
         public string Description { get; set; }
 
