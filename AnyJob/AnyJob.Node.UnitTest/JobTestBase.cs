@@ -11,6 +11,7 @@ namespace AnyJob.Node
         [TestInitialize]
         public virtual void Before()
         {
+            AnyJob.Node.NodeAction nodeAction = null;
             if (ServiceCenter.CurrentProvider == null)
             {
                 ServiceCenter.RegisteDomainService();

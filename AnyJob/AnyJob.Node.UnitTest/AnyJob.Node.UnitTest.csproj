@@ -22,19 +22,22 @@
     <None Update="global\node\node_modules\globalmodule.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="node_actions\add.js">
+    <None Update="packs\nodepack\add.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="global\node\node_wrapper.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="node_actions\global_ref.js">
+    <None Update="packs\nodepack\add.meta">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="node_actions\pack_ref.js">
+    <None Update="packs\nodepack\global_ref.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="node_modules\packmodule.js">
+    <None Update="packs\nodepack\pack_ref.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="packs\nodepack\node_modules\packmodule.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

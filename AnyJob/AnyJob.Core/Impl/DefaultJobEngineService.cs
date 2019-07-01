@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace AnyJob.Impl
 {
-
+    [ServiceImplClass(typeof(IJobEngineService))]
     public class DefaultJobEngineService : IJobEngineService
     {
 
@@ -32,7 +32,7 @@ namespace AnyJob.Impl
 
         #region 字段
         private const int MAX_JOB_COUNT = 100;
-        private ConcurrentDictionary<string, Job> currentJobs;
+        private ConcurrentDictionary<string, Job> currentJobs = new ConcurrentDictionary<string, Job>();
         #endregion
 
 
@@ -63,7 +63,7 @@ namespace AnyJob.Impl
             {
                 throw new ArgumentNullException(nameof(jobStartInfo));
             }
-           
+
             lock (this)
             {
                 if (this.currentJobs.Count >= MAX_JOB_COUNT)
@@ -101,7 +101,7 @@ namespace AnyJob.Impl
         {
             if (string.IsNullOrEmpty(jobStartInfo.ExecutionId))
             {
-              
+
                 var newid = this.idGenService.NewId();
                 return ExecutePath.RootPath(newid);
             }
@@ -130,15 +130,5 @@ namespace AnyJob.Impl
 
     }
 
-    public class TypeFilterEventArgs : EventArgs
-    {
-        public TypeFilterEventArgs(Type serviceType, Type interfaceType)
-        {
-            this.InterfaceType = interfaceType;
-            this.ServiceType = serviceType;
-        }
-        public Type ServiceType { get; private set; }
-        public Type InterfaceType { get; private set; }
-        public bool Filtered { get; set; }
-    }
+
 }

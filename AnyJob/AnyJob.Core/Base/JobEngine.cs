@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Base
+namespace AnyJob
 {
     public static class JobEngine
     {

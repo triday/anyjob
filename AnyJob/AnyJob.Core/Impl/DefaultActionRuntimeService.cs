@@ -1,5 +1,6 @@
 ﻿using AnyJob.Config;
 using AnyJob.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,14 +10,14 @@ namespace AnyJob.Impl
     [ServiceImplClass(typeof(IActionRuntimeService))]
     public class DefaultActionRuntimeService : IActionRuntimeService
     {
-        public DefaultActionRuntimeService(PackOption pack)
+        public DefaultActionRuntimeService(IOptions<PackOption> packOption)
         {
-            this.pack = pack;
+            this.packOption = packOption;
         }
-        private PackOption pack;
+        private IOptions<PackOption> packOption;
         public IActionRuntime GetRunTime(IActionName actionName)
         {
-            string packDir = System.IO.Path.Combine(this.pack.RootDir, actionName.Pack, actionName.Version ?? string.Empty);
+            string packDir = System.IO.Path.Combine(this.packOption.Value.RootDir, actionName.Pack, actionName.Version ?? string.Empty);
             return new ActionRuntime()
             {
                 WorkingDirectory = packDir,

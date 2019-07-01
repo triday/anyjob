@@ -7,7 +7,7 @@ namespace AnyJob
 {
     public interface IActionMeta
     {
-        string ActionKind { get;}
+        string Kind { get;}
         string Description { get; }
         string EntryPoint { get; }
         bool Enabled { get; }

@@ -42,6 +42,7 @@ namespace AnyJob
 
         private static void RegisterCurrentDomainConfigs(ServiceCollection services, IConfiguration configuration)
         {
+            services.AddOptions();
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 services.ConfigAssemblyOptions(assembly, configuration);
