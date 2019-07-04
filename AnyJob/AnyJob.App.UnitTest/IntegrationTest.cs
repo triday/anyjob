@@ -43,13 +43,6 @@ namespace AnyJob.App
             var text = Convert.ToString(result.Result);
             Assert.AreEqual("bcd", text.Trim());
         }
-        [TestMethod]
-        public void TestOS()
-        {
-            OSPlatform os = new OSPlatform();
-            var win = OSPlatform.Windows;
-            string text = os.ToString();
 
-        }
     }
 }
