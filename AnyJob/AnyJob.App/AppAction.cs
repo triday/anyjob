@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using AnyJob.Process;
+using System.Runtime.InteropServices;
 
 namespace AnyJob.App
 {
@@ -48,6 +49,7 @@ namespace AnyJob.App
         {
             if (System.IO.Path.IsPathRooted(appName))
             {
+                //绝对路径
                 return appName;
             }
             string[] searchDirs = new string[] {
@@ -55,18 +57,68 @@ namespace AnyJob.App
                 System.IO.Path.Combine(context.RuntimeInfo.WorkingDirectory,AppOption.PackBinPath),
                 System.IO.Path.GetFullPath(AppOption.GlobalBinPath)
             };
+            if (context.RuntimeInfo.OSPlatForm == OSPlatform.Windows)
+            {
+                return FindWindowsAppFullName(searchDirs, appName);
+            }
+            else
+            {
+                return FindOtherOSAppFullName(searchDirs, appName);
+            }
 
+
+        }
+        private string FindWindowsAppFullName(string[] searchDirs, string appName)
+        {
+            if (System.IO.Path.HasExtension(appName))
+            {
+                if (SearchAppFullName(searchDirs, appName, out string appFullName))
+                {
+                    return appFullName;
+                }
+                else
+                {
+                    return appName;
+                }
+            }
+            else
+            {
+                foreach (var ext in new string[] { ".com", ".exe", ".bat" })
+                {
+                    if (SearchAppFullName(searchDirs, System.IO.Path.ChangeExtension(appName, ext), out string appFullName))
+                    {
+                        return appFullName;
+                    }
+                }
+                return appName;
+            }
+        }
+
+        private bool SearchAppFullName(string[] searchDirs, string appName, out string appFullName)
+        {
             foreach (var baseDir in searchDirs)
             {
                 string fullName = System.IO.Path.GetFullPath(appName, baseDir);
                 if (System.IO.File.Exists(fullName))
                 {
-                    return fullName;
+                    appFullName = fullName;
+                    return true;
                 }
             }
+            appFullName = appName;
+            return false;
+        }
 
-            return appName;
-
+        private string FindOtherOSAppFullName(string[] searchDirs, string appName)
+        {
+            if (SearchAppFullName(searchDirs, appName, out string appFullName))
+            {
+                return appFullName;
+            }
+            else
+            {
+                return appName;
+            }
         }
     }
 }
