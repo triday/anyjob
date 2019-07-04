@@ -18,7 +18,7 @@ namespace AnyJob
             }
             if (context != null)
             {
-                this.Context = new ConcurrentDictionary<string, object>(inputs);
+                this.Context = new ConcurrentDictionary<string, object>(context);
             }
         }
 

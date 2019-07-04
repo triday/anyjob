@@ -1,4 +1,5 @@
 ﻿using AnyJob;
+using AnyJob.UnitTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ namespace AnyJob.Node
             };
             var job = JobEngine.Start("nodepack.add", inputs);
             var result = job.Task.Result;
-
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(300L, result.Result);
         }
     }
 }

@@ -1,17 +1,18 @@
-﻿using System;
+﻿using AnyJob.DependencyInjection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace AnyJob.Node
+namespace AnyJob.UnitTest
 {
     public class JobTestBase
     {
-        
+
         [TestInitialize]
         public virtual void Before()
         {
-            AnyJob.Node.NodeAction nodeAction = null;
+            AssemblyLoader.LoadAssemblies("Anyjob.*.dll");
             if (ServiceCenter.CurrentProvider == null)
             {
                 ServiceCenter.RegisteDomainService();

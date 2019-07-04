@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 namespace AnyJob.Node
 {
@@ -31,9 +32,9 @@ namespace AnyJob.Node
         protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
         {
             ISerializeService serializeService = context.ServiceProvider.GetService<ISerializeService>();
-            string wrapperPath = System.IO.Path.GetFullPath(Option.WrapperPath, Environment.CurrentDirectory);
+            string wrapperPath = Path.GetFullPath(Option.WrapperPath, Environment.CurrentDirectory);
             string paramsText = serializeService.Serialize(context.Parameters.Inputs ?? new object());
-            string entryFile = System.IO.Path.GetFullPath(this.EntryFile, context.RuntimeInfo.WorkingDirectory);
+            string entryFile = Path.Combine(context.RuntimeInfo.WorkingDirectory, this.EntryFile);
             string[] args = new string[] {
                 wrapperPath,
                 entryFile,

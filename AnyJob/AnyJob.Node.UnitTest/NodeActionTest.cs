@@ -1,3 +1,4 @@
+using AnyJob.UnitTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using System.Collections.Generic;
 namespace AnyJob.Node
 {
     [TestClass]
-    public class NodeActionTest:JobTestBase
+    public class NodeActionTest : JobTestBase
     {
         [TestMethod]
         public void TestAdd()
@@ -17,11 +18,12 @@ namespace AnyJob.Node
                 { "num2" , 200 }
             });
             NodeAction nodeAction = new NodeAction(option, "add.js");
-            object res= nodeAction.Run(context);
+            object res = nodeAction.Run(context);
             Assert.AreEqual(300, Convert.ToInt32(res));
         }
         [TestMethod]
-        public void TestGlobalRef() {
+        public void TestGlobalRef()
+        {
             var option = this.CreateOption();
             var context = this.CreateActionContext(new Dictionary<string, object>()
             {
@@ -58,7 +60,7 @@ namespace AnyJob.Node
                 Parameters = new ActionParameters(inputs),
                 RuntimeInfo = new ActionRuntime()
                 {
-                     WorkingDirectory=System.IO.Path.Combine( Environment.CurrentDirectory,"packs/nodepack"),
+                    WorkingDirectory = System.IO.Path.Combine(Environment.CurrentDirectory, "packs/nodepack"),
                 }
 
 

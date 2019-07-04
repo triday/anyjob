@@ -32,7 +32,6 @@ namespace AnyJob.Process
                 {
                     return typedResult.Result;
                 }
-
             }
 
         }
