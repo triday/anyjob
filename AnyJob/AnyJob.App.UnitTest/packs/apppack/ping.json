@@ -1,0 +1,3 @@
+﻿{
+    "command": "ping ${host} -n ${count}"
+}

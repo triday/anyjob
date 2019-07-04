@@ -9,10 +9,12 @@ namespace AnyJob.App
 {
     public class AppAction : ProcessAction
     {
-        public AppAction(AppInfo appInfo)
+        public AppAction(AppInfo appInfo, AppOption appOption)
         {
             this.AppInfo = appInfo;
+            this.AppOption = appOption;
         }
+        public AppOption AppOption { get; private set; }
         public AppInfo AppInfo { get; private set; }
 
         protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
@@ -20,8 +22,10 @@ namespace AnyJob.App
             var items = this.AppInfo.Command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var args = context.Parameters.Inputs;
             var translateItems = items.Select(p => Translate(p, args));
-            return (translateItems.First(), string.Join(' ', translateItems.Skip(1)));
+            var fileName = this.FindAppFullPath(context, translateItems.First());
+            return (fileName, string.Join(' ', translateItems.Skip(1)));
         }
+
         private string Translate(string item, IDictionary<string, object> input)
         {
             if (item.StartsWith("${") && item.EndsWith("}"))
@@ -33,6 +37,36 @@ namespace AnyJob.App
             {
                 return item;
             }
+        }
+
+        private string JoinEnvironmentPaths(params string[] paths)
+        {
+            return string.Join(System.IO.Path.PathSeparator, paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
+        }
+
+        private string FindAppFullPath(IActionContext context, string appName)
+        {
+            if (System.IO.Path.IsPathRooted(appName))
+            {
+                return appName;
+            }
+            string[] searchDirs = new string[] {
+                context.RuntimeInfo.WorkingDirectory,
+                System.IO.Path.Combine(context.RuntimeInfo.WorkingDirectory,AppOption.PackBinPath),
+                System.IO.Path.GetFullPath(AppOption.GlobalBinPath)
+            };
+
+            foreach (var baseDir in searchDirs)
+            {
+                string fullName = System.IO.Path.GetFullPath(appName, baseDir);
+                if (System.IO.File.Exists(fullName))
+                {
+                    return fullName;
+                }
+            }
+
+            return appName;
+
         }
     }
 }

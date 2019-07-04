@@ -14,7 +14,8 @@ namespace AnyJob.App.UnitTest
             {
                 Command = "ping ${host} -n ${count}"
             };
-            AppAction appAction = new AppAction(appInfo);
+            AppOption appOption = new AppOption();
+            AppAction appAction = new AppAction(appInfo, appOption);
             var inputs = new Dictionary<string, object>()
             {
                 {"host","127.0.0.1"},
@@ -31,7 +32,8 @@ namespace AnyJob.App.UnitTest
             {
                 Command = "cmd /c echo ${text}"
             };
-            AppAction appAction = new AppAction(appInfo);
+            AppOption appOption = new AppOption();
+            AppAction appAction = new AppAction(appInfo, appOption);
             var inputs = new Dictionary<string, object>()
             {
                 {"text","abc"}
@@ -39,7 +41,7 @@ namespace AnyJob.App.UnitTest
             var context = this.CreateActionContext(inputs);
             object res = appAction.Run(context);
             Assert.IsNotNull(res);
-            Assert.AreEqual("abc", res);
+            Assert.AreEqual("abc", System.Convert.ToString(res).Trim());
         }
 
         private IActionContext CreateActionContext(IDictionary<string, object> inputs)
@@ -51,6 +53,7 @@ namespace AnyJob.App.UnitTest
                 RuntimeInfo = new ActionRuntime()
                 {
                     WorkingDirectory = System.Environment.CurrentDirectory
+
                 }
             };
         }

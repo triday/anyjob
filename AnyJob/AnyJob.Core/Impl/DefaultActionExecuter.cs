@@ -130,7 +130,8 @@ namespace AnyJob.Impl
                 RuntimeInfo = actionRuntime,
                 ExecuteName = executeContext.ExecuteName,
                 ServiceProvider = this.serviceProvider,
-                Parameters = executeContext.ActionParameters
+                Parameters = executeContext.ActionParameters,
+                Logger = new ActionLogger()
             };
         }
 
@@ -158,7 +159,7 @@ namespace AnyJob.Impl
 
         protected virtual object OnRunAction(IAction action, IExecuteContext executeContext, IActionContext actionContext)
         {
-            int loopCount = Math.Min(1, executeContext.ActionRetryCount);
+            int loopCount = Math.Max(1, executeContext.ActionRetryCount);
             Exception error = null;
             for (int i = 0; i < loopCount && !executeContext.Token.IsCancellationRequested; i++)
             {
