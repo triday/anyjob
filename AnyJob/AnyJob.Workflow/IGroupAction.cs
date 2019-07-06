@@ -6,6 +6,6 @@ namespace AnyJob.Workflow
 {
     public interface IGroupAction:IAction
     {
-        GroupInfo GroupInfo { get; set; }
+       
     }
 }
