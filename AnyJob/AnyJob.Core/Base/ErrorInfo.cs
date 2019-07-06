@@ -4,15 +4,20 @@ using System.Text;
 
 namespace AnyJob
 {
-    public sealed class ErrorInfo
+    public abstract class ErrorInfo
     {
-        public string Code { get; set; }
-        public string Format { get; set; }
+        public ErrorInfo(string code)
+        {
+            this.Code = code;
+        }
+        public string Code { get; private set; }
+        protected abstract string OnGetMessageFormat(string code);
 
         public ActionException ToException(Exception cause, params object[] args)
         {
             string code = this.Code ?? string.Empty;
-            string message = string.Format(this.Format ?? string.Empty, args);
+            string format = this.OnGetMessageFormat(this.Code);
+            string message = string.Format(format ?? string.Empty, args);
             return new ActionException(code, message, cause);
         }
         public ActionException ToException(params object[] args)

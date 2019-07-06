@@ -1,8 +1,9 @@
-﻿using System;
+﻿using AnyJob.Workflow.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Workflow
+namespace AnyJob.Workflow.Actions
 {
     public class Group : IGroupAction
     {
