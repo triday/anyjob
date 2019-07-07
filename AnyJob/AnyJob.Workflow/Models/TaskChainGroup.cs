@@ -7,8 +7,8 @@ namespace AnyJob.Workflow.Models
     public class TaskChainGroup
     {
 
-        public List<TaskChainInfo> Chains { get; set; }
+        public TaskChainInfo[] Chains { get; set; }
 
-        public Dictionary<string, object> Outputs { get; set; }
+        public IDictionary<string, object> Outputs { get; set; }
     }
 }
