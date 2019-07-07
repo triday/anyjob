@@ -6,7 +6,7 @@ namespace AnyJob.Workflow.Models
 {
     public class TaskChainInfo
     {
-        public string Stop { get; set; }
+        public bool Stop { get; set; }
 
         public string Condition { get; set; }
 
