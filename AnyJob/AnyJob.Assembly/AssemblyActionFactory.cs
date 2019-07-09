@@ -41,7 +41,7 @@ namespace AnyJob.Assembly
         {
             var defaultValues = actionContext.MetaInfo.Inputs.Where(p => p.Value.Default != null).ToDictionary(p => p.Key, p => p.Value.Default);
 
-            return defaultValues.Union(actionContext.Parameters.Inputs).ToDictionary(p => p.Key, p => p.Value);
+            return defaultValues.Union(actionContext.Parameters.Arguments).ToDictionary(p => p.Key, p => p.Value);
         }
         
 

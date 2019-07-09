@@ -33,7 +33,7 @@ namespace AnyJob.Node
         {
             ISerializeService serializeService = context.ServiceProvider.GetService<ISerializeService>();
             string wrapperPath = Path.GetFullPath(Option.WrapperPath, Environment.CurrentDirectory);
-            string paramsText = serializeService.Serialize(context.Parameters.Inputs ?? new object());
+            string paramsText = serializeService.Serialize(context.Parameters.Arguments ?? new object());
             string entryFile = Path.Combine(context.RuntimeInfo.WorkingDirectory, this.EntryFile);
             string[] args = new string[] {
                 wrapperPath,

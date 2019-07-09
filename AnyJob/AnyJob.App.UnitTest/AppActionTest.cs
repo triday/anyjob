@@ -48,7 +48,10 @@ namespace AnyJob.App.UnitTest
         {
             return new ActionContext()
             {
-                Parameters = new ActionParameters(inputs),
+                Parameters = new ActionParameters()
+                {
+                    Arguments = inputs
+                },
                 Logger = new ActionLogger(),
                 RuntimeInfo = new ActionRuntime()
                 {

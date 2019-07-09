@@ -57,7 +57,10 @@ namespace AnyJob.Node
                 ExecutePath = ExecutePath.RootPath(Guid.NewGuid().ToString()),
                 Logger = new ActionLogger(),
                 ServiceProvider = ServiceCenter.CurrentProvider,
-                Parameters = new ActionParameters(inputs),
+                Parameters = new ActionParameters()
+                {
+                    Arguments = inputs,
+                },
                 RuntimeInfo = new ActionRuntime()
                 {
                     WorkingDirectory = System.IO.Path.Combine(Environment.CurrentDirectory, "packs/nodepack"),

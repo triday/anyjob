@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using System.Collections.ObjectModel;
 
 namespace AnyJob.Impl
 {
@@ -114,11 +115,17 @@ namespace AnyJob.Impl
         protected virtual IExecuteContext OnCreateExecuteContext(JobStartInfo jobStartInfo, CancellationToken token, IExecutePath path)
         {
 
-            var parameters = new ActionParameters(jobStartInfo.Inputs, jobStartInfo.Context);
+            var parameters = new ExecuteParameter()
+            {
+                Context = new ReadOnlyDictionary<string, object>(jobStartInfo.Context ?? new Dictionary<string, object>()),
+                Inputs = new ReadOnlyDictionary<string, object>(jobStartInfo.Inputs ?? new Dictionary<string, object>()),
+                Vars = new ConcurrentDictionary<string, object>(),
+                Outputs = new ConcurrentDictionary<string, object>(),
+            };
             return new ExecuteContext
             {
                 ActionFullName = jobStartInfo.ActionFullName,
-                ActionParameters = parameters,
+                ExecuteParameter = parameters,
                 ExecutePath = path,
                 Token = token,
                 ActionRetryCount = jobStartInfo.RetryCount

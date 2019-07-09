@@ -21,7 +21,7 @@ namespace AnyJob.App
         protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
         {
             var items = this.AppInfo.Command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var args = context.Parameters.Inputs;
+            var args = context.Parameters.Arguments;
             var translateItems = items.Select(p => Translate(p, args));
             var fileName = this.FindAppFullPath(context, translateItems.First());
             return (fileName, string.Join(' ', translateItems.Skip(1)));

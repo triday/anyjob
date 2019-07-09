@@ -1,6 +1,7 @@
 ﻿using AnyJob.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -130,9 +131,36 @@ namespace AnyJob.Impl
                 RuntimeInfo = actionRuntime,
                 ExecuteName = executeContext.ExecuteName,
                 ServiceProvider = this.serviceProvider,
-                Parameters = executeContext.ActionParameters,
+                Parameters = this.ConvertParameter(actionMeta, executeContext.ExecuteParameter),
                 Logger = new ActionLogger()
             };
+        }
+        protected virtual IActionParameter ConvertParameter(IActionMeta actionMeta, IExecuteParameter executeParameter)
+        {
+            var runtimeArgs = new Dictionary<string, object>();
+            if (actionMeta.Inputs != null)
+            {
+                foreach (var metaEntry in actionMeta.Inputs)
+                {
+                    if (metaEntry.Value.Default != null)
+                    {
+                        runtimeArgs.Add(metaEntry.Key, metaEntry.Value.Default);
+                    }
+                }
+            }
+            foreach (var inputEntry in executeParameter.Inputs)
+            {
+                runtimeArgs[inputEntry.Key] = inputEntry.Value;
+            }
+
+            return new ActionParameters()
+            {
+                Arguments = new ReadOnlyDictionary<string, object>(runtimeArgs),
+                Context = executeParameter.Context,
+                Outputs = executeParameter.Outputs,
+                Vars = executeParameter.Vars,
+            };
+
         }
 
         protected virtual void OnCheckPremission(IActionContext actionContext)
