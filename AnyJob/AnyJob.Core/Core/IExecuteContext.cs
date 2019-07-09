@@ -11,7 +11,7 @@ namespace AnyJob
         /// <summary>
         /// 获取Action的执行参数
         /// </summary>
-        ActionParameters ActionParameters { get; }
+        IExecuteParameter ExecuteParameter { get; }
         /// <summary>
         /// 或者执行的Action的名称
         /// </summary>

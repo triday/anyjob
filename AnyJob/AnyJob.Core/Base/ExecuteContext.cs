@@ -9,7 +9,7 @@ namespace AnyJob
     {
         public string ActionFullName { get; set; }
 
-        public ActionParameters ActionParameters { get; set; }
+        public IExecuteParameter ExecuteParameter { get; set; }
 
         public int ActionRetryCount { get; set; }
 

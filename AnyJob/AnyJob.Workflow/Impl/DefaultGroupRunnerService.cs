@@ -5,13 +5,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using AnyJob.Workflow.Config;
+using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
+
 namespace AnyJob.Workflow.Impl
 {
     public class DefaultGroupRunnerService : IGroupRunnerService
     {
         IActionExecuterService actionExecuterService;
         IPublishValueService publishValueService;
-        public Task RunGroup(ActionContext actionContext, GroupInfo groupInfo)
+        WorkflowOption workflowOption;
+        IIdGenService idGenService;
+        IDynamicValueService dynamicValueService;
+        public virtual Task RunGroup(ActionContext actionContext, GroupInfo groupInfo)
         {
             if (groupInfo == null)
             {
@@ -21,13 +28,26 @@ namespace AnyJob.Workflow.Impl
             {
                 return Task.CompletedTask;
             }
-            this.PublishGroupVars(actionContext, groupInfo);
+            this.PublishVars(actionContext, groupInfo.Vars);
             var tasks = GetRunTasks(string.Empty, groupInfo.Entry, groupInfo);
             return RunTaskInfos(actionContext, tasks, groupInfo);
         }
 
-        private void PublishGroupVars(ActionContext actionContext, GroupInfo groupInfo)
+        private void PublishVars(ActionContext actionContext, IDictionary<string, object> vars)
         {
+            if (vars == null) return;
+            foreach (var kv in vars)
+            {
+                publishValueService.PublishVar(kv.Key, kv.Value, actionContext.Parameters);
+            }
+        }
+        private void PublishOutputs(ActionContext actionContext, IDictionary<string, object> outputs)
+        {
+            if (outputs == null) return;
+            foreach (var kv in outputs)
+            {
+                publishValueService.PublishOutput(kv.Key, kv.Value, actionContext.Parameters);
+            }
 
         }
         private List<TaskDesc> GetRunTasks(string fromName, IEnumerable<string> taskNames, GroupInfo groupInfo)
@@ -57,6 +77,7 @@ namespace AnyJob.Workflow.Impl
 
         protected virtual Task RunTaskInfo(ActionContext actionContext, TaskDesc taskDesc, GroupInfo groupInfo)
         {
+            PublishTaskVars(actionContext, taskDesc);
             IExecuteContext executeContext = OnCreateExecuteContext(actionContext, taskDesc);
             return actionExecuterService.Execute(executeContext).ContinueWith((result) =>
             {
@@ -68,6 +89,14 @@ namespace AnyJob.Workflow.Impl
                 RunTaskInfos(actionContext, nextTasks, groupInfo).Wait();
             });
 
+        }
+        private void PublishTaskVars(ActionContext actionContext, TaskDesc taskDesc)
+        {
+            if (IsSubEntryGroup(taskDesc.TaskInfo.ActionName))
+            {
+                return;
+            }
+            PublishVars(actionContext, taskDesc.TaskInfo.Vars);
         }
         private void PublishResultVars(ActionContext actionContext, IExecuteResult result, TaskDesc taskDesc)
         {
@@ -91,11 +120,8 @@ namespace AnyJob.Workflow.Impl
         }
         private void PublishOutputs(ActionContext actionContext, TaskChainGroup taskChain)
         {
-            if (taskChain == null || taskChain.Outputs == null) return;
-            foreach (var kv in taskChain.Outputs)
-            {
-                publishValueService.PublishOutput(kv.Key, kv.Value, actionContext.Parameters);
-            }
+            if (taskChain == null) return;
+            PublishOutputs(actionContext, taskChain.Outputs);
         }
         private List<TaskDesc> GetNextTasks(ActionContext actionContext, bool success, TaskDesc taskDesc, GroupInfo groupInfo)
         {
@@ -141,11 +167,65 @@ namespace AnyJob.Workflow.Impl
         }
         protected virtual IExecuteContext OnCreateExecuteContext(ActionContext actionContext, TaskDesc taskInfo)
         {
+            string newid = idGenService.NewId();
             return new ExecuteContext()
             {
-
+                ActionFullName = taskInfo.TaskInfo.ActionName,
+                ExecuteName = taskInfo.TaskName,
+                Token = actionContext.Token,
+                ActionRetryCount = taskInfo.TaskInfo.RetryCount,
+                ExecutePath = actionContext.ExecutePath.NewSubPath(newid),
+                ExecuteParameter = OnCreateExecuteParameter(actionContext, taskInfo)
             };
         }
+
+
+        protected virtual IExecuteParameter OnCreateExecuteParameter(ActionContext actionContext, TaskDesc taskInfo)
+        {
+            Dictionary<string, object> inputs = new Dictionary<string, object>();
+
+            if (taskInfo.TaskInfo.Inputs != null)
+            {
+                foreach (var inputEntry in taskInfo.TaskInfo.Inputs)
+                {
+                    object value = dynamicValueService.GetDynamicValue(inputEntry.Value, actionContext.Parameters);
+                    inputs.Add(inputEntry.Key, value);
+                }
+            }
+
+
+
+            if (IsSubEntryGroup(taskInfo.TaskInfo.ActionName))
+            {
+                //需要共享output
+                return new ExecuteParameter()
+                {
+                    Inputs = new ReadOnlyDictionary<string, object>(inputs),
+                    Context = actionContext.Parameters.Context,
+                    //TODO
+                    
+                    Outputs=actionContext.Parameters.Outputs,
+                };
+            }
+            else
+            {
+                return new ExecuteParameter()
+                {
+                    Inputs = new ReadOnlyDictionary<string, object>(inputs),
+                    Context = actionContext.Parameters.Context,
+                    Outputs = new ConcurrentDictionary<string, object>(),
+                    Vars = new ConcurrentDictionary<string, object>(),
+                };
+            }
+
+        }
+
+        private bool IsSubEntryGroup(string actionName)
+        {
+            if (workflowOption.SubEntryActions == null) return false;
+            return workflowOption.SubEntryActions.Contains(actionName);
+        }
+
 
         protected class TaskDesc
         {
