@@ -9,11 +9,11 @@ namespace AnyJob
     {
         public static T GetService<T>(this IActionContext context)
         {
-            return context.GetService<T>();
+            return context.ServiceProvider.GetService<T>();
         }
         public static T GetRequiredService<T>(this IActionContext context)
         {
-            return context.GetRequiredService<T>();
+            return context.ServiceProvider.GetRequiredService<T>();
         }
        
     }
