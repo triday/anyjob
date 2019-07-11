@@ -31,6 +31,10 @@ namespace AnyJob
         /// </summary>
         IExecutePath ExecutePath { get; }
         /// <summary>
+        /// 获取任务执行的名称
+        /// </summary>
+        string ExecuteName { get; }
+        /// <summary>
         /// 获取服务提供商
         /// </summary>
         IServiceProvider ServiceProvider { get; }
