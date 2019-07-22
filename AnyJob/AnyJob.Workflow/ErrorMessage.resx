@@ -120,4 +120,7 @@
   <data name="E70001" xml:space="preserve">
     <value>找不到名称为"{0}"的Task任务。</value>
   </data>
+  <data name="E70002" xml:space="preserve">
+    <value>执行任务"{0}"发生错误。</value>
+  </data>
 </root>

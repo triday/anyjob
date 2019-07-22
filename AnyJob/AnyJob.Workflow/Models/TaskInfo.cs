@@ -4,10 +4,9 @@ using System.Text;
 
 namespace AnyJob.Workflow.Models
 {
-    public class TaskInfo
+    public class TaskInfo: GroupInfo
     {
         public IDictionary<string, object> Inputs { get; set; }
-        public IDictionary<string, object> Vars { get; set; }
         public string ActionName { get; set; }
         public int RetryCount { get; set; }
         public TaskChainGroup OnSuccess { get; set; }

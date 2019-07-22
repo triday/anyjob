@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AnyJob.Workflow.Services
 {
-    public interface IGroupRunnerService
+    public interface ITaskRunnerService
     {
-        Task RunGroup(IActionContext actionContext, GroupInfo groupInfo);
+        Task RunTask(IActionContext actionContext, TaskDesc taskDesc, GroupInfo groupInfo);
     }
 }

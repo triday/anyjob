@@ -157,7 +157,7 @@ namespace AnyJob.Impl
             {
                 Arguments = new ReadOnlyDictionary<string, object>(runtimeArgs),
                 Context = executeParameter.Context,
-                Outputs = executeParameter.Outputs,
+                GlobalVars = executeParameter.GlobalVars,
                 Vars = executeParameter.Vars,
             };
 

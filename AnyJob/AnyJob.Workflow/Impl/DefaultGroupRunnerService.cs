@@ -1,13 +1,12 @@
-﻿using AnyJob.Workflow.Models;
+﻿using AnyJob.Workflow.Config;
+using AnyJob.Workflow.Models;
 using AnyJob.Workflow.Services;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
-using AnyJob.Workflow.Config;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AnyJob.Workflow.Impl
 {
@@ -18,37 +17,13 @@ namespace AnyJob.Workflow.Impl
         WorkflowOption workflowOption;
         IIdGenService idGenService;
         IDynamicValueService dynamicValueService;
-        public virtual Task RunGroup(ActionContext actionContext, GroupInfo groupInfo)
+        IConvertService convertService;
+        public virtual Task RunGroup(IActionContext actionContext, GroupInfo groupInfo)
         {
-            if (groupInfo == null)
-            {
-                return Task.CompletedTask;
-            }
-            if (groupInfo.Entry != null && groupInfo.Entry.Length == 0)
-            {
-                return Task.CompletedTask;
-            }
-            this.PublishVars(actionContext, groupInfo.Vars);
+            if (groupInfo == null) return Task.CompletedTask;
+            publishValueService.PublishVars(actionContext.Parameters, groupInfo.Vars);
             var tasks = GetRunTasks(string.Empty, groupInfo.Entry, groupInfo);
-            return RunTaskInfos(actionContext, tasks, groupInfo);
-        }
-
-        private void PublishVars(ActionContext actionContext, IDictionary<string, object> vars)
-        {
-            if (vars == null) return;
-            foreach (var kv in vars)
-            {
-                publishValueService.PublishVar(kv.Key, kv.Value, actionContext.Parameters);
-            }
-        }
-        private void PublishOutputs(ActionContext actionContext, IDictionary<string, object> outputs)
-        {
-            if (outputs == null) return;
-            foreach (var kv in outputs)
-            {
-                publishValueService.PublishOutput(kv.Key, kv.Value, actionContext.Parameters);
-            }
-
+            return RunTasks(actionContext, tasks, groupInfo);
         }
         private List<TaskDesc> GetRunTasks(string fromName, IEnumerable<string> taskNames, GroupInfo groupInfo)
         {
@@ -68,62 +43,64 @@ namespace AnyJob.Workflow.Impl
                 TaskInfo = groupInfo.Tasks[taskName]
             };
         }
-
-        protected Task RunTaskInfos(ActionContext actionContext, IEnumerable<TaskDesc> taskDescs, GroupInfo groupInfo)
+        private Task RunTasks(IActionContext actionContext, IEnumerable<TaskDesc> taskDescs, GroupInfo groupInfo)
         {
-            var allTasks = taskDescs.Select(p => RunTaskInfo(actionContext, p, groupInfo)).ToArray();
+            var allTasks = taskDescs.Select(p => RunTask(actionContext, p, groupInfo)).ToArray();
             return Task.WhenAll(allTasks);
         }
-
-        protected virtual Task RunTaskInfo(ActionContext actionContext, TaskDesc taskDesc, GroupInfo groupInfo)
+        private Task RunTask(IActionContext actionContext, TaskDesc taskDesc, GroupInfo groupInfo)
         {
-            PublishTaskVars(actionContext, taskDesc);
-            IExecuteContext executeContext = OnCreateExecuteContext(actionContext, taskDesc);
+            bool isSubEntryAction = this.IsSubEntryGroup(taskDesc.TaskInfo.ActionName);
+            if (!isSubEntryAction) {
+                publishValueService.PublishVars(actionContext.Parameters, taskDesc.TaskInfo.Vars);
+            }
+            IExecuteContext executeContext = CreateExecuteContext(actionContext, taskDesc,isSubEntryAction);
             return actionExecuterService.Execute(executeContext).ContinueWith((result) =>
             {
-                PublishResultVars(actionContext, result.Result, taskDesc);
-                bool success = result.IsCompletedSuccessfully && result.Result.IsSuccess;
-                //publish output
-                PublishOutputs(actionContext, success, taskDesc);
-                List<TaskDesc> nextTasks = GetNextTasks(actionContext, success, taskDesc, groupInfo);
-                RunTaskInfos(actionContext, nextTasks, groupInfo).Wait();
-            });
+                if (result.IsCompletedSuccessfully)
+                {
+                    var executeResult = result.Result;
+                    PublishGlobalVars(actionContext, executeResult.IsSuccess, taskDesc);
+                    List<TaskDesc> nextTasks = GetNextTasks(actionContext, executeResult.IsSuccess, taskDesc, groupInfo);
+                    RunTasks(actionContext, nextTasks, groupInfo).Wait();
+                }
+                else
+                {
+                    throw WorkflowError.TaskEexcuteError(taskDesc.TaskName, result.Exception);
+                }
+            }, actionContext.Token);
+        }
 
-        }
-        private void PublishTaskVars(ActionContext actionContext, TaskDesc taskDesc)
+        
+     
+
+
+        private void PublishResultVars(IActionContext actionContext, IExecuteResult result, TaskDesc taskDesc)
         {
-            if (IsSubEntryGroup(taskDesc.TaskInfo.ActionName))
-            {
-                return;
-            }
-            PublishVars(actionContext, taskDesc.TaskInfo.Vars);
-        }
-        private void PublishResultVars(ActionContext actionContext, IExecuteResult result, TaskDesc taskDesc)
-        {
-            publishValueService.PublishVar($"{taskDesc.TaskName}_result", result.Result, actionContext.Parameters);
-            publishValueService.PublishVar($"{taskDesc.TaskName}_error", result.Error, actionContext.Parameters);
+            publishValueService.PublishVars($"{taskDesc.TaskName}_result", result.Result, actionContext.Parameters);
+            publishValueService.PublishVars($"{taskDesc.TaskName}_error", result.Error, actionContext.Parameters);
             //publishValueService.PublishVar($"{taskDesc.TaskName}_log", result., actionContext.Parameters);
 
         }
-        private void PublishOutputs(ActionContext actionContext, bool success, TaskDesc taskDesc)
+        private void PublishGlobalVars(IActionContext actionContext, bool success, TaskDesc taskDesc)
         {
             if (success)
             {
-                PublishOutputs(actionContext, taskDesc.TaskInfo.OnSuccess);
+                PublishGlobalVars(actionContext, taskDesc.TaskInfo.OnSuccess);
             }
             else
             {
-                PublishOutputs(actionContext, taskDesc.TaskInfo.OnError);
+                PublishGlobalVars(actionContext, taskDesc.TaskInfo.OnError);
             }
 
-            PublishOutputs(actionContext, taskDesc.TaskInfo.OnComplete);
+            PublishGlobalVars(actionContext, taskDesc.TaskInfo.OnComplete);
         }
-        private void PublishOutputs(ActionContext actionContext, TaskChainGroup taskChain)
+        private void PublishGlobalVars(IActionContext actionContext, TaskChainGroup taskChain)
         {
             if (taskChain == null) return;
-            PublishOutputs(actionContext, taskChain.Outputs);
+            publishValueService.PublishGlobalVars(actionContext.Parameters, taskChain.Outputs);
         }
-        private List<TaskDesc> GetNextTasks(ActionContext actionContext, bool success, TaskDesc taskDesc, GroupInfo groupInfo)
+        private List<TaskDesc> GetNextTasks(IActionContext actionContext, bool success, TaskDesc taskDesc, GroupInfo groupInfo)
         {
             List<string> allNextTasksNames = new List<string>();
             if (success)
@@ -137,7 +114,7 @@ namespace AnyJob.Workflow.Impl
             allNextTasksNames.AddRange(GetNextTasksFromNextChain(actionContext, taskDesc.TaskInfo.OnComplete));
             return GetRunTasks(taskDesc.TaskName, allNextTasksNames, groupInfo);
         }
-        private IEnumerable<string> GetNextTasksFromNextChain(ActionContext actionContext, TaskChainGroup taskChain)
+        private IEnumerable<string> GetNextTasksFromNextChain(IActionContext actionContext, TaskChainGroup taskChain)
         {
             if (taskChain == null || taskChain.Chains == null)
             {
@@ -160,64 +137,51 @@ namespace AnyJob.Workflow.Impl
             return nexts;
 
         }
-        private bool IsInCondition(ActionContext actionContext, object condition)
+        private bool IsInCondition(IActionContext actionContext, object condition)
         {
-            //TODO 
-            return true;
+            if (condition == null) return true;
+            object dynamicValue = dynamicValueService.GetDynamicValue(condition, actionContext.Parameters);
+            return (bool)convertService.Convert(dynamicValue, typeof(bool));
         }
-        protected virtual IExecuteContext OnCreateExecuteContext(ActionContext actionContext, TaskDesc taskInfo)
+        private  IExecuteContext CreateExecuteContext(IActionContext actionContext, TaskDesc taskDesc,bool isSubEntryAction)
         {
             string newid = idGenService.NewId();
             return new ExecuteContext()
             {
-                ActionFullName = taskInfo.TaskInfo.ActionName,
-                ExecuteName = taskInfo.TaskName,
+                ActionFullName = taskDesc.TaskInfo.ActionName,
+                ExecuteName = taskDesc.TaskName,
                 Token = actionContext.Token,
-                ActionRetryCount = taskInfo.TaskInfo.RetryCount,
+                ActionRetryCount = taskDesc.TaskInfo.RetryCount,
                 ExecutePath = actionContext.ExecutePath.NewSubPath(newid),
-                ExecuteParameter = OnCreateExecuteParameter(actionContext, taskInfo)
+                ExecuteParameter = OnCreateExecuteParameter(actionContext, taskDesc,isSubEntryAction)
             };
         }
-
-
-        protected virtual IExecuteParameter OnCreateExecuteParameter(ActionContext actionContext, TaskDesc taskInfo)
+        protected virtual IExecuteParameter OnCreateExecuteParameter(IActionContext actionContext, TaskDesc taskDesc,bool isSubEntryAction)
         {
             Dictionary<string, object> inputs = new Dictionary<string, object>();
-
-            if (taskInfo.TaskInfo.Inputs != null)
+            if (taskDesc.TaskInfo.Inputs != null)
             {
-                foreach (var inputEntry in taskInfo.TaskInfo.Inputs)
+                foreach (var inputEntry in taskDesc.TaskInfo.Inputs)
                 {
                     object value = dynamicValueService.GetDynamicValue(inputEntry.Value, actionContext.Parameters);
                     inputs.Add(inputEntry.Key, value);
                 }
             }
-
-
-
-            if (IsSubEntryGroup(taskInfo.TaskInfo.ActionName))
+            var executeParameter = new ExecuteParameter();
+            executeParameter.Inputs = new ReadOnlyDictionary<string, object>(inputs);
+            executeParameter.Context = actionContext.Parameters.Context;
+            executeParameter.GlobalVars = isSubEntryAction ? actionContext.Parameters.GlobalVars : new ConcurrentDictionary<string, object>();
+            if (isSubEntryAction)
             {
-                //需要共享output
-                return new ExecuteParameter()
-                {
-                    Inputs = new ReadOnlyDictionary<string, object>(inputs),
-                    Context = actionContext.Parameters.Context,
-                    //TODO
-                    
-                    Outputs=actionContext.Parameters.Outputs,
-                };
+                var newVars = new ConcurrentDictionary<string, object>(actionContext.Parameters.Vars);
+                newVars[workflowOption.SubEntryActionVarName] = taskDesc.TaskInfo;
+                executeParameter.Vars = newVars;
             }
             else
             {
-                return new ExecuteParameter()
-                {
-                    Inputs = new ReadOnlyDictionary<string, object>(inputs),
-                    Context = actionContext.Parameters.Context,
-                    Outputs = new ConcurrentDictionary<string, object>(),
-                    Vars = new ConcurrentDictionary<string, object>(),
-                };
+                executeParameter.Vars = new ConcurrentDictionary<string, object>();
             }
-
+            return executeParameter;
         }
 
         private bool IsSubEntryGroup(string actionName)
@@ -227,11 +191,6 @@ namespace AnyJob.Workflow.Impl
         }
 
 
-        protected class TaskDesc
-        {
-            public string TaskName { get; set; }
-            public string FromName { get; set; }
-            public TaskInfo TaskInfo { get; set; }
-        }
+
     }
 }
