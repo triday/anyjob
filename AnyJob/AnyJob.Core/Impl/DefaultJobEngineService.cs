@@ -120,7 +120,7 @@ namespace AnyJob.Impl
                 Context = new ReadOnlyDictionary<string, object>(jobStartInfo.Context ?? new Dictionary<string, object>()),
                 Inputs = new ReadOnlyDictionary<string, object>(jobStartInfo.Inputs ?? new Dictionary<string, object>()),
                 Vars = new ConcurrentDictionary<string, object>(),
-                Outputs = new ConcurrentDictionary<string, object>(),
+                GlobalVars = new ConcurrentDictionary<string, object>(),
             };
             return new ExecuteContext
             {

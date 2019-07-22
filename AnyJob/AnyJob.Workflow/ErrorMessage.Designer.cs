@@ -68,5 +68,14 @@ namespace AnyJob.Workflow {
                 return ResourceManager.GetString("E70001", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 执行任务&quot;{0}&quot;发生错误。 的本地化字符串。
+        /// </summary>
+        internal static string E70002 {
+            get {
+                return ResourceManager.GetString("E70002", resourceCulture);
+            }
+        }
     }
 }

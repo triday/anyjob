@@ -12,6 +12,6 @@ namespace AnyJob
 
         public IDictionary<string, object> Vars { get; set; }
 
-        public IDictionary<string, object> Outputs { get; set; }
+        public IDictionary<string, object> GlobalVars { get; set; }
     }
 }

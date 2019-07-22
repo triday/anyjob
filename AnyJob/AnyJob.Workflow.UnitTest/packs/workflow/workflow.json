@@ -1,0 +1,68 @@
+﻿{
+    "version": "1.1.1",
+    "global-vars": {
+        "abc": 1,
+        "bcd": 2,
+        "cde": "<% abc + bcd %>",
+        "dig": []
+    },
+    "output": "<% dig %>",
+    "teardown": {
+        "vars": {
+            "keys": "<% dxxx %>"
+        }
+    },
+    "setup": {},
+    "body": {
+        "vars": {
+            "abc": 1,
+            "bcd": 2
+        },
+        "entry": [
+            "abc"
+        ],
+        "tasks": {
+            "abc": {
+                "action": "core.add",
+                "vars": {
+                    "abc": 1,
+                    "bcd": 2
+                },
+                "position": {
+                    "dx": 123,
+                    "dy": 456
+                },
+                "inputs": {
+                    "num1": 1,
+                    "num2": 2
+                },
+                "on-success": {
+                    "set-global-vars": {
+                        "aaa": "<% [...aaa,{}] %>",
+                        "bbb": "bbb",
+                        "abc": {
+                            "dig": "",
+                            "suggest": "",
+                            "reason": ""
+                        },
+                        "dig": "[...dig,abc]"
+                    },
+                    "nexts": [
+                        {
+                            "name": "bcd",
+                            "stop": false,
+                            "condition": "<% xxxx %>"
+                        }
+                    ]
+                }
+
+
+            },
+            "loop": {
+                "action": "core.loop",
+                
+            }
+        }
+
+    }
+}

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AnyJob.Workflow.Actions
 {
-    public class For : SubGroupAction
+    public class ForAction : SubGroupAction
     {
         public string ItemName { get; set; } = "i";
         public int StartValue { get; set; } = 0;
