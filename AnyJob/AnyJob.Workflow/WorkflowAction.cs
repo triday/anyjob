@@ -18,14 +18,14 @@ namespace AnyJob.Workflow
         public object Run(IActionContext context)
         {
             var groupRunnerService = context.GetRequiredService<IGroupRunnerService>();
-            var resultParseService = context.GetRequiredService<IWorkflowResultParseService>();
+            var dynamicValueService = context.GetRequiredService<IDynamicValueService>();
             var publishValueService = context.GetRequiredService<IPublishValueService>();
             this.PublishGlobalVars(context, publishValueService);
             try
             {
                 this.RunSetup(context, groupRunnerService).Wait();
                 this.RunBody(context, groupRunnerService).Wait();
-                return this.ParseResult(context, resultParseService);
+                return this.ParseResult(context, dynamicValueService);
             }
             finally
             {
@@ -52,10 +52,10 @@ namespace AnyJob.Workflow
             if (this.WorkflowInfo == null || this.WorkflowInfo.TearDown == null) return Task.CompletedTask;
             return groupRunnerService.RunGroup(context, this.WorkflowInfo.TearDown);
         }
-        protected virtual object ParseResult(IActionContext context, IWorkflowResultParseService workflowResultParseService)
+        protected virtual object ParseResult(IActionContext context, IDynamicValueService dynamicValueService)
         {
             if (this.WorkflowInfo == null) return null;
-            return workflowResultParseService.ParseResult(context, this.WorkflowInfo.Output);
+            return dynamicValueService.GetDynamicValue(this.WorkflowInfo.Output,context.Parameters);
         }
 
     }

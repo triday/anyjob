@@ -17,7 +17,18 @@ namespace AnyJob.App
         }
         public AppOption AppOption { get; private set; }
         public AppInfo AppInfo { get; private set; }
-
+        protected override IDictionary<string, string> OnGetEnvironment(IActionContext context)
+        {
+            var baseEnvs = base.OnGetEnvironment(context);
+            if (this.AppInfo.Envs != null)
+            {
+                foreach (var kv in this.AppInfo.Envs)
+                {
+                    baseEnvs.Add(kv);
+                }
+            }
+            return base.OnGetEnvironment(context);
+        }
         protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
         {
             var items = this.AppInfo.Command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
