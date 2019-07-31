@@ -18,9 +18,9 @@ namespace AnyJob
 
         public IReadOnlyList<string> Tags { get; set; }
 
-        public IReadOnlyDictionary<string, IActionInputDefination> Inputs { get; set; }
+        public IDictionary<string, IActionType> Inputs { get; set; }
 
-        public IActionOutputDefination Output { get; set; }
+        public IActionType Output { get; set; }
 
     }
 }

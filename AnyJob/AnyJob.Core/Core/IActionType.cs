@@ -6,6 +6,12 @@ namespace AnyJob
 {
     public interface IActionType
     {
-        Type GetRunTimeType();
+        object Default { get; }
+
+        bool IsMust { get; }
+
+        bool Validate(object value, out IList<string> errorMessages);
+
+        object Protect(object value);
     }
 }

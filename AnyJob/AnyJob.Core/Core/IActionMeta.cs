@@ -12,7 +12,7 @@ namespace AnyJob
         string EntryPoint { get; }
         bool Enabled { get; }
         IReadOnlyList<string> Tags { get; }
-        IReadOnlyDictionary<string, IActionInputDefination> Inputs { get; }
-        IActionOutputDefination Output { get; }
+        IDictionary<string, IActionType> Inputs { get; }
+        IActionType Output { get; }
     }
 }

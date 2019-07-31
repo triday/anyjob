@@ -7,6 +7,8 @@ using System.Text;
 using System.Linq;
 using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 
 namespace AnyJob.Impl
 {
@@ -43,8 +45,8 @@ namespace AnyJob.Impl
         protected IActionMeta ConvertToActionMeta(MetaInfo metaInfo)
         {
             if (metaInfo == null) return null;
-            var inputList = metaInfo.Inputs ?? new Dictionary<string, InputInfo>();
-            var output = metaInfo.Output ?? new OutputInfo();
+            var inputList = metaInfo.Inputs ?? new Dictionary<string, JSchema>();
+            
 
             return new ActionMeta()
             {
@@ -53,31 +55,13 @@ namespace AnyJob.Impl
                 Enabled = metaInfo.Enabled,
                 EntryPoint = metaInfo.EntryPoint,
                 Tags = metaInfo.Tags,
-                Inputs = inputList.Select(p => new { Name = p.Key, Input = ConvertToActionInput(p.Value) }).ToDictionary(p => p.Name, p => p.Input),
-                Output = ConvertToActionOutput(output)
+                Inputs = inputList.ToDictionary(p => p.Key, p => new JsonSchemaType(p.Value) as IActionType),
+                Output = new JsonSchemaType(metaInfo.Output)
             };
         }
-        protected IActionInputDefination ConvertToActionInput(InputInfo input)
-        {
-            return new ActionInputDefination()
-            {
-                Default = input.DefaultValue,
-                IsRequired = input.IsRequired,
-                IsSecret = input.IsSecret,
-                Description = input.Description,
+       
 
-            };
-        }
-
-        protected IActionOutputDefination ConvertToActionOutput(OutputInfo output)
-        {
-            return new ActionOutputDefination()
-            {
-                Description = output.Description,
-                IsRequired = output.IsRequired,
-                IsSecret = output.IsSecret
-            };
-        }
+        
         public class MetaInfo
         {
             public string Kind { get; set; }
@@ -90,36 +74,12 @@ namespace AnyJob.Impl
 
             public List<string> Tags { get; set; }
 
-            public Dictionary<string, InputInfo> Inputs { get; set; }
+            public Dictionary<string, JSchema> Inputs { get; set; }
 
-            public OutputInfo Output { get; set; }
+            public JSchema Output { get; set; }
 
         }
 
-        public class InputInfo
-        {
-
-            public string Description { get; set; }
-
-            public object DefaultValue { get; set; }
-
-            public bool IsRequired { get; set; }
-
-            public bool IsSecret { get; set; }
-
-            public string Type { get; set; }
-        }
-
-        public class OutputInfo
-        {
-            public string Type { get; set; }
-
-            public string Description { get; set; }
-
-            public bool IsSecret { get; set; }
-
-            public bool IsRequired { get; set; }
-        }
 
     }
 }

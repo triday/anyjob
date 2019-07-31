@@ -27,7 +27,7 @@ namespace AnyJob.Node
         }
         private string JoinEnvironmentPaths(params string[] paths)
         {
-            return string.Join(System.IO.Path.PathSeparator, paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
+            return string.Join(Path.PathSeparator, paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
         }
         protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
         {
