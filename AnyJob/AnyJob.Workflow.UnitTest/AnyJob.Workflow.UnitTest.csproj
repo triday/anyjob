@@ -16,6 +16,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AnyJob.UnitTest.Base\AnyJob.UnitTest.Base.csproj" />
+    <ProjectReference Include="..\AnyJob.Workflow\AnyJob.Workflow.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="packs\workflow\empty.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="packs\workflow\empty.meta">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="packs\workflow\workflow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
