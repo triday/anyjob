@@ -1,4 +1,5 @@
-﻿using AnyJob.Workflow.Config;
+﻿using AnyJob.DependencyInjection;
+using AnyJob.Workflow.Config;
 using AnyJob.Workflow.Models;
 using AnyJob.Workflow.Services;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace AnyJob.Workflow.Impl
 {
+    [ServiceImplClass(typeof(IGroupRunnerService))]
     public class DefaultGroupRunnerService : IGroupRunnerService
     {
         IActionExecuterService actionExecuterService;

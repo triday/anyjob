@@ -1,9 +1,11 @@
-﻿using System;
+﻿using AnyJob.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AnyJob.Impl
 {
+    [ServiceImplClass(typeof(IExpressionTemplateService))]
     public class DefaultExpressionTemplateService : IExpressionTemplateService
     {
         const string PrefixText = "<%";

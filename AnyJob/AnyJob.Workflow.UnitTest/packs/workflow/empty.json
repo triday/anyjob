@@ -1,10 +1,9 @@
 ﻿{
     "body": {
-        "entry": [ "abc" ],
+        "entry": [],
         "tasks": {
-            "abc": {
-                "action": "core.noop"
-            }
+
         }
-    }
+    },
+    "output": "empty"
 }

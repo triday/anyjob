@@ -1,10 +1,12 @@
-﻿using AnyJob.Workflow.Services;
+﻿using AnyJob.DependencyInjection;
+using AnyJob.Workflow.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AnyJob.Workflow.Impl
 {
+    [ServiceImplClass(typeof(IPublishValueService))]
     public class DefaultPublishValueService : IPublishValueService
     {
         public DefaultPublishValueService(IDynamicValueService dynamicValueService, IConvertService convertService)
