@@ -9,6 +9,6 @@ namespace AnyJob.Workflow.Models
 
         public TaskChainInfo[] Chains { get; set; }
 
-        public IDictionary<string, object> Outputs { get; set; }
+        public IDictionary<string, object> GlobalVars { get; set; }
     }
 }
