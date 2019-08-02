@@ -2,6 +2,7 @@
 using AnyJob.Workflow.Config;
 using AnyJob.Workflow.Models;
 using AnyJob.Workflow.Services;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -20,6 +21,18 @@ namespace AnyJob.Workflow.Impl
         IIdGenService idGenService;
         IDynamicValueService dynamicValueService;
         IConvertService convertService;
+
+        public DefaultGroupRunnerService(IActionExecuterService actionExecuterService, IPublishValueService publishValueService, IIdGenService idGenService, IDynamicValueService dynamicValueService, IConvertService convertService,IOptions<WorkflowOption> workflowOption)
+        {
+            this.actionExecuterService = actionExecuterService;
+            this.publishValueService = publishValueService;
+            this.idGenService = idGenService;
+            this.dynamicValueService = dynamicValueService;
+            this.convertService = convertService;
+            this.workflowOption = workflowOption.Value;
+        }
+
+
         public virtual Task RunGroup(IActionContext actionContext, GroupInfo groupInfo)
         {
             if (groupInfo == null) return Task.CompletedTask;
@@ -52,7 +65,7 @@ namespace AnyJob.Workflow.Impl
         }
         private Task RunTask(IActionContext actionContext, TaskDesc taskDesc, GroupInfo groupInfo)
         {
-            bool isSubEntryAction = this.IsSubEntryGroup(taskDesc.TaskInfo.ActionName);
+            bool isSubEntryAction = this.IsSubEntryGroup(taskDesc.TaskInfo.Action);
             if (!isSubEntryAction) {
                 publishValueService.PublishVars(actionContext.Parameters, taskDesc.TaskInfo.Vars);
             }
@@ -62,6 +75,7 @@ namespace AnyJob.Workflow.Impl
                 if (result.IsCompletedSuccessfully)
                 {
                     var executeResult = result.Result;
+                    this.PublishResultVars(actionContext, executeResult, taskDesc);
                     PublishGlobalVars(actionContext, executeResult.IsSuccess, taskDesc);
                     List<TaskDesc> nextTasks = GetNextTasks(actionContext, executeResult.IsSuccess, taskDesc, groupInfo);
                     RunTasks(actionContext, nextTasks, groupInfo).Wait();
@@ -100,7 +114,7 @@ namespace AnyJob.Workflow.Impl
         private void PublishGlobalVars(IActionContext actionContext, TaskChainGroup taskChain)
         {
             if (taskChain == null) return;
-            publishValueService.PublishGlobalVars(actionContext.Parameters, taskChain.Outputs);
+            publishValueService.PublishGlobalVars(actionContext.Parameters, taskChain.GlobalVars);
         }
         private List<TaskDesc> GetNextTasks(IActionContext actionContext, bool success, TaskDesc taskDesc, GroupInfo groupInfo)
         {
@@ -150,7 +164,7 @@ namespace AnyJob.Workflow.Impl
             string newid = idGenService.NewId();
             return new ExecuteContext()
             {
-                ActionFullName = taskDesc.TaskInfo.ActionName,
+                ActionFullName = taskDesc.TaskInfo.Action,
                 ExecuteName = taskDesc.TaskName,
                 Token = actionContext.Token,
                 ActionRetryCount = taskDesc.TaskInfo.RetryCount,

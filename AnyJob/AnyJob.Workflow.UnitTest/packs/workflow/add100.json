@@ -1,0 +1,20 @@
+﻿{
+    "body": {
+        "entry": ["add"],
+        "tasks": {
+            "add": {
+                "action": "assembly.add",
+                "inputs": {
+                    "num1": "<% num %>",
+                    "num2": 100
+                },
+                "onSuccess": {
+                    "globalVars": {
+                        "res": "<% add_result %>"  
+                    }
+                }
+            }
+        }
+    },
+    "output": "<% res %>"
+}

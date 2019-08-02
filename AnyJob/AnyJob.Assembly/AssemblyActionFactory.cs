@@ -26,10 +26,8 @@ namespace AnyJob.Assembly
         }
         protected void SetInputProperties(IActionContext actionContext, Type type, object instance)
         {
-            var runtimeParams = GetRuntimeInputs(actionContext);
-            if (runtimeParams.Count == 0) return;
             var propsMap= type.GetProperties().ToDictionary(p => p.Name, StringComparer.CurrentCultureIgnoreCase);
-            foreach (var kv in runtimeParams)
+            foreach (var kv in actionContext.Parameters.Arguments)
             {
                 var prop = propsMap[kv.Key];
                 var value = this.convertService.Convert(kv.Value, prop.PropertyType);
@@ -37,12 +35,7 @@ namespace AnyJob.Assembly
             }
         }
 
-        protected Dictionary<string, object> GetRuntimeInputs(IActionContext actionContext)
-        {
-            var defaultValues = actionContext.MetaInfo.Inputs.Where(p => p.Value.Default != null).ToDictionary(p => p.Key, p => p.Value.Default);
-
-            return defaultValues.Union(actionContext.Parameters.Arguments).ToDictionary(p => p.Key, p => p.Value);
-        }
+      
         
 
     }
