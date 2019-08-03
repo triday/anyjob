@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(IActionRuntimeService))]
+    [ServiceImplClass]
     public class DefaultActionRuntimeService : IActionRuntimeService
     {
         public DefaultActionRuntimeService(IOptions<PackOption> packOption)

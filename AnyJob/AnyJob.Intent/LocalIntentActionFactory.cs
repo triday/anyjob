@@ -7,7 +7,7 @@ using AnyJob.Impl;
 
 namespace AnyJob.Intent
 {
-    [ServiceImplClass(typeof(IActionFactoryService))]
+    [ServiceImplClass(Key ="intent")]
     public class LocalIntentActionFactory : IActionFactoryService
     {
         public LocalIntentActionFactory(ISerializeService serializeService)
@@ -17,7 +17,6 @@ namespace AnyJob.Intent
         private ISerializeService serializeService;
 
 
-        public string ActionKind => "intent";
 
         public IAction CreateAction(IActionContext actionContext)
         {

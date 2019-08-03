@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(IExpressionService))]
+    [ServiceImplClass]
     public class DefaultExpressionService : IExpressionService
     {
         public object Exec(string line, IDictionary<string, object> contexts)

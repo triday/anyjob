@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(IDynamicValueService))]
+    [ServiceImplClass]
     public class DefaultDynamicValueService : IDynamicValueService
     {
         public DefaultDynamicValueService(IExpressionTemplateService expressionTemplateService, IExpressionService expressionService)

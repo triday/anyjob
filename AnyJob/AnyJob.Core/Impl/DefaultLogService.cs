@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(ILogService))]
+    [ServiceImplClass]
     public class DefaultLogService : ILogService
     {
         public void Debug(string message, params object[] args)

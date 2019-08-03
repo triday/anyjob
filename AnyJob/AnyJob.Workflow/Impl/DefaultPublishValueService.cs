@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AnyJob.Workflow.Impl
 {
-    [ServiceImplClass(typeof(IPublishValueService))]
+    [ServiceImplClass]
     public class DefaultPublishValueService : IPublishValueService
     {
         public DefaultPublishValueService(IDynamicValueService dynamicValueService, IConvertService convertService)

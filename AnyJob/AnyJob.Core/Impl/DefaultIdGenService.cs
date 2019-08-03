@@ -5,15 +5,9 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(IIdGenService))]
+    [ServiceImplClass]
     public class DefaultIdGenService : IIdGenService
     {
-        
-        public string NewChildId(string parentId)
-        {
-            return Guid.NewGuid().ToString();
-        }
-
         public string NewId()
         {
             return NewSequenceGuid().ToString();

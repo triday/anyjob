@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace AnyJob.Workflow
 {
-    [ServiceImplClass(typeof(IActionFactoryService))]
+    [ServiceImplClass(Key = "workflow")]
     public class WorkflowFactoryService : IActionFactoryService
     {
         IFileStoreService fileStoreService;
@@ -18,7 +18,6 @@ namespace AnyJob.Workflow
             this.fileStoreService = fileStoreService;
         }
 
-        public string ActionKind => "workflow";
 
         public IAction CreateAction(IActionContext actionContext)
         {

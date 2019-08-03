@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(ITraceService))]
+    [ServiceImplClass]
     public class DefaultTraceService : ITraceService
     {
         private ILogService logService;

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AnyJob.DependencyInjection
 {
-    [System.AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     public sealed class ConfigClassAttribute : Attribute
     {
 
@@ -14,7 +14,6 @@ namespace AnyJob.DependencyInjection
         public ConfigClassAttribute(string configKey)
         {
             this.configKey = configKey;
-
         }
 
         public string ConfigKey

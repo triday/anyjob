@@ -6,7 +6,6 @@ namespace AnyJob
 {
     public interface IActionFactoryService
     {
-        string ActionKind { get; }
         IAction CreateAction(IActionContext actionContext);
     }
 }

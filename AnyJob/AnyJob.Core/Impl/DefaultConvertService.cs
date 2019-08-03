@@ -6,7 +6,7 @@ using AnyJob.DependencyInjection;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(IConvertService))]
+    [ServiceImplClass]
     public class DefaultConvertService : IConvertService
     {
        

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace AnyJob.App
 {
-    [ServiceImplClass(typeof(IActionFactoryService))]
+    [ServiceImplClass(Key ="app")]
     public class AppActionFactory : IActionFactoryService
     {
         private IFileStoreService fileStoreService;
@@ -18,7 +18,6 @@ namespace AnyJob.App
             this.fileStoreService = fileStoreService;
 
         }
-        public string ActionKind => "app";
 
         public IAction CreateAction(IActionContext actionContext)
         {
