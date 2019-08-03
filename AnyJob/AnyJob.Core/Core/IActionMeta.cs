@@ -1,10 +1,10 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace AnyJob
 {
+    /// <summary>
+    /// 表达动作的元数据信息
+    /// </summary>
     public interface IActionMeta
     {
         string Kind { get;}

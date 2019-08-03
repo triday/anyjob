@@ -2,6 +2,9 @@
 
 namespace AnyJob
 {
+    /// <summary>
+    /// 表示执行的结果
+    /// </summary>
     public interface IExecuteResult
     {
         Exception Error { get; set; }
