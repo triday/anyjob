@@ -10,9 +10,9 @@ namespace AnyJob.App
     [ServiceImplClass(Key ="app")]
     public class AppActionFactory : IActionFactoryService
     {
-        private IFileStoreService fileStoreService;
+        private IObjectStoreService fileStoreService;
         private IOptions<AppOption> appOption;
-        public AppActionFactory(IFileStoreService fileStoreService, IOptions<AppOption> options)
+        public AppActionFactory(IObjectStoreService fileStoreService, IOptions<AppOption> options)
         {
             this.appOption = options;
             this.fileStoreService = fileStoreService;
@@ -23,7 +23,7 @@ namespace AnyJob.App
         {
             string entryPoint = actionContext.MetaInfo.EntryPoint;
             string entryFile = System.IO.Path.GetFullPath(entryPoint, actionContext.RuntimeInfo.WorkingDirectory);
-            AppInfo appInfo = fileStoreService.ReadObject<AppInfo>(entryFile);
+            AppInfo appInfo = fileStoreService.GetObject<AppInfo>(entryFile);
             return new AppAction(appInfo, appOption.Value);
         }
     }

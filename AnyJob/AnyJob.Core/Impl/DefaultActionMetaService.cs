@@ -16,8 +16,8 @@ namespace AnyJob.Impl
     public class DefaultActionMetaService : IActionMetaService
     {
         private IOptions<PackOption> packOption;
-        private IFileStoreService fileStoreService;
-        public DefaultActionMetaService(IFileStoreService fileStoreService, IOptions<PackOption> packOption)
+        private IObjectStoreService fileStoreService;
+        public DefaultActionMetaService(IObjectStoreService fileStoreService, IOptions<PackOption> packOption)
         {
             this.fileStoreService = fileStoreService;
             this.packOption = packOption;
@@ -25,7 +25,7 @@ namespace AnyJob.Impl
         public IActionMeta GetActionMeta(IActionName actionName)
         {
             string metaFile = this.OnGetMetaFile(actionName);
-            var metaInfo = fileStoreService.ReadObject<MetaInfo>(metaFile);
+            var metaInfo = fileStoreService.GetObject<MetaInfo>(metaFile);
             return ConvertToActionMeta(metaInfo);
         }
         protected virtual string OnGetMetaFile(IActionName actionName)

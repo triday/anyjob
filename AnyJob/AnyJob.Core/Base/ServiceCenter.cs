@@ -1,6 +1,7 @@
 ﻿using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,6 +27,15 @@ namespace AnyJob
         {
             var serviceCollection = new ServiceCollection();
             var configurationRoot = InitConfiguration();
+            serviceCollection.AddLogging(builder =>
+            {
+                builder
+                    .AddConfiguration(configurationRoot.GetSection("Logging"))
+                    .AddFilter("Microsoft", LogLevel.Warning)
+                    .AddConsole();
+            });
+
+
             RegisterCurrentDomainConfigs(serviceCollection, configurationRoot);
             RegisterCurrentDomainServices(serviceCollection);
             return serviceCollection.BuildServiceProvider();

@@ -1,8 +1,8 @@
 ﻿using AnyJob.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AnyJob.Impl
@@ -13,12 +13,12 @@ namespace AnyJob.Impl
         private IServiceProvider serviceProvider;
         private IActionRuntimeService runtimeService;
         private IActionMetaService metaService;
-        private ILogService logService;
+        private ILogger logger;
         private ITraceService traceService;
         private IActionNameResolveService actionNameResolveService;
         private IDictionary<string, IActionFactoryService> actionFactoryMap;
         public DefaultActionExecuter(
-            ILogService logService,
+            ILogger<DefaultActionExecuter> logger,
             ITraceService traceService,
             IActionMetaService metaService,
             IActionRuntimeService runtimeService,
@@ -27,7 +27,7 @@ namespace AnyJob.Impl
             IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
-            this.logService = logService;
+            this.logger = logger;
             this.traceService = traceService;
             this.runtimeService = runtimeService;
             this.metaService = metaService;
@@ -196,7 +196,7 @@ namespace AnyJob.Impl
                 }
                 catch (Exception ex)
                 {
-                    logService.Warn("Error in execute action [{0}] {1} time(s).\n{2}", executeContext.ActionFullName, i, ex);
+                    this.logger.LogWarning("Error in execute action [{0}] {1} time(s).\n{2}", executeContext.ActionFullName, i, ex);
                     error = ex;
                 }
             }

@@ -12,8 +12,8 @@ namespace AnyJob.Workflow
     [ServiceImplClass(Key = "workflow")]
     public class WorkflowFactoryService : IActionFactoryService
     {
-        IFileStoreService fileStoreService;
-        public WorkflowFactoryService(IFileStoreService fileStoreService)
+        IObjectStoreService fileStoreService;
+        public WorkflowFactoryService(IObjectStoreService fileStoreService)
         {
             this.fileStoreService = fileStoreService;
         }
@@ -24,7 +24,7 @@ namespace AnyJob.Workflow
             string workingDir = actionContext.RuntimeInfo.WorkingDirectory;
             string entryPoint = actionContext.MetaInfo.EntryPoint;
             string entryFile = System.IO.Path.Combine(workingDir, entryPoint);
-            var workflowInfo = fileStoreService.ReadObject<WorkflowInfo>(entryFile);
+            var workflowInfo = fileStoreService.GetObject<WorkflowInfo>(entryFile);
             return new WorkflowAction(workflowInfo);
         }
     }
