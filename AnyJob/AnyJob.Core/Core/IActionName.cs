@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AnyJob
+﻿namespace AnyJob
 {
+    /// <summary>
+    /// 表示动作的结构化名称
+    /// </summary>
     public interface IActionName
     {
         string Name { get;  }

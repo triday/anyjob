@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
-using AnyJob.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using System.Collections.ObjectModel;
+﻿using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace AnyJob.Impl
 {
