@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(IFileStoreService))]
+    [ServiceImplClass]
 
     public class DefaultFileStoreService : IFileStoreService
     {

@@ -12,7 +12,7 @@ using Newtonsoft.Json.Schema;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(IActionMetaService))]
+    [ServiceImplClass]
     public class DefaultActionMetaService : IActionMetaService
     {
         private IOptions<PackOption> packOption;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(IExpressionTemplateService))]
+    [ServiceImplClass]
     public class DefaultExpressionTemplateService : IExpressionTemplateService
     {
         const string PrefixText = "<%";

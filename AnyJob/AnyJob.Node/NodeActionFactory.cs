@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AnyJob.Node
 {
-    [ServiceImplClass(typeof(IActionFactoryService))]
+    [ServiceImplClass(Key ="node")]
     public class NodeActionFactory : IActionFactoryService
     {
         public NodeActionFactory(IOptions<NodeOption> option)
@@ -14,7 +14,6 @@ namespace AnyJob.Node
             this.option = option;
         }
         private IOptions<NodeOption> option;
-        public string ActionKind => "node";
 
         public IAction CreateAction(IActionContext actionContext)
         {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(ITimeService))]
+    [ServiceImplClass]
     public class DefaultTimeService : ITimeService
     {
         public DateTimeOffset Now()

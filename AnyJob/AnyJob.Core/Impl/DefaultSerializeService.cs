@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(ISerializeService))]
+    [ServiceImplClass]
     public class DefaultSerializeService : ISerializeService
     {
         public string Kind

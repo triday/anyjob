@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(IActionExecuterService))]
+    [ServiceImplClass]
     public class DefaultActionExecuter : IActionExecuterService
     {
         private IServiceProvider serviceProvider;
         private IActionRuntimeService runtimeService;
         private IActionMetaService metaService;
         private ILogService logService;
-        private ITimeService timeService;
         private ITraceService traceService;
         private IActionNameResolveService actionNameResolveService;
-        private Dictionary<string, IActionFactoryService> actionFactoryMap;
+        private IDictionary<string, IActionFactoryService> actionFactoryMap;
         public DefaultActionExecuter(
             ILogService logService,
             ITraceService traceService,
@@ -33,7 +32,7 @@ namespace AnyJob.Impl
             this.runtimeService = runtimeService;
             this.metaService = metaService;
             this.actionNameResolveService = actionNameResolveService;
-            this.actionFactoryMap = actionFactories.ToDictionary(p => p.ActionKind, StringComparer.CurrentCultureIgnoreCase);
+            this.actionFactoryMap = actionFactories.ToServiceDictionary();
         }
 
         public Task<ExecuteResult> Execute(IExecuteContext executeContext)

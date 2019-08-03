@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AnyJob.Workflow.Impl
 {
-    [ServiceImplClass(typeof(IGroupRunnerService))]
+    [ServiceImplClass]
     public class DefaultGroupRunnerService : IGroupRunnerService
     {
         IActionExecuterService actionExecuterService;

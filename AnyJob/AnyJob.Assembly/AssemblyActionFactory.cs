@@ -1,12 +1,9 @@
 ﻿using AnyJob.DependencyInjection;
-using AnyJob.Impl;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 namespace AnyJob.Assembly
 {
-    [ServiceImplClass(typeof(IActionFactoryService))]
+    [ServiceImplClass(Key ="assembly")]
     public class AssemblyActionFactory : IActionFactoryService
     {
         public AssemblyActionFactory(IConvertService convertService)
@@ -14,7 +11,6 @@ namespace AnyJob.Assembly
             this.convertService = convertService;
         }
         private IConvertService convertService;
-        public string ActionKind => "assembly";
 
         public IAction CreateAction(IActionContext actionContext)
         {

@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass(typeof(IJobEngineService))]
+    [ServiceImplClass]
     public class DefaultJobEngineService : IJobEngineService
     {
 

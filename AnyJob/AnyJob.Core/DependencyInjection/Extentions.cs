@@ -16,11 +16,13 @@ namespace AnyJob.DependencyInjection
             var mapInfos = from p in assembly.GetTypes()
                            where p.IsClass && !p.IsAbstract && Attribute.IsDefined(p, typeof(ServiceImplClassAttribute))
                            let attr = Attribute.GetCustomAttribute(p, typeof(ServiceImplClassAttribute)) as ServiceImplClassAttribute
+                           let injectType = attr.InjectType ?? p.GetInterfaces().FirstOrDefault()
+                           where injectType != null
                            where !filter(p, attr.InjectType)
                            select new
                            {
                                InstanceType = p,
-                               attr.InjectType,
+                               InjectType = injectType,
                                attr.Lifetime
                            };
             foreach (var map in mapInfos)
@@ -44,7 +46,7 @@ namespace AnyJob.DependencyInjection
         {
             foreach (var assembly in assemblies)
             {
-                ConfigAssemblyServices(services, assembly,filter);
+                ConfigAssemblyServices(services, assembly, filter);
             }
             return services;
         }
@@ -62,6 +64,23 @@ namespace AnyJob.DependencyInjection
                 AddOptionInternal(services, configType, section);
             }
             return services;
+        }
+
+        public static IDictionary<string, T> ToServiceDictionary<T>(this IEnumerable<T> services)
+        {
+            return services.Where(p => p != null).ToDictionary(p => GetServiceKey(p.GetType()));
+        }
+        private static string GetServiceKey(Type type)
+        {
+            ServiceImplClassAttribute serviceImplClass = Attribute.GetCustomAttribute(type, typeof(ServiceImplClassAttribute)) as ServiceImplClassAttribute;
+            if (serviceImplClass == null || string.IsNullOrEmpty(serviceImplClass.Key))
+            {
+                return type.FullName;
+            }
+            else
+            {
+                return serviceImplClass.Key;
+            }
         }
 
         private static void AddOptionInternal(IServiceCollection services, Type optionType, IConfiguration configuration)
