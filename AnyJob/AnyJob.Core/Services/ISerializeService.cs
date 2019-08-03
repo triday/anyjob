@@ -4,6 +4,7 @@ using System.Text;
 
 namespace AnyJob
 {
+    
     public interface ISerializeService
     {
         string Kind { get; }

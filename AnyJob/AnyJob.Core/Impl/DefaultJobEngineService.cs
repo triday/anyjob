@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using System.Collections.ObjectModel;
+using Microsoft.Extensions.Logging;
 
 namespace AnyJob.Impl
 {
@@ -18,16 +19,16 @@ namespace AnyJob.Impl
     {
 
 
-        public DefaultJobEngineService(ILogService logService, IActionExecuterService actionExecuterService, IIdGenService idGenService)
+        public DefaultJobEngineService(ILogger<DefaultJobEngineService> logger, IActionExecuterService actionExecuterService, IIdGenService idGenService)
         {
-            this.logService = logService;
+            this.logger = logger;
             this.idGenService = idGenService;
             this.actionExecuterService = actionExecuterService;
         }
 
         private IIdGenService idGenService;
 
-        private ILogService logService;
+        private ILogger logger;
 
         private IActionExecuterService actionExecuterService;
 
@@ -45,13 +46,13 @@ namespace AnyJob.Impl
         {
             if (currentJobs.TryGetValue(executionId, out var job))
             {
-                this.logService.Info($"Begin cancel execution [{executionId}]");
+                this.logger.LogInformation($"Begin cancel execution [{executionId}]");
                 job.Spy.Cancel();
                 return true;
             }
             else
             {
-                this.logService.Warn($"Can not cancel execution [{executionId}]");
+                this.logger.LogWarning($"Can not cancel execution [{executionId}]");
                 return false;
             }
         }
@@ -69,7 +70,7 @@ namespace AnyJob.Impl
             {
                 if (this.currentJobs.Count >= MAX_JOB_COUNT)
                 {
-                    logService.Error($"Maximizing jobs limit, total count {this.currentJobs.Count}.");
+                    logger.LogError($"Maximizing jobs limit, total count {this.currentJobs.Count}.");
                     throw ActionException.FromErrorCode(nameof(ErrorCodes.JobCountLimit), MAX_JOB_COUNT);
                 }
                 var spy = this.OnCreateSpy(jobStartInfo);
@@ -78,16 +79,16 @@ namespace AnyJob.Impl
                 var task = actionExecuterService.Execute(context);
                 var jobinfo = new Job() { ExecutionId = executePath.ExecuteId, StartInfo = jobStartInfo, Spy = spy, Task = task };
                 currentJobs[executePath.ExecuteId] = jobinfo;
-                logService.Debug($"Add jobInfo in engine [{ executePath.ExecuteId}]");
+                this.logger.LogDebug($"Add jobInfo in engine [{ executePath.ExecuteId}]");
                 task.ContinueWith((e) =>
                 {
                     if (currentJobs.TryRemove(executePath.ExecuteId, out var job))
                     {
-                        logService.Debug($"Remove jobInfo in engine [{ executePath.ExecuteId}].");
+                        this.logger.LogDebug($"Remove jobInfo in engine [{ executePath.ExecuteId}].");
                     }
                     else
                     {
-                        logService.Warn($"Can not remove job info in engine [{ executePath.ExecuteId}].");
+                        this.logger.LogWarning($"Can not remove job info in engine [{ executePath.ExecuteId}].");
                     }
                 });
                 return jobinfo;
