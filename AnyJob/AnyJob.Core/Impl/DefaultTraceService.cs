@@ -20,5 +20,15 @@ namespace AnyJob.Impl
                 context.ActionFullName,
                 state);
         }
+        protected class TraceInfo
+        {
+            public string ExecuteName { get; set; }
+            public IExecutePath ExecutePath { get; set; }
+            public IActionName ActionName { get; set; }
+            public ExecuteState State { get; set; }
+            public ExecuteResult Result { get; set; }
+            public IActionMeta MetaInfo { get; set; }
+            public IActionRuntime RuntimeInfo { get; set; }
+        }
     }
 }

@@ -141,9 +141,10 @@ namespace AnyJob.Impl
             {
                 foreach (var metaEntry in actionMeta.Inputs)
                 {
-                    if (metaEntry.Value.Default != null)
+                    var defaultValue = metaEntry.Value.DefaultValue;
+                    if (defaultValue != null)
                     {
-                        runtimeArgs.Add(metaEntry.Key, metaEntry.Value.Default);
+                        runtimeArgs.Add(metaEntry.Key, defaultValue);
                     }
                 }
             }

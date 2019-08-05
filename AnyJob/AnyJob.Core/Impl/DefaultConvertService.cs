@@ -10,13 +10,12 @@ namespace AnyJob.Impl
         {
             try
             {
-               return System.Convert.ChangeType(value, targetType);
+                return System.Convert.ChangeType(value, targetType);
             }
             catch (Exception ex)
             {
-                throw ActionException.FromErrorCode(ex, nameof(ErrorCodes.CONV_ERROR));
+                throw Errors.ConvertError(ex, value, targetType);
             }
-           
         }
     }
 }

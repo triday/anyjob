@@ -1,0 +1,6 @@
+﻿{
+    "default": 100,
+    "must": true,
+    "type": "number",
+    "writeOnly": true
+}
