@@ -1,0 +1,20 @@
+﻿{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "JSON Schema for AppInfo",
+    "type": "object",
+    "properties": {
+        "command": {
+            "type": "string",
+            "description": "This command line text."
+        },
+        "envs": {
+            "type": "array",
+            "description": "The app environment.",
+            "minItems": 1,
+            "items": {
+                "type": "number"
+            }
+        }
+    },
+    "required": [ "command" ]
+}

@@ -20,9 +20,16 @@ namespace AnyJob.Impl
         }
         public IActionMeta GetActionMeta(IActionName actionName)
         {
-            string metaFile = this.OnGetMetaFile(actionName);
-            var metaInfo = fileStoreService.GetObject<MetaInfo>(metaFile);
-            return ConvertToActionMeta(metaInfo);
+            try
+            {
+                string metaFile = this.OnGetMetaFile(actionName);
+                var metaInfo = fileStoreService.GetObject<MetaInfo>(metaFile);
+                return ConvertToActionMeta(metaInfo);
+            }
+            catch (System.Exception ex)
+            {
+                throw Errors.GetMetaInfoError(ex, actionName);
+            }
         }
         protected virtual string OnGetMetaFile(IActionName actionName)
         {
@@ -42,8 +49,6 @@ namespace AnyJob.Impl
         {
             if (metaInfo == null) return null;
             var inputList = metaInfo.Inputs ?? new Dictionary<string, JSchema>();
-            
-
             return new ActionMeta()
             {
                 Kind = metaInfo.Kind,

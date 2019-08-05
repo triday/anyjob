@@ -7,27 +7,30 @@ namespace AnyJob.Impl
     [ServiceImplClass]
     public class DefaultSerializeService : ISerializeService
     {
-        public string Kind
-        {
-            get
-            {
-                return "json";
-            }
-        }
-
         public string Serialize(object obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            try
+            {
+                return JsonConvert.SerializeObject(obj);
+            }
+            catch (Exception ex)
+            {
+                throw Errors.SerializeError(ex, obj);
+            }
         }
 
         public T Deserialize<T>(string text)
         {
-            return JsonConvert.DeserializeObject<T>(text);
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(text);
+            }
+            catch (Exception ex)
+            {
+                throw Errors.DeserializeError(ex, typeof(T));
+            }
         }
 
-        public object Deserialize(string text, Type type)
-        {
-            return JsonConvert.DeserializeObject(text, type);
-        }
+     
     }
 }

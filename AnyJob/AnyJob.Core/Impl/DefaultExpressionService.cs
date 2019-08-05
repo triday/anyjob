@@ -9,8 +9,15 @@ namespace AnyJob.Impl
     {
         public object Exec(string line, IDictionary<string, object> contexts)
         {
-            var expression = DynamicExpressionParser.ParseLambda(typeof(object), line, contexts);
-            return expression.Compile().DynamicInvoke();
+            try
+            {
+                var expression = DynamicExpressionParser.ParseLambda(typeof(object), line, contexts);
+                return expression.Compile().DynamicInvoke();
+            }
+            catch (System.Exception ex)
+            {
+                throw Errors.CalcExpressionValueError(ex, line);
+            }
         }
     }
 }

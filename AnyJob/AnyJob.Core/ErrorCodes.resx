@@ -120,9 +120,6 @@
   <data name="ActionDisabled" xml:space="preserve">
     <value>Action "{0}" is disabled.</value>
   </data>
-  <data name="CONV_ERROR" xml:space="preserve">
-    <value>Convert error.</value>
-  </data>
   <data name="E00001" xml:space="preserve">
     <value>Action exec error.</value>
   </data>
@@ -131,6 +128,33 @@
   </data>
   <data name="E00003" xml:space="preserve">
     <value>Canceled by user.</value>
+  </data>
+  <data name="E00004" xml:space="preserve">
+    <value>将值“{0}”转换为类型“{1}”失败。</value>
+  </data>
+  <data name="E00005" xml:space="preserve">
+    <value>计算表达式“{0}”的值发生错误。</value>
+  </data>
+  <data name="E00006" xml:space="preserve">
+    <value>序列化对象“{0}”过程发生错误。</value>
+  </data>
+  <data name="E00007" xml:space="preserve">
+    <value>反序列化类型“{0}”过程发生错误。</value>
+  </data>
+  <data name="E00008" xml:space="preserve">
+    <value>从文件“{0}”获取类型“{1}”的对象的过程中发生错误。</value>
+  </data>
+  <data name="E00009" xml:space="preserve">
+    <value>将对象"{0}"保存到文件"{1}"的过程中发生错误。</value>
+  </data>
+  <data name="E00010" xml:space="preserve">
+    <value>动态求值发生错误。</value>
+  </data>
+  <data name="E10001" xml:space="preserve">
+    <value>获取动作“{0}”运行时信息发生错误。</value>
+  </data>
+  <data name="E10002" xml:space="preserve">
+    <value>获取"{0}"的元数据信息发生错误。</value>
   </data>
   <data name="InvalidActionName" xml:space="preserve">
     <value>Invalid action name "{0}".</value>

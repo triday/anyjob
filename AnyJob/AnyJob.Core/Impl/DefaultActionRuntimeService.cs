@@ -1,6 +1,7 @@
 ﻿using AnyJob.Config;
 using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -16,12 +17,20 @@ namespace AnyJob.Impl
         private IOptions<PackOption> packOption;
         public IActionRuntime GetRunTime(IActionName actionName)
         {
-            string packDir = Path.Combine(this.packOption.Value.RootDir, actionName.Pack, actionName.Version ?? string.Empty);
-            return new ActionRuntime()
+            try
             {
-                WorkingDirectory = Path.GetFullPath(packDir),
-                OSPlatForm = GetCurrentOSPlatform()
-            };
+                string packDir = Path.Combine(this.packOption.Value.RootDir, actionName.Pack, actionName.Version ?? string.Empty);
+                return new ActionRuntime()
+                {
+                    WorkingDirectory = Path.GetFullPath(packDir),
+                    OSPlatForm = GetCurrentOSPlatform()
+                };
+            }
+            catch (Exception ex)
+            {
+                throw Errors.GetRuntimeInfoError(ex, actionName);
+            }
+
         }
         private OSPlatform GetCurrentOSPlatform()
         {

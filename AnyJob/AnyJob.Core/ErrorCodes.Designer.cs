@@ -70,15 +70,6 @@ namespace AnyJob {
         }
         
         /// <summary>
-        ///   查找类似 Convert error. 的本地化字符串。
-        /// </summary>
-        public static string CONV_ERROR {
-            get {
-                return ResourceManager.GetString("CONV_ERROR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Action exec error. 的本地化字符串。
         /// </summary>
         public static string E00001 {
@@ -102,6 +93,87 @@ namespace AnyJob {
         public static string E00003 {
             get {
                 return ResourceManager.GetString("E00003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 将值“{0}”转换为类型“{1}”失败。 的本地化字符串。
+        /// </summary>
+        public static string E00004 {
+            get {
+                return ResourceManager.GetString("E00004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 计算表达式“{0}”的值发生错误。 的本地化字符串。
+        /// </summary>
+        public static string E00005 {
+            get {
+                return ResourceManager.GetString("E00005", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 序列化对象“{0}”过程发生错误。 的本地化字符串。
+        /// </summary>
+        public static string E00006 {
+            get {
+                return ResourceManager.GetString("E00006", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 反序列化类型“{0}”过程发生错误。 的本地化字符串。
+        /// </summary>
+        public static string E00007 {
+            get {
+                return ResourceManager.GetString("E00007", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 从文件“{0}”获取类型“{1}”的对象的过程中发生错误。 的本地化字符串。
+        /// </summary>
+        public static string E00008 {
+            get {
+                return ResourceManager.GetString("E00008", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 将对象&quot;{0}&quot;保存到文件&quot;{1}&quot;的过程中发生错误。 的本地化字符串。
+        /// </summary>
+        public static string E00009 {
+            get {
+                return ResourceManager.GetString("E00009", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 动态求值发生错误。 的本地化字符串。
+        /// </summary>
+        public static string E00010 {
+            get {
+                return ResourceManager.GetString("E00010", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 获取动作“{0}”运行时信息发生错误。 的本地化字符串。
+        /// </summary>
+        public static string E10001 {
+            get {
+                return ResourceManager.GetString("E10001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 获取&quot;{0}&quot;的元数据信息发生错误。 的本地化字符串。
+        /// </summary>
+        public static string E10002 {
+            get {
+                return ResourceManager.GetString("E10002", resourceCulture);
             }
         }
         

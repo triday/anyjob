@@ -1,7 +1,9 @@
 ﻿using AnyJob.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AnyJob.Impl
 {
@@ -17,45 +19,58 @@ namespace AnyJob.Impl
         private IExpressionService expressionService;
         public object GetDynamicValue(object value, IActionParameter actionParameter)
         {
-            if (value == null) return null;
-            if (value is string)
+            try
             {
-                if (expressionTemplateService.IsExpression(value as string))
+                if (value == null) return null;
+                if (value is string)
                 {
-                    var expression = expressionTemplateService.PickExpression(value as string);
-                    return expressionService.Exec(expression, actionParameter.GetAllValues());
+                    return GetStringDynamicValue(value as string, actionParameter);
+                }
+                else if (value is JArray)
+                {
+                    return GetJArrayDynamicValue(value as JArray, actionParameter);
+                }
+                else if (value is JObject)
+                {
+                    return GetJObjectDynamicValue(value as JObject, actionParameter);
                 }
                 else
                 {
                     return value;
                 }
             }
-            else if (value is Array)
+            catch (Exception ex)
             {
-                Array valueArray = value as Array;
-                object[] resultArray = new object[valueArray.Length];
-                for (int i = 0; i < resultArray.Length; i++)
-                {
-                    resultArray[i] = GetDynamicValue(valueArray.GetValue(i), actionParameter);
-                }
-                return resultArray;
+                throw Errors.GetDynamicValueError(ex);
             }
-            else if (value is IDictionary)
+            
+        }
+        private object GetStringDynamicValue(string text, IActionParameter actionParameter)
+        {
+            if (expressionTemplateService.IsExpression(text))
             {
-                IDictionary valueDictionary = value as IDictionary;
-                Dictionary<object, object> resultDictionary = new Dictionary<object, object>();
-                foreach (var key in valueDictionary.Keys)
-                {
-                    object dynamicKey = GetDynamicValue(key, actionParameter);
-                    object dynamicValue = GetDynamicValue(valueDictionary[key], actionParameter);
-                    resultDictionary[dynamicKey] = dynamicValue;
-                }
-                return resultDictionary;
+                var expression = expressionTemplateService.PickExpression(text);
+                return expressionService.Exec(expression, actionParameter.GetAllValues());
             }
             else
             {
-                return value;
+                return text;
             }
+        }
+        private object GetJArrayDynamicValue(JArray jArray, IActionParameter actionParameter)
+        {
+            return new JArray(jArray.Select(p => GetDynamicValue(p, actionParameter)).ToArray());
+        }
+        private object GetJObjectDynamicValue(JObject jObject, IActionParameter actionParameter)
+        {
+            var result = new JObject();
+            foreach (var prop in jObject)
+            {
+                object dynamicKey = GetDynamicValue(prop.Key, actionParameter);
+                object dynamicValue = GetDynamicValue(prop.Value, actionParameter);
+                result[dynamicKey] = JToken.FromObject(dynamicValue);
+            }
+            return result;
         }
     }
 }

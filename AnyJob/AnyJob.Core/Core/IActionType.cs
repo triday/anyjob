@@ -5,12 +5,12 @@ namespace AnyJob
 
     public interface IActionType
     {
-        object Default { get; }
+        object DefaultValue { get; }
 
         bool IsMust { get; }
 
         bool Validate(object value, out IList<string> errorMessages);
 
-        object Protect(object value);
+        object MaskSecret(object value);
     }
 }
