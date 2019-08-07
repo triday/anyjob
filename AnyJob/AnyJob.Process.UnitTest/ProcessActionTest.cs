@@ -52,25 +52,25 @@ namespace AnyJob.Process.UnitTest
 
         class PingProcessAction : ProcessAction
         {
-            protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
+            protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
             {
-                return ("ping", "127.0.0.1 -n 2");
+                return ("ping", "127.0.0.1 -n 2",string.Empty);
             }
         }
 
         class EchoProcessAction : ProcessAction
         {
-            protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
+            protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
             {
-                return ("cmd", "/c echo hello");
+                return ("cmd", "/c echo hello",string.Empty);
             }
         }
 
         class JavaVersionProcessAction : ProcessAction
         {
-            protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
+            protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
             {
-                return ("java", "-version");
+                return ("java", "-version",string.Empty);
             }
         }
     }
