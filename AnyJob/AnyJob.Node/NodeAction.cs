@@ -29,19 +29,14 @@ namespace AnyJob.Node
         {
             return string.Join(Path.PathSeparator, paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
         }
-        protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
+        protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
         {
             ISerializeService serializeService = context.ServiceProvider.GetService<ISerializeService>();
             string wrapperPath = Path.GetFullPath(Option.WrapperPath, Environment.CurrentDirectory);
             string paramsText = serializeService.Serialize(context.Parameters.Arguments ?? new object());
             string entryFile = Path.Combine(context.RuntimeInfo.WorkingDirectory, this.EntryFile);
-            string[] args = new string[] {
-                wrapperPath,
-                entryFile,
-                "json",
-                paramsText.Replace("\"","\\\"")
-            };
-            return (Option.NodePath, string.Join(' ', args));
+            string[] args = new string[] { wrapperPath, entryFile };
+            return (Option.NodePath, string.Join(' ', args), paramsText);
         }
     }
 }
