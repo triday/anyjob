@@ -1,0 +1,18 @@
+﻿{
+    "enabled": true,
+    "description": "concat from node",
+    "entrypoint": "concat.js",
+    "kind": "node",
+    "inputs": {
+        "num1": {
+            "type": "string",
+            "must": true
+        },
+        "num2": {
+            "type": "string"
+        }
+    },
+    "output": {
+        "type": "string"
+    }
+}

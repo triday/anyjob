@@ -17,9 +17,9 @@ namespace AnyJob.Process
         public virtual object Run(IActionContext context)
         {
             string workingDir = context.RuntimeInfo.WorkingDirectory;
-            var (fileName, arguments) = this.OnGetCommands(context);
+            var (fileName, arguments, stdInput) = this.OnGetCommands(context);
             IDictionary<string, string> envs = this.OnGetEnvironment(context);
-            string output = this.OnRunProcess(context, workingDir, fileName, arguments, envs);
+            string output = this.OnRunProcess(context, workingDir, fileName, arguments, stdInput, envs);
 
             return OnParseResult(context, output);
         }
@@ -34,9 +34,9 @@ namespace AnyJob.Process
             return new Dictionary<string, string>();
         }
 
-        protected abstract (string FileName, string Arguments) OnGetCommands(IActionContext context);
+        protected abstract (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context);
 
-        protected virtual string OnRunProcess(IActionContext context, string workingDir, string fileName, string arguments, IDictionary<string, string> envs)
+        protected virtual string OnRunProcess(IActionContext context, string workingDir, string fileName, string arguments, string stdInput, IDictionary<string, string> envs)
         {
             int timeoutSecond = this.OnGetMaximumTimeSeconds(context);
             int timeout = timeoutSecond * 1000;
@@ -46,6 +46,7 @@ namespace AnyJob.Process
                 CreateNoWindow = true,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
+                RedirectStandardInput = !string.IsNullOrEmpty(stdInput),
                 RedirectStandardError = true,
             };
             foreach (var env in envs)
@@ -56,6 +57,21 @@ namespace AnyJob.Process
             StringBuilder errorTextBuilder = new StringBuilder();
             using (var process = System.Diagnostics.Process.Start(startInfo))
             {
+                if (!string.IsNullOrEmpty(stdInput))
+                {
+                    var chars = stdInput.ToCharArray();
+                    int count = 1024;
+                    for (int i = 0; i < chars.Length; i += count)
+                    {
+                        int writeCount = Math.Min(count, chars.Length - i);
+                        if (writeCount > 0) {
+                            process.StandardInput.Write(chars, i, writeCount);
+                            process.StandardInput.Flush();
+                        }
+                    }
+                    process.StandardInput.Close();
+                }
+               
                 using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
                 using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
                 {
