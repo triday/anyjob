@@ -29,13 +29,13 @@ namespace AnyJob.App
             }
             return base.OnGetEnvironment(context);
         }
-        protected override (string FileName, string Arguments) OnGetCommands(IActionContext context)
+        protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
         {
             var items = this.AppInfo.Command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var args = context.Parameters.Arguments;
             var translateItems = items.Select(p => Translate(p, args));
             var fileName = this.FindAppFullPath(context, translateItems.First());
-            return (fileName, string.Join(' ', translateItems.Skip(1)));
+            return (fileName, string.Join(' ', translateItems.Skip(1)), string.Empty);
         }
 
         private string Translate(string item, IDictionary<string, object> input)

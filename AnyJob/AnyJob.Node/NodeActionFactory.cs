@@ -20,5 +20,7 @@ namespace AnyJob.Node
             var entryFile = actionContext.MetaInfo.EntryPoint;
             return new NodeAction(option.Value, entryFile);
         }
+
+       
     }
 }
