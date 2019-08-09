@@ -17,11 +17,13 @@ if __name__ == "__main__":
         _, module = sys.argv
         action_argv = json.loads(input())
         action_res = run_action(module, action_argv)
-        return_text = json.dumps({'result': action_res})
         print(RESULT_SPLIT_TEXT)
-        print(return_text)
-    except:
-        error = traceback.format_exc()
-        return_text = json.dumps({'error': error})
+        print(json.dumps({'result': action_res}))
+    except BaseException as ex:
+        error = {
+            'type': type(ex).__name__,
+            'message': str(ex),
+            'stack': traceback.format_exc()
+        }
         print(RESULT_SPLIT_TEXT)
-        print(return_text)
+        print(json.dumps({'error': error}))
