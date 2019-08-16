@@ -35,7 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Assembly.UnitTest", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Python", "AnyJob.Python\AnyJob.Python.csproj", "{2202F98D-9C2D-47ED-B2DB-2187A5D89E32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Python.UnitTest", "AnyJob.Python.UnitTest\AnyJob.Python.UnitTest.csproj", "{2F9B3462-C39E-4F50-A5B3-B62AA7D07B0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Python.UnitTest", "AnyJob.Python.UnitTest\AnyJob.Python.UnitTest.csproj", "{2F9B3462-C39E-4F50-A5B3-B62AA7D07B0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Java", "AnyJob.Java\AnyJob.Java.csproj", "{419B76BF-DC8B-44CE-A676-36729AB743A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +109,10 @@ Global
 		{2F9B3462-C39E-4F50-A5B3-B62AA7D07B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F9B3462-C39E-4F50-A5B3-B62AA7D07B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F9B3462-C39E-4F50-A5B3-B62AA7D07B0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{419B76BF-DC8B-44CE-A676-36729AB743A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{419B76BF-DC8B-44CE-A676-36729AB743A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{419B76BF-DC8B-44CE-A676-36729AB743A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{419B76BF-DC8B-44CE-A676-36729AB743A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
