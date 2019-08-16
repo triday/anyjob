@@ -57,21 +57,8 @@ namespace AnyJob.Process
             StringBuilder errorTextBuilder = new StringBuilder();
             using (var process = System.Diagnostics.Process.Start(startInfo))
             {
-                if (!string.IsNullOrEmpty(stdInput))
-                {
-                    var chars = stdInput.ToCharArray();
-                    int count = 1024;
-                    for (int i = 0; i < chars.Length; i += count)
-                    {
-                        int writeCount = Math.Min(count, chars.Length - i);
-                        if (writeCount > 0) {
-                            process.StandardInput.Write(chars, i, writeCount);
-                            process.StandardInput.Flush();
-                        }
-                    }
-                    process.StandardInput.Close();
-                }
-               
+                WriteStdInput(process, stdInput);
+
                 using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
                 using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
                 {
@@ -118,6 +105,25 @@ namespace AnyJob.Process
                         throw ErrorFactory.FromCode(nameof(Errors.E80001), timeoutSecond);
                     }
                 }
+            }
+        }
+
+        private static void WriteStdInput(System.Diagnostics.Process process, string stdInput)
+        {
+            if (!string.IsNullOrEmpty(stdInput))
+            {
+                var chars = stdInput.ToCharArray();
+                int count = 1024;
+                for (int i = 0; i < chars.Length; i += count)
+                {
+                    int writeCount = Math.Min(count, chars.Length - i);
+                    if (writeCount > 0)
+                    {
+                        process.StandardInput.Write(chars, i, writeCount);
+                        process.StandardInput.Flush();
+                    }
+                }
+                process.StandardInput.Close();
             }
         }
 
