@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AnyJob
 {
@@ -21,20 +19,11 @@ namespace AnyJob
         {
             this.ErrorCode = errorCode;
         }
-
+        /// <summary>
+        /// 获取异常编码
+        /// </summary>
         public string ErrorCode { get; private set; }
 
-        public static ActionException FromErrorCode(string errorCode, params object[] args)
-        {
-            string messageFormat = ErrorCodes.ResourceManager.GetString(errorCode, ErrorCodes.Culture);
-            string message = string.Format(messageFormat, args);
-            return new ActionException(errorCode, message);
-        }
-        public static ActionException FromErrorCode(Exception exception, string errorCode, params object[] args)
-        {
-            string messageFormat = ErrorCodes.ResourceManager.GetString(errorCode, ErrorCodes.Culture);
-            string message = string.Format(messageFormat, args);
-            return new ActionException(errorCode, message, exception);
-        }
+
     }
 }

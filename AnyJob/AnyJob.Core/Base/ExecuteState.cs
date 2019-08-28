@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AnyJob
+﻿namespace AnyJob
 {
     /// <summary>
     /// 表示任务执行的状态
