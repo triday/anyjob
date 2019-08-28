@@ -46,6 +46,14 @@ namespace AnyJob
             return FromErrorMessage(nameof(ErrorCodes.E10002), exception, ToText(actionName));
         }
 
+        public static ActionException JobCountLimitError(int maxJobCount)
+        {
+            return FromErrorMessage(nameof(ErrorCodes.E10003),maxJobCount);
+        }
+        public static ActionException InvalidActionName(string name)
+        {
+            return FromErrorMessage(nameof(ErrorCodes.InvalidActionName), name);
+        }
         private static ActionException FromErrorMessage(string name, params object[] args)
         {
             string format = ErrorCodes.ResourceManager.GetString(name);

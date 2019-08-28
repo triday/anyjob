@@ -65,7 +65,7 @@ namespace AnyJob.Impl
                 if (this.currentJobs.Count >= MAX_JOB_COUNT)
                 {
                     logger.LogError($"Maximizing jobs limit, total count {this.currentJobs.Count}.");
-                    throw ActionException.FromErrorCode(nameof(ErrorCodes.JobCountLimit), MAX_JOB_COUNT);
+                    throw Errors.JobCountLimitError(MAX_JOB_COUNT);
                 }
                 var spy = this.OnCreateSpy(jobStartInfo);
                 var executePath = this.OnCreateExecutePath(jobStartInfo);

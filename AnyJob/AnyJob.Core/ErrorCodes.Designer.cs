@@ -178,20 +178,20 @@ namespace AnyJob {
         }
         
         /// <summary>
+        ///   查找类似 任务数量达到上限{0}。 的本地化字符串。
+        /// </summary>
+        public static string E10003 {
+            get {
+                return ResourceManager.GetString("E10003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Invalid action name &quot;{0}&quot;. 的本地化字符串。
         /// </summary>
         public static string InvalidActionName {
             get {
                 return ResourceManager.GetString("InvalidActionName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The job count limited. 的本地化字符串。
-        /// </summary>
-        public static string JobCountLimit {
-            get {
-                return ResourceManager.GetString("JobCountLimit", resourceCulture);
             }
         }
     }

@@ -22,7 +22,7 @@ namespace AnyJob.Impl
             }
             else
             {
-                throw ActionException.FromErrorCode(nameof(ErrorCodes.InvalidActionName), fullName);
+                throw Errors.InvalidActionName(fullName);
             }
         }
     }

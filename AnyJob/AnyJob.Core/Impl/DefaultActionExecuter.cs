@@ -37,34 +37,42 @@ namespace AnyJob.Impl
 
         public Task<ExecuteResult> Execute(IExecuteContext executeContext)
         {
-            this.OnTraceState(executeContext, ExecuteState.Ready);
+            var traceInfo = new TraceInfo()
+            {
+                ExecuteContext = executeContext
+            };
+            this.OnTraceState(traceInfo, ExecuteState.Ready);
+
             return Task.Run(() =>
             {
                 executeContext.Token.ThrowIfCancellationRequested();
-                this.OnTraceState(executeContext, ExecuteState.Running);
-                var result = this.OnExecute(executeContext);
+                this.OnTraceState(traceInfo, ExecuteState.Running);
+                var result = this.OnExecute(executeContext,traceInfo);
                 if (result.IsSuccess)
                 {
-                    this.OnTraceState(executeContext, ExecuteState.Success, result);
+                    this.OnTraceState(traceInfo, ExecuteState.Success, result);
                 }
                 else
                 {
-                    this.OnTraceState(executeContext, ExecuteState.Failure, result);
+                    this.OnTraceState(traceInfo, ExecuteState.Failure, result);
                 }
                 return result;
             }, executeContext.Token);
         }
 
-        protected virtual ExecuteResult OnExecute(IExecuteContext executionContext)
+        protected virtual ExecuteResult OnExecute( IExecuteContext executionContext, TraceInfo traceInfo)
         {
             try
             {
                 //1 resolve action name
                 var actionName = this.OnResolveActionName(executionContext.ActionFullName);
+                traceInfo.ActionName = actionName;
                 //2 get runtime info
                 var runtimeInfo = this.OnGetActionRuntime(actionName);
+                traceInfo.ActionRuntime = runtimeInfo;
                 //3 get meta info
                 var metaInfo = this.OnGetActionMeta(actionName);
+                traceInfo.ActionMeta = metaInfo;
                 //4 resolve action factory 
                 var actionFactory = this.OnResolveActionFactory(metaInfo);
                 //5 create action context
@@ -214,9 +222,11 @@ namespace AnyJob.Impl
 
 
 
-        protected virtual void OnTraceState(IExecuteContext context, ExecuteState state, ExecuteResult result = null)
+        protected virtual void OnTraceState(TraceInfo traceInfo, ExecuteState state, ExecuteResult result = null)
         {
-            traceService.TraceState(context, state, result);
+            traceInfo.State = state;
+            traceInfo.Result = result;
+            traceService.TraceState(traceInfo);
         }
 
     }
