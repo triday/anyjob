@@ -13,5 +13,6 @@ namespace AnyJob
         public IActionRuntime RuntimeInfo { get; set; }
         public IServiceProvider ServiceProvider { get; set; }
         public IActionLogger Logger { get; set; }
+        public IActionName Name { get; set; }
     }
 }
