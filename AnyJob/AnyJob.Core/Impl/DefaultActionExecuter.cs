@@ -16,12 +16,15 @@ namespace AnyJob.Impl
         private ILogger logger;
         private ITraceService traceService;
         private IActionNameResolveService actionNameResolveService;
+        private IPreparePackService preparePackService;
         private IDictionary<string, IActionFactoryService> actionFactoryMap;
+
         public DefaultActionExecuter(
             ILogger<DefaultActionExecuter> logger,
             ITraceService traceService,
             IActionMetaService metaService,
             IActionRuntimeService runtimeService,
+            IPreparePackService preparePackService,
             IActionNameResolveService actionNameResolveService,
             IEnumerable<IActionFactoryService> actionFactories,
             IServiceProvider serviceProvider)
@@ -32,6 +35,7 @@ namespace AnyJob.Impl
             this.runtimeService = runtimeService;
             this.metaService = metaService;
             this.actionNameResolveService = actionNameResolveService;
+            this.preparePackService = preparePackService;
             this.actionFactoryMap = actionFactories.ToServiceDictionary();
         }
 
@@ -47,7 +51,7 @@ namespace AnyJob.Impl
             {
                 executeContext.Token.ThrowIfCancellationRequested();
                 this.OnTraceState(traceInfo, ExecuteState.Running);
-                var result = this.OnExecute(executeContext,traceInfo);
+                var result = this.OnExecute(executeContext, traceInfo);
                 if (result.IsSuccess)
                 {
                     this.OnTraceState(traceInfo, ExecuteState.Success, result);
@@ -60,7 +64,7 @@ namespace AnyJob.Impl
             }, executeContext.Token);
         }
 
-        protected virtual ExecuteResult OnExecute( IExecuteContext executionContext, TraceInfo traceInfo)
+        protected virtual ExecuteResult OnExecute(IExecuteContext executionContext, TraceInfo traceInfo)
         {
             try
             {
@@ -70,22 +74,24 @@ namespace AnyJob.Impl
                 //2 get runtime info
                 var runtimeInfo = this.OnGetActionRuntime(actionName);
                 traceInfo.ActionRuntime = runtimeInfo;
-                //3 get meta info
+                //3 prepare package
+                this.OnPrepareAction(actionName, runtimeInfo);
+                //4 get meta info
                 var metaInfo = this.OnGetActionMeta(actionName);
                 traceInfo.ActionMeta = metaInfo;
-                //4 resolve action factory 
+                //5 resolve action factory 
                 var actionFactory = this.OnResolveActionFactory(metaInfo);
-                //5 create action context
+                //6 create action context
                 var actionContext = this.OnCreateActionContext(executionContext, runtimeInfo, metaInfo);
-                //6 check premission
+                //7 check premission
                 this.OnCheckPremission(actionContext);
-                //7 valid inputs
+                //8 valid inputs
                 this.OnValidInputs(actionContext);
-                //8 create action instance
+                //9 create action instance
                 var actionInstance = this.OnCreateActionInstance(actionFactory, actionContext);
-                //9 run action
+                //10 run action
                 var result = OnRunAction(actionInstance, executionContext, actionContext);
-                //10 valid output
+                //11 valid output
                 this.OnValidOutput(actionContext, result);
 
                 return ExecuteResult.FromResult(result);
@@ -99,20 +105,35 @@ namespace AnyJob.Impl
 
         protected virtual IActionName OnResolveActionName(string actionFullName)
         {
-            return this.actionNameResolveService.ResolverName(actionFullName);
+            IActionName actionName = this.actionNameResolveService.ResolverName(actionFullName);
+            if (actionName == null)
+            {
+                throw Errors.ResolveNullActionName(actionFullName);
+            }
+            return actionName;
         }
+
 
         protected virtual IActionRuntime OnGetActionRuntime(IActionName actionName)
         {
-            return runtimeService.GetRunTime(actionName);
-        }
+            var actionRuntime = runtimeService.GetRunTime(actionName);
+            if (actionRuntime == null)
+            {
+                throw Errors.GetNullRuntimeInfo(actionName.ToString());
+            }
+            return actionRuntime;
 
+        }
+        protected virtual void OnPrepareAction(IActionName actionName, IActionRuntime actionRuntime)
+        {
+            this.preparePackService.PreparePack(actionName, actionRuntime);
+        }
         protected virtual IActionMeta OnGetActionMeta(IActionName actionName)
         {
             var actionMeta = this.metaService.GetActionMeta(actionName);
             if (actionMeta == null)
             {
-
+                throw Errors.GetNullMetaInfo(actionName.ToString());
             }
             return metaService.GetActionMeta(actionName);
         }
@@ -125,7 +146,7 @@ namespace AnyJob.Impl
             }
             else
             {
-                return null;
+                throw Errors.CannotGetActionFactory(actionMeta.Kind);
             }
         }
         protected virtual IActionContext OnCreateActionContext(IExecuteContext executeContext, IActionRuntime actionRuntime, IActionMeta actionMeta)
@@ -175,7 +196,7 @@ namespace AnyJob.Impl
         {
             if (!actionContext.MetaInfo.Enabled)
             {
-
+                throw Errors.ActionIsDisabled(actionContext.Name.ToString());
             }
         }
         protected virtual void OnValidInputs(IActionContext actionContext)
@@ -228,6 +249,7 @@ namespace AnyJob.Impl
             traceInfo.Result = result;
             traceService.TraceState(traceInfo);
         }
+
 
     }
 }

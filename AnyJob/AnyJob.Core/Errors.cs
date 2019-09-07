@@ -54,6 +54,29 @@ namespace AnyJob
         {
             return FromErrorMessage(nameof(ErrorCodes.InvalidActionName), name);
         }
+        public static ActionException ResolveNullActionName(string name)
+        {
+            return FromErrorMessage(nameof(ErrorCodes.E20001), name);
+        }
+        public static ActionException GetNullRuntimeInfo(string name)
+        {
+            return FromErrorMessage(nameof(ErrorCodes.E20002), name);
+        }
+        public static ActionException GetNullMetaInfo(string name)
+        {
+            return FromErrorMessage(nameof(ErrorCodes.E20003), name);
+        }
+        public static ActionException CannotGetActionFactory(string kind)
+        {
+            return FromErrorMessage(nameof(ErrorCodes.E20004), kind);
+        }
+        public static ActionException ActionIsDisabled(string name)
+        {
+            return FromErrorMessage(nameof(ErrorCodes.E20005), name);
+        }
+
+
+
         private static ActionException FromErrorMessage(string name, params object[] args)
         {
             string format = ErrorCodes.ResourceManager.GetString(name);

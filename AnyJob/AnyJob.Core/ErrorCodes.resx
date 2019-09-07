@@ -159,6 +159,21 @@
   <data name="E10003" xml:space="preserve">
     <value>任务数量达到上限{0}。</value>
   </data>
+  <data name="E20001" xml:space="preserve">
+    <value>未解析出动作“{0}”的名称对象。</value>
+  </data>
+  <data name="E20002" xml:space="preserve">
+    <value>未获取到动作“{0}”的运行时对象。</value>
+  </data>
+  <data name="E20003" xml:space="preserve">
+    <value>未获取到动作“{0}”的元数据对象。</value>
+  </data>
+  <data name="E20004" xml:space="preserve">
+    <value>无法找到动作类型为"{0}"的工厂。</value>
+  </data>
+  <data name="E20005" xml:space="preserve">
+    <value>动作"{0}"已经被禁用。</value>
+  </data>
   <data name="InvalidActionName" xml:space="preserve">
     <value>Invalid action name "{0}".</value>
   </data>

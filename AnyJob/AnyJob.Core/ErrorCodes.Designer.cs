@@ -187,6 +187,51 @@ namespace AnyJob {
         }
         
         /// <summary>
+        ///   查找类似 未解析出动作“{0}”的名称对象。 的本地化字符串。
+        /// </summary>
+        public static string E20001 {
+            get {
+                return ResourceManager.GetString("E20001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 未获取到动作“{0}”的运行时对象。 的本地化字符串。
+        /// </summary>
+        public static string E20002 {
+            get {
+                return ResourceManager.GetString("E20002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 未获取到动作“{0}”的元数据对象。 的本地化字符串。
+        /// </summary>
+        public static string E20003 {
+            get {
+                return ResourceManager.GetString("E20003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 无法找到动作类型为&quot;{0}&quot;的工厂。 的本地化字符串。
+        /// </summary>
+        public static string E20004 {
+            get {
+                return ResourceManager.GetString("E20004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 动作&quot;{0}&quot;已经被禁用。 的本地化字符串。
+        /// </summary>
+        public static string E20005 {
+            get {
+                return ResourceManager.GetString("E20005", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Invalid action name &quot;{0}&quot;. 的本地化字符串。
         /// </summary>
         public static string InvalidActionName {

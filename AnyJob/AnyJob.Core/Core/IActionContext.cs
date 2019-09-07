@@ -9,6 +9,7 @@ namespace AnyJob
     /// </summary>
     public interface IActionContext
     {
+        IActionName Name { get; }
         /// <summary>
         /// 获取Action的元数据信息
         /// </summary>
