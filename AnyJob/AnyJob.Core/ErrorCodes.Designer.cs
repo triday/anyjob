@@ -160,6 +160,15 @@ namespace AnyJob {
         }
         
         /// <summary>
+        ///   查找类似 验证类型的JsonSchema失败。 的本地化字符串。
+        /// </summary>
+        public static string E00011 {
+            get {
+                return ResourceManager.GetString("E00011", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 获取动作“{0}”运行时信息发生错误。 的本地化字符串。
         /// </summary>
         public static string E10001 {

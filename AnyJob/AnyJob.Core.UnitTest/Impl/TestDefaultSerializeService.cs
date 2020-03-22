@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using AnyJob.DependencyInjection;
 
 namespace AnyJob.Impl
 {
@@ -22,8 +23,21 @@ namespace AnyJob.Impl
             Assert.IsNotNull(instance);
         }
 
+        public void TestDeserializeWithSchema()
+        {
+            string text = "{}";
+            var serializeService = ServiceCenter.GetRequiredService<ISerializeService>();
+            var instance = serializeService.Deserialize<ModelAbc>(text);
+
+        }
         public class ModelAbc {
             public object Abc { get; set; }
+        }
+        [Schema("schemas.basic-schema.json")]
+        public class ModelWithSchema
+        {
+            public int IntProp { get; set; }
+            public string StringProp { get; set; }
         }
     }
 }

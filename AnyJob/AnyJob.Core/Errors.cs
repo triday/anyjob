@@ -75,7 +75,10 @@ namespace AnyJob
             return FromErrorMessage(nameof(ErrorCodes.E20005), name);
         }
 
-
+        public static ActionException InvalidJsonSchema(Type type)
+        {
+            return FromErrorMessage(nameof(ErrorCodes.E00011));
+        }
 
         private static ActionException FromErrorMessage(string name, params object[] args)
         {
