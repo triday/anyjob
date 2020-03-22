@@ -1,6 +1,9 @@
 ﻿using AnyJob.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using System;
+using System.IO;
 
 namespace AnyJob.Impl
 {
@@ -23,7 +26,14 @@ namespace AnyJob.Impl
         {
             try
             {
-                return JsonConvert.DeserializeObject<T>(text);
+                JObject obj = JObject.Parse(text);
+                var schema = GetJSchema(typeof(T));
+                if (schema != null && !obj.IsValid(schema))
+                {
+                    throw Errors.InvalidJsonSchema(typeof(T));
+
+                }
+                return obj.ToObject<T>();
             }
             catch (Exception ex)
             {
@@ -31,6 +41,20 @@ namespace AnyJob.Impl
             }
         }
 
-     
+        public JSchema GetJSchema(Type type)
+        {
+            var schemaAttr = Attribute.GetCustomAttribute(type, typeof(SchemaAttribute)) as SchemaAttribute;
+            if (schemaAttr == null) return null;
+            using (var stream = type.Assembly.GetManifestResourceStream(schemaAttr.SchemaFile))
+            {
+                using (var textReader = new StreamReader(stream, System.Text.Encoding.UTF8))
+                {
+                    using (JsonReader jsonReader = new JsonTextReader(textReader))
+                    {
+                        return JSchema.Load(jsonReader);
+                    }
+                }
+            }
+        }
     }
 }

@@ -150,6 +150,9 @@
   <data name="E00010" xml:space="preserve">
     <value>动态求值发生错误。</value>
   </data>
+  <data name="E00011" xml:space="preserve">
+    <value>验证类型的JsonSchema失败。</value>
+  </data>
   <data name="E10001" xml:space="preserve">
     <value>获取动作“{0}”运行时信息发生错误。</value>
   </data>
