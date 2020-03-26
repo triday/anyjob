@@ -1,0 +1,15 @@
+﻿{
+    "enabled": true,
+    "description": "add from node",
+    "entrypoint": "add100.json",
+    "kind": "workflow",
+       "inputs": {
+        "num": {
+            "type": "number",
+            "default":1000
+        }
+    },
+    "output": {
+        "type": "number"
+    }
+}
