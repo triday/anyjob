@@ -4,8 +4,6 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
-
-    <RootNamespace>AnyJob.Assembly</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,14 +13,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnyJob.Assembly\AnyJob.Assembly.csproj" />
-    <ProjectReference Include="..\AnyJob.UnitTest.Base\AnyJob.UnitTest.Base.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Assembly\AnyJob.Assembly.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Core\AnyJob.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="packs\pack1\add.meta">
+    <None Update="Intents\test\add100.intent.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\" />
   </ItemGroup>
 
 </Project>

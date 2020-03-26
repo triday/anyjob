@@ -3,41 +3,41 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Core", "AnyJob.Core\AnyJob.Core.csproj", "{144A3A46-DCC8-42B6-BB91-D2495A6DC474}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Core", "src\AnyJob.Core\AnyJob.Core.csproj", "{144A3A46-DCC8-42B6-BB91-D2495A6DC474}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Workflow", "AnyJob.Workflow\AnyJob.Workflow.csproj", "{F798D9BD-EAB6-41CA-B1DC-5E86730E568E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Workflow", "src\AnyJob.Workflow\AnyJob.Workflow.csproj", "{F798D9BD-EAB6-41CA-B1DC-5E86730E568E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Intent", "AnyJob.Intent\AnyJob.Intent.csproj", "{D795DDCB-B616-4369-A7A1-8183F76E695D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Intent", "src\AnyJob.Intent\AnyJob.Intent.csproj", "{D795DDCB-B616-4369-A7A1-8183F76E695D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Assembly", "AnyJob.Assembly\AnyJob.Assembly.csproj", "{DA09F936-73FF-4CB6-921F-B6189C6B6DE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Assembly", "src\AnyJob.Assembly\AnyJob.Assembly.csproj", "{DA09F936-73FF-4CB6-921F-B6189C6B6DE8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{B03DEFA0-9B4F-4E7D-A298-CA733B693E39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Core.UnitTest", "AnyJob.Core.UnitTest\AnyJob.Core.UnitTest.csproj", "{73557B1E-F612-4951-BD65-9DF8FB061E34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Core.UnitTest", "test\AnyJob.Core.UnitTest\AnyJob.Core.UnitTest.csproj", "{73557B1E-F612-4951-BD65-9DF8FB061E34}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Process", "AnyJob.Process\AnyJob.Process.csproj", "{DCCFBC58-BDF6-4943-B4BD-E0E6CF9A5417}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Process", "src\AnyJob.Process\AnyJob.Process.csproj", "{DCCFBC58-BDF6-4943-B4BD-E0E6CF9A5417}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Process.UnitTest", "AnyJob.Process.UnitTest\AnyJob.Process.UnitTest.csproj", "{32C50DB6-BBDC-48FD-BEBD-70D19BC69020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Process.UnitTest", "src\AnyJob.Process.UnitTest\AnyJob.Process.UnitTest.csproj", "{32C50DB6-BBDC-48FD-BEBD-70D19BC69020}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.App", "AnyJob.App\AnyJob.App.csproj", "{A1DF8275-9FB8-4CE4-B396-209E3EB78859}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.App", "src\AnyJob.App\AnyJob.App.csproj", "{A1DF8275-9FB8-4CE4-B396-209E3EB78859}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.App.UnitTest", "AnyJob.App.UnitTest\AnyJob.App.UnitTest.csproj", "{0AE7871D-68BA-4A20-AE9A-BA3B5157B843}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.App.UnitTest", "test\AnyJob.App.UnitTest\AnyJob.App.UnitTest.csproj", "{0AE7871D-68BA-4A20-AE9A-BA3B5157B843}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Node", "AnyJob.Node\AnyJob.Node.csproj", "{6603AD3D-7F66-476E-9B40-15B36A5459DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Node", "src\AnyJob.Node\AnyJob.Node.csproj", "{6603AD3D-7F66-476E-9B40-15B36A5459DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Node.UnitTest", "AnyJob.Node.UnitTest\AnyJob.Node.UnitTest.csproj", "{0434C434-D90B-485C-BE6A-69B8648034F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Node.UnitTest", "test\AnyJob.Node.UnitTest\AnyJob.Node.UnitTest.csproj", "{0434C434-D90B-485C-BE6A-69B8648034F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.UnitTest.Base", "AnyJob.UnitTest.Base\AnyJob.UnitTest.Base.csproj", "{D62AFCBB-51D6-4BDB-B672-F4429FB3A8D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.UnitTest.Base", "test\AnyJob.UnitTest.Base\AnyJob.UnitTest.Base.csproj", "{D62AFCBB-51D6-4BDB-B672-F4429FB3A8D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Workflow.UnitTest", "AnyJob.Workflow.UnitTest\AnyJob.Workflow.UnitTest.csproj", "{CBF69CA3-EEF6-48C9-BCF0-28329C5B7684}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Workflow.UnitTest", "test\AnyJob.Workflow.UnitTest\AnyJob.Workflow.UnitTest.csproj", "{CBF69CA3-EEF6-48C9-BCF0-28329C5B7684}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Assembly.UnitTest", "AnyJob.Assembly.UnitTest\AnyJob.Assembly.UnitTest.csproj", "{33F78A75-877A-4D25-B1C2-630DE2A6BA5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Assembly.UnitTest", "test\AnyJob.Assembly.UnitTest\AnyJob.Assembly.UnitTest.csproj", "{33F78A75-877A-4D25-B1C2-630DE2A6BA5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Python", "AnyJob.Python\AnyJob.Python.csproj", "{2202F98D-9C2D-47ED-B2DB-2187A5D89E32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Python", "src\AnyJob.Python\AnyJob.Python.csproj", "{2202F98D-9C2D-47ED-B2DB-2187A5D89E32}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Python.UnitTest", "AnyJob.Python.UnitTest\AnyJob.Python.UnitTest.csproj", "{2F9B3462-C39E-4F50-A5B3-B62AA7D07B0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Python.UnitTest", "test\AnyJob.Python.UnitTest\AnyJob.Python.UnitTest.csproj", "{2F9B3462-C39E-4F50-A5B3-B62AA7D07B0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Java", "AnyJob.Java\AnyJob.Java.csproj", "{419B76BF-DC8B-44CE-A676-36729AB743A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Java", "src\AnyJob.Java\AnyJob.Java.csproj", "{419B76BF-DC8B-44CE-A676-36729AB743A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
