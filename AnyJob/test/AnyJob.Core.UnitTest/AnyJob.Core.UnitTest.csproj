@@ -5,7 +5,7 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>AnyJob.Python</RootNamespace>
+    <RootNamespace>AnyJob</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,24 +15,30 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnyJob.Python\AnyJob.Python.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Core\AnyJob.Core.csproj" />
     <ProjectReference Include="..\AnyJob.UnitTest.Base\AnyJob.UnitTest.Base.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="global\python\python_wrapper.py">
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="schemas\secret.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\pythonpack\concat.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\pythonpack\add.meta">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\pythonpack\add.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\pythonpack\concat.meta">
+    <None Update="schemas\simple.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

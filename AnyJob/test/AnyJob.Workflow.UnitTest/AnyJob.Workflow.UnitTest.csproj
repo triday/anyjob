@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnyJob.Assembly\AnyJob.Assembly.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Assembly\AnyJob.Assembly.csproj" />
     <ProjectReference Include="..\AnyJob.UnitTest.Base\AnyJob.UnitTest.Base.csproj" />
-    <ProjectReference Include="..\AnyJob.Workflow\AnyJob.Workflow.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Workflow\AnyJob.Workflow.csproj" />
   </ItemGroup>
 
   <ItemGroup>
