@@ -1,4 +1,3 @@
-﻿require("packmodule");
-exports.run = function () {
+﻿exports.run = function () {
     return "ok"
 };
