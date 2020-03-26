@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnyJob.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace AnyJob.Impl
 {
+    [ServiceImplClass]
     public class DefaultPreparePackService : IPreparePackService
     {
         public void PreparePack(IActionName actionName, IActionRuntime actionRuntime)
