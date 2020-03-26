@@ -20,9 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="global\python\python_wrapper.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="packs\pythonpack\concat.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

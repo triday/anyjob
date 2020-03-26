@@ -8,4 +8,10 @@
     <ProjectReference Include="..\AnyJob.Process\AnyJob.Process.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="global\app\bin\" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties model_4appinfo_3schema_1json__JsonSchema="http://json.schemastore.org/asmdef" /></VisualStudio></ProjectExtensions>
+
 </Project>

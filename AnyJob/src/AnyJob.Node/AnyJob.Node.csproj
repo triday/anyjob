@@ -1,11 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="global\node\node_wrapper.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="global\node\node_wrapper.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AnyJob.Process\AnyJob.Process.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="global\node\node_modules\" />
   </ItemGroup>
 
 </Project>
