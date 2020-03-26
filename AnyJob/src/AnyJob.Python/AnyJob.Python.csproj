@@ -5,7 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="global\python\python_wrapper.py" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AnyJob.Process\AnyJob.Process.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="global\python\python_wrapper.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +31,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorCode.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="global\python\python_libs\" />
   </ItemGroup>
 
 </Project>
