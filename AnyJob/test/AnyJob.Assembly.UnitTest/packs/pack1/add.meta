@@ -1,18 +1,17 @@
 ﻿{
-  "enabled": true,
-  "description": "add from assembly",
-  "entrypoint": "AnyJob.Assembly.Actions.Add,AnyJob.Assembly.UnitTest",
-  "kind": "assembly",
-  "inputs": {
-    "num1": {
-      "type": "number",
-      "must": true
+    "enabled": true,
+    "description": "add from node",
+    "entrypoint": "AnyJob.Assembly.Actions.Add,AnyJob.Assembly.UnitTest",
+    "kind": "assembly",
+    "inputs": {
+        "num1": {
+            "type": "number"
+        },
+        "num2": {
+            "type": "number"
+        }
     },
-    "num2": {
-      "type": "number"
+    "output": {
+        "type": "number"
     }
-  },
-  "output": {
-    "type": "number"
-  }
 }

@@ -23,26 +23,26 @@ namespace AnyJob.App
             Assert.IsTrue(result.IsSuccess);
             Assert.IsTrue(result.Result is string);
         }
-        [TestMethod]
-        public void TestFromPackBin()
-        {
-            var job = JobEngine.Start("apppack.abc", null);
-            var result = job.Task.Result;
+        //[TestMethod]
+        //public void TestFromPackBin()
+        //{
+        //    var job = JobEngine.Start("apppack.abc", null);
+        //    var result = job.Task.Result;
 
-            Assert.IsTrue(result.IsSuccess);
-            var text = Convert.ToString(result.Result);
-            Assert.AreEqual("abc", text.Trim());
+        //    Assert.IsTrue(result.IsSuccess);
+        //    var text = Convert.ToString(result.Result);
+        //    Assert.AreEqual("abc", text.Trim());
 
-        }
-        [TestMethod]
-        public void TestFromGlobalBin()
-        {
-            var job = JobEngine.Start("apppack.bcd", null);
-            var result = job.Task.Result;
-            Assert.IsTrue(result.IsSuccess);
-            var text = Convert.ToString(result.Result);
-            Assert.AreEqual("bcd", text.Trim());
-        }
+        //}
+        //[TestMethod]
+        //public void TestFromGlobalBin()
+        //{
+        //    var job = JobEngine.Start("apppack.bcd", null);
+        //    var result = job.Task.Result;
+        //    Assert.IsTrue(result.IsSuccess);
+        //    var text = Convert.ToString(result.Result);
+        //    Assert.AreEqual("bcd", text.Trim());
+        //}
 
     }
 }
