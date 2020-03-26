@@ -32,6 +32,9 @@
     <None Update="packs\assembly\add.meta">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="packs\workflow\add.meta">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="packs\workflow\add100.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

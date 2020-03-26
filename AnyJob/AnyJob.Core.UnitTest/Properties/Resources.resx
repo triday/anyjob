@@ -121,7 +121,4 @@
   <data name="json_schema1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>res\json-schema1.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TextFile1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\..\..\yangpengbo\Documents\TextFile1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
-  </data>
 </root>
