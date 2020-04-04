@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AnyJob.Core\AnyJob.Core.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Engine\AnyJob.Engine.csproj" />
     <ProjectReference Include="..\AnyJob.UnitTest.Base\AnyJob.UnitTest.Base.csproj" />
   </ItemGroup>
 
