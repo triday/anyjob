@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Core", "src\AnyJob.Core\AnyJob.Core.csproj", "{144A3A46-DCC8-42B6-BB91-D2495A6DC474}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Engine", "src\AnyJob.Engine\AnyJob.Engine.csproj", "{144A3A46-DCC8-42B6-BB91-D2495A6DC474}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Workflow", "src\AnyJob.Workflow\AnyJob.Workflow.csproj", "{F798D9BD-EAB6-41CA-B1DC-5E86730E568E}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Assembly", "src\AnyJ
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B03DEFA0-9B4F-4E7D-A298-CA733B693E39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Core.UnitTest", "test\AnyJob.Core.UnitTest\AnyJob.Core.UnitTest.csproj", "{73557B1E-F612-4951-BD65-9DF8FB061E34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Engine.UnitTest", "test\AnyJob.Engine.UnitTest\AnyJob.Engine.UnitTest.csproj", "{73557B1E-F612-4951-BD65-9DF8FB061E34}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Process", "src\AnyJob.Process\AnyJob.Process.csproj", "{DCCFBC58-BDF6-4943-B4BD-E0E6CF9A5417}"
 EndProject
@@ -45,7 +45,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runners", "runners", "{AFC5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runners", "runners", "{D0160ACA-14BC-4914-98D3-992E9F3F7465}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Docker", "src\AnyJob.Docker\AnyJob.Docker.csproj", "{5120121E-D242-440F-BEA4-7A75D0A6ED73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Docker", "src\AnyJob.Docker\AnyJob.Docker.csproj", "{5120121E-D242-440F-BEA4-7A75D0A6ED73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logic", "logic", "{199163D3-2FF0-4A0D-80CF-6A87AE000BC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -150,6 +152,7 @@ Global
 		{AFC5ACEC-BA4E-4A26-A1B5-DF798A041758} = {7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}
 		{D0160ACA-14BC-4914-98D3-992E9F3F7465} = {B03DEFA0-9B4F-4E7D-A298-CA733B693E39}
 		{5120121E-D242-440F-BEA4-7A75D0A6ED73} = {AFC5ACEC-BA4E-4A26-A1B5-DF798A041758}
+		{199163D3-2FF0-4A0D-80CF-6A87AE000BC0} = {7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CBF58BD-693A-4AED-85E9-3F8FCC07DE00}

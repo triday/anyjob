@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AnyJob.Assembly\AnyJob.Assembly.csproj" />
-    <ProjectReference Include="..\..\src\AnyJob.Core\AnyJob.Core.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Engine\AnyJob.Engine.csproj" />
   </ItemGroup>
 
   <ItemGroup>
