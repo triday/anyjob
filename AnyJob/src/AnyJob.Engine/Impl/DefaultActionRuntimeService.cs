@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultActionRuntimeService : IActionRuntimeService
     {
         public DefaultActionRuntimeService(IOptions<PackOption> packOption)

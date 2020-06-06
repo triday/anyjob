@@ -4,7 +4,8 @@ using System;
 
 namespace AnyJob.Python
 {
-    [ServiceImplClass(Key = "python")]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
+    [YS.Knife.DictionaryKey("python")]
     public class PythonActionFactory : IActionFactoryService
     {
         public PythonActionFactory(IOptions<PythonOption> option)

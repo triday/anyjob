@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AnyJob
 {
@@ -8,7 +9,7 @@ namespace AnyJob
     {
         public static Job Start(JobStartInfo jobStartInfo)
         {
-            var jobEngineService = ServiceCenter.GetRequiredService<IJobEngineService>();
+            var jobEngineService = JobHost.Instance.GetRequiredService<IJobEngineService>();
             return jobEngineService.Start(jobStartInfo);
         }
 
@@ -31,8 +32,22 @@ namespace AnyJob
 
         public static bool Cancel(string executionId)
         {
-            var jobEngineService = ServiceCenter.GetRequiredService<IJobEngineService>();
+            var jobEngineService = JobHost.Instance.GetRequiredService<IJobEngineService>();
             return jobEngineService.Cancel(executionId);
+        }
+
+
+        class JobHost : YS.Knife.Hosting.KnifeHost
+        {
+            static JobHost()
+            {
+                Instance = new JobHost();
+            }
+            public static JobHost Instance { get; }
+            private JobHost() : base(new string[0])
+            {
+
+            }
         }
     }
 }

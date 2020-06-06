@@ -7,7 +7,7 @@ using System.IO;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultSerializeService : ISerializeService
     {
         public string Serialize(object obj)

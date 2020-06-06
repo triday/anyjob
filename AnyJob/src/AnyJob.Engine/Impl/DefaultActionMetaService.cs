@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultActionMetaService : IActionMetaService
     {
         private IOptions<PackOption> packOption;
@@ -60,9 +60,9 @@ namespace AnyJob.Impl
                 Output = new JsonSchemaType(metaInfo.Output)
             };
         }
-       
 
-        
+
+
         public class MetaInfo
         {
             public string Kind { get; set; }

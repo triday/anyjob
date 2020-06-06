@@ -6,7 +6,9 @@ using System.Text;
 
 namespace AnyJob.Node
 {
-    [ServiceImplClass(Key ="node")]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
+
+    [YS.Knife.DictionaryKey("node")]
     public class NodeActionFactory : IActionFactoryService
     {
         public NodeActionFactory(IOptions<NodeOption> option)

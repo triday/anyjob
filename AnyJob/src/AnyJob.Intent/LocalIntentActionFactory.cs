@@ -7,7 +7,8 @@ using AnyJob.Impl;
 
 namespace AnyJob.Intent
 {
-    [ServiceImplClass(Key ="intent")]
+    [AnyJobService(Key ="intent")]
+    [YS.Knife.DictionaryKey("intent")]
     public class LocalIntentActionFactory : IActionFactoryService
     {
         public LocalIntentActionFactory(ISerializeService serializeService)

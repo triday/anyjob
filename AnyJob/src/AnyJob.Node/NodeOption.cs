@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AnyJob.Node
 {
-    [ConfigClass("node")]
+    [YS.Knife.OptionsClass("node")]
     public class NodeOption
     {
         public string NodePath { get; set; } = "node";

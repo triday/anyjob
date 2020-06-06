@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultTraceService : ITraceService
     {
         private ILogger logger;

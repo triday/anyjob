@@ -1,11 +1,12 @@
 ﻿using AnyJob.DependencyInjection;
-
+using YS.Knife;
+using System.ComponentModel.DataAnnotations;
 namespace AnyJob.Config
 {
     /// <summary>
     /// 表示任务的配置项
     /// </summary>
-    [ConfigClass("pack")]
+    [OptionsClass("pack")]
     public class JobOption
     {
         /// <summary>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AnyJob.Java
 {
-    [ConfigClass("java")]
+    [YS.Knife.OptionsClass("java")]
     public class JavaOption
     {
         public string JavaPath { get; set; } = "java";
