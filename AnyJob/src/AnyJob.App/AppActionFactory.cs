@@ -4,7 +4,8 @@ using Microsoft.Extensions.Options;
 
 namespace AnyJob.App
 {
-    [ServiceImplClass(Key ="app")]
+    [AnyJobService(Key ="app")]
+    [YS.Knife.DictionaryKey("app")]
     public class AppActionFactory : IActionFactoryService
     {
         private IObjectStoreService fileStoreService;

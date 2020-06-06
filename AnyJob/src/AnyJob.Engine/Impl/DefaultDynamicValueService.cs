@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultDynamicValueService : IDynamicValueService
     {
         public DefaultDynamicValueService(IExpressionTemplateService expressionTemplateService, IExpressionService expressionService)

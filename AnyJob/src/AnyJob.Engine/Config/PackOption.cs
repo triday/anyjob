@@ -1,11 +1,11 @@
 ﻿using AnyJob.DependencyInjection;
-
+using YS.Knife;
 namespace AnyJob.Config
 {
     /// <summary>
     /// 表示Pack的配置项
     /// </summary>
-    [ConfigClass("pack")]
+    [OptionsClass("pack")]
     public class PackOption
     {
         /// <summary>

@@ -3,7 +3,8 @@ using System;
 using System.Linq;
 namespace AnyJob.Assembly
 {
-    [ServiceImplClass(Key ="assembly")]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
+    [YS.Knife.DictionaryKey("assembly")]
     public class AssemblyActionFactory : IActionFactoryService
     {
         public AssemblyActionFactory(IConvertService convertService)

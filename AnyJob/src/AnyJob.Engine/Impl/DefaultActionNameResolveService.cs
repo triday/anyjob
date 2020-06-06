@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultActionNameResolveService : IActionNameResolveService
     {
         public static Regex ActionFullnameRegex = new Regex(@"^(?<pack>\w+(\.\w+)*)\.(?<name>\w+)(@(?<version>\d+(\.\d+){1,3}))?$", RegexOptions.Compiled);

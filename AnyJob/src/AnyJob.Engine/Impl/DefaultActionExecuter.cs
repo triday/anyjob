@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultActionExecuter : IActionExecuterService
     {
         private IServiceProvider serviceProvider;
@@ -26,7 +26,7 @@ namespace AnyJob.Impl
             IActionRuntimeService runtimeService,
             IPreparePackService preparePackService,
             IActionNameResolveService actionNameResolveService,
-            IEnumerable<IActionFactoryService> actionFactories,
+            IDictionary<string, IActionFactoryService> actionFactoryMap,
             IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
@@ -36,7 +36,7 @@ namespace AnyJob.Impl
             this.metaService = metaService;
             this.actionNameResolveService = actionNameResolveService;
             this.preparePackService = preparePackService;
-            this.actionFactoryMap = actionFactories.ToServiceDictionary();
+            this.actionFactoryMap = actionFactoryMap;
         }
 
         public Task<ExecuteResult> Execute(IExecuteContext executeContext)

@@ -2,7 +2,7 @@
 
 namespace AnyJob.Python
 {
-    [ConfigClass("python")]
+    [YS.Knife.OptionsClass("python")]
     public class PythonOption
     {
         public string PythonPath { get; set; } = "python";

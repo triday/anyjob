@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultPreparePackService : IPreparePackService
     {
         public void PreparePack(IActionName actionName, IActionRuntime actionRuntime)

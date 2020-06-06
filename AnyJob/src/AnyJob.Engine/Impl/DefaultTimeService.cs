@@ -3,7 +3,7 @@ using System;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultTimeService : ITimeService
     {
         public DateTimeOffset Now()

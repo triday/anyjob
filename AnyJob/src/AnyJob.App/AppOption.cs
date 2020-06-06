@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AnyJob.App
 {
-    [ConfigClass("node")]
+    [YS.Knife.OptionsClass("node")]
     public class AppOption
     {
         public string GlobalBinPath { get; set; } = "global/app/bin";

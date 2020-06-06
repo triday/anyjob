@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultObjectStoreService : IObjectStoreService
     {
         ISerializeService serializeService;

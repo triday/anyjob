@@ -4,7 +4,7 @@ using System.Linq.Dynamic.Core;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultExpressionService : IExpressionService
     {
         public object Exec(string line, IDictionary<string, object> contexts)

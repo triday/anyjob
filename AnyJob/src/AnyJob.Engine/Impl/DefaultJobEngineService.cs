@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace AnyJob.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultJobEngineService : IJobEngineService
     {
 
