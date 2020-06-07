@@ -1,5 +1,4 @@
 ﻿using AnyJob;
-using AnyJob.UnitTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Text;
 namespace AnyJob.Python
 {
     [TestClass]
-    public class IntegrationTest : JobTestBase
+    public class IntegrationTest : YS.Knife.Hosting.KnifeHost
     {
         [TestMethod]
         public void TestAdd()
