@@ -9,7 +9,8 @@ using Microsoft.Extensions.Options;
 
 namespace AnyJob.Workflow
 {
-    [ServiceImplClass(Key = "workflow")]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
+    [YS.Knife.DictionaryKey("workflow")]
     public class WorkflowFactoryService : IActionFactoryService
     {
         IObjectStoreService fileStoreService;

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AnyJob.Workflow.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultGroupRunnerService : IGroupRunnerService
     {
         IActionExecuterService actionExecuterService;
