@@ -22,7 +22,7 @@ namespace AnyJob.Workflow.Impl
         IDynamicValueService dynamicValueService;
         IConvertService convertService;
 
-        public DefaultGroupRunnerService(IActionExecuterService actionExecuterService, IPublishValueService publishValueService, IIdGenService idGenService, IDynamicValueService dynamicValueService, IConvertService convertService,IOptions<WorkflowOption> workflowOption)
+        public DefaultGroupRunnerService(IActionExecuterService actionExecuterService, IPublishValueService publishValueService, IIdGenService idGenService, IDynamicValueService dynamicValueService, IConvertService convertService, IOptions<WorkflowOption> workflowOption)
         {
             this.actionExecuterService = actionExecuterService;
             this.publishValueService = publishValueService;
@@ -66,13 +66,14 @@ namespace AnyJob.Workflow.Impl
         private Task RunTask(IActionContext actionContext, TaskDesc taskDesc, GroupInfo groupInfo)
         {
             bool isSubEntryAction = this.IsSubEntryGroup(taskDesc.TaskInfo.Action);
-            if (!isSubEntryAction) {
+            if (!isSubEntryAction)
+            {
                 publishValueService.PublishVars(actionContext.Parameters, taskDesc.TaskInfo.Vars);
             }
-            IExecuteContext executeContext = CreateExecuteContext(actionContext, taskDesc,isSubEntryAction);
+            IExecuteContext executeContext = CreateExecuteContext(actionContext, taskDesc, isSubEntryAction);
             return actionExecuterService.Execute(executeContext).ContinueWith((result) =>
             {
-                if (result.IsCompletedSuccessfully)
+                if (result.IsCompleted && result.Exception != null)
                 {
                     var executeResult = result.Result;
                     this.PublishResultVars(actionContext, executeResult, taskDesc);
@@ -87,8 +88,8 @@ namespace AnyJob.Workflow.Impl
             }, actionContext.Token);
         }
 
-        
-     
+
+
 
 
         private void PublishResultVars(IActionContext actionContext, IExecuteResult result, TaskDesc taskDesc)
@@ -159,7 +160,7 @@ namespace AnyJob.Workflow.Impl
             object dynamicValue = dynamicValueService.GetDynamicValue(condition, actionContext.Parameters);
             return (bool)convertService.Convert(dynamicValue, typeof(bool));
         }
-        private  IExecuteContext CreateExecuteContext(IActionContext actionContext, TaskDesc taskDesc,bool isSubEntryAction)
+        private IExecuteContext CreateExecuteContext(IActionContext actionContext, TaskDesc taskDesc, bool isSubEntryAction)
         {
             string newid = idGenService.NewId();
             return new ExecuteContext()
@@ -169,10 +170,10 @@ namespace AnyJob.Workflow.Impl
                 Token = actionContext.Token,
                 ActionRetryCount = taskDesc.TaskInfo.RetryCount,
                 ExecutePath = actionContext.ExecutePath.NewSubPath(newid),
-                ExecuteParameter = OnCreateExecuteParameter(actionContext, taskDesc,isSubEntryAction)
+                ExecuteParameter = OnCreateExecuteParameter(actionContext, taskDesc, isSubEntryAction)
             };
         }
-        protected virtual IExecuteParameter OnCreateExecuteParameter(IActionContext actionContext, TaskDesc taskDesc,bool isSubEntryAction)
+        protected virtual IExecuteParameter OnCreateExecuteParameter(IActionContext actionContext, TaskDesc taskDesc, bool isSubEntryAction)
         {
             Dictionary<string, object> inputs = new Dictionary<string, object>();
             if (taskDesc.TaskInfo.Inputs != null)

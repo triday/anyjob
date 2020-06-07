@@ -23,6 +23,6 @@ namespace AnyJob.Node
             return new NodeAction(option.Value, entryFile);
         }
 
-       
+
     }
 }

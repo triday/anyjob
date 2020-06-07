@@ -15,6 +15,6 @@ namespace AnyJob
         {
             return context.ServiceProvider.GetRequiredService<T>();
         }
-       
+
     }
 }

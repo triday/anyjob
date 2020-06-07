@@ -20,23 +20,23 @@ namespace AnyJob.Node
         {
             var currentEnv = base.OnGetEnvironment(context);
             string currentNodeModulesPath = System.Environment.GetEnvironmentVariable("NODE_PATH");
-            string packNodeModulesPath = System.IO.Path.GetFullPath(Option.PackNodeModulesPath, context.RuntimeInfo.WorkingDirectory);
+            string packNodeModulesPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(context.RuntimeInfo.WorkingDirectory, Option.PackNodeModulesPath));
             string globalNodeModulesPath = System.IO.Path.GetFullPath(Option.GlobalNodeModulesPath);
             currentEnv.Add("NODE_PATH", JoinEnvironmentPaths(packNodeModulesPath, globalNodeModulesPath, currentNodeModulesPath));
             return currentEnv;
         }
         private string JoinEnvironmentPaths(params string[] paths)
         {
-            return string.Join(Path.PathSeparator, paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
+            return string.Join(Path.PathSeparator.ToString(), paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
         }
         protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
         {
             ISerializeService serializeService = context.ServiceProvider.GetService<ISerializeService>();
-            string wrapperPath = Path.GetFullPath(Option.WrapperPath, Environment.CurrentDirectory);
+            string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, Option.WrapperPath));
             string paramsText = serializeService.Serialize(context.Parameters.Arguments ?? new object());
             string entryFile = Path.Combine(context.RuntimeInfo.WorkingDirectory, this.EntryFile);
             string[] args = new string[] { wrapperPath, entryFile };
-            return (Option.NodePath, string.Join(' ', args), paramsText);
+            return (Option.NodePath, string.Join(" ", args), paramsText);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace AnyJob
 {
-    public class JobSpy:CancellationTokenSource,IJobSpy
+    public class JobSpy : CancellationTokenSource, IJobSpy
     {
     }
 }

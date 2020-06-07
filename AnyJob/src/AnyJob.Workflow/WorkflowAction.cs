@@ -55,7 +55,7 @@ namespace AnyJob.Workflow
         protected virtual object ParseResult(IActionContext context, IDynamicValueService dynamicValueService)
         {
             if (this.WorkflowInfo == null) return null;
-            return dynamicValueService.GetDynamicValue(this.WorkflowInfo.Output,context.Parameters);
+            return dynamicValueService.GetDynamicValue(this.WorkflowInfo.Output, context.Parameters);
         }
 
     }

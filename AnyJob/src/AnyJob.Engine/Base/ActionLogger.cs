@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AnyJob
 {
-   public class ActionLogger : IActionLogger
+    public class ActionLogger : IActionLogger
     {
         StringBuilder stringBuilder = new StringBuilder();
 

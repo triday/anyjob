@@ -32,7 +32,7 @@ namespace AnyJob
             return FromErrorMessage(nameof(ErrorCodes.E00009), exception, ToText(value), ToText(fileName));
         }
 
-       
+
         public static ActionException GetDynamicValueError(Exception exception)
         {
             return FromErrorMessage(nameof(ErrorCodes.E00010), exception);
@@ -48,7 +48,7 @@ namespace AnyJob
 
         public static ActionException JobCountLimitError(int maxJobCount)
         {
-            return FromErrorMessage(nameof(ErrorCodes.E10003),maxJobCount);
+            return FromErrorMessage(nameof(ErrorCodes.E10003), maxJobCount);
         }
         public static ActionException InvalidActionName(string name)
         {

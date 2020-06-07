@@ -7,8 +7,8 @@ namespace AnyJob
     {
         IDictionary<string, object> Context { get; }
         IDictionary<string, object> Arguments { get; }
-        IDictionary<string,object> Vars { get; }
-        IDictionary<string,object> GlobalVars { get; }
+        IDictionary<string, object> Vars { get; }
+        IDictionary<string, object> GlobalVars { get; }
 
         IDictionary<string, object> GetAllValues();
     }

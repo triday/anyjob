@@ -11,16 +11,16 @@ namespace AnyJob.Process
 
         protected override object OnParseResult(IActionContext context, string output)
         {
-            string[] items = output.Split(RESULT_SPLIT_MAGIC_LINE);
-            if (items.Length != 2)
+            var index = output.IndexOf(RESULT_SPLIT_MAGIC_LINE);
+            if (index < 0)
             {
                 context.Logger.WriteLine(output);
                 throw ErrorFactory.FromCode(nameof(Errors.E80002));
             }
             else
             {
-                string log = items[0].TrimEnd();
-                string resultText = items[1].TrimStart();
+                string log = output.Substring(index).TrimEnd();
+                string resultText = output.Substring(index + RESULT_SPLIT_MAGIC_LINE.Length).TrimStart();
                 context.Logger.WriteLine(log);
                 var serializeService = context.ServiceProvider.GetService<ISerializeService>();
                 var typedResult = serializeService.Deserialize<TypedProcessResult>(resultText);

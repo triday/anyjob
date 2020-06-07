@@ -6,9 +6,9 @@ using System.Text;
 
 namespace AnyJob.UnitTest
 {
-    public class JobTestBase:YS.Knife.Hosting.KnifeHost
+    public class JobTestBase : YS.Knife.Hosting.KnifeHost
     {
 
-        
+
     }
 }

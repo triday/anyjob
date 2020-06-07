@@ -14,9 +14,9 @@ namespace AnyJob.Workflow
             return FromErrorMessage(nameof(ErrorMessage.E70001), taskName);
         }
 
-        public static WorkflowException TaskEexcuteError(string taskName,Exception exception)
+        public static WorkflowException TaskEexcuteError(string taskName, Exception exception)
         {
-            return FromErrorMessage(nameof(ErrorMessage.E70002), taskName,exception);
+            return FromErrorMessage(nameof(ErrorMessage.E70002), taskName, exception);
         }
 
 

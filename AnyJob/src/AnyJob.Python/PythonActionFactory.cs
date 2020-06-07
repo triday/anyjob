@@ -26,12 +26,12 @@ namespace AnyJob.Python
             {
 
             }
-            string fullPath = System.IO.Path.GetFullPath(entryFile, actionContext.RuntimeInfo.WorkingDirectory);
+            string fullPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(actionContext.RuntimeInfo.WorkingDirectory, entryFile));
             if (!System.IO.File.Exists(fullPath))
             {
 
             }
         }
-        
+
     }
 }

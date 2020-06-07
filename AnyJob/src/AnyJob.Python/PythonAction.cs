@@ -19,17 +19,17 @@ namespace AnyJob.Python
         protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
         {
             ISerializeService serializeService = context.GetRequiredService<ISerializeService>();
-            string wrapperPath = Path.GetFullPath(pythonOption.WrapperPath, Environment.CurrentDirectory);
+            string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
             string paramsText = serializeService.Serialize(context.Parameters.Arguments);
             string entryModule = this.GetEntryModuleName(this.entryFile);
             string[] args = new string[] { wrapperPath, entryModule };
-            return (pythonOption.PythonPath, string.Join(' ', args), paramsText);
+            return (pythonOption.PythonPath, string.Join(" ", args), paramsText);
         }
         protected override IDictionary<string, string> OnGetEnvironment(IActionContext context)
         {
             var currentEnv = base.OnGetEnvironment(context);
             string currentNodeModulesPath = System.Environment.GetEnvironmentVariable("PYTHONPATH");
-            string packNodeModulesPath = System.IO.Path.GetFullPath(pythonOption.PackPythonLibPath, context.RuntimeInfo.WorkingDirectory);
+            string packNodeModulesPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(context.RuntimeInfo.WorkingDirectory, pythonOption.PackPythonLibPath));
             string globalNodeModulesPath = System.IO.Path.GetFullPath(pythonOption.GlobalPythonLibPath);
             string workingDirectory = context.RuntimeInfo.WorkingDirectory;
             currentEnv.Add("PYTHONPATH", JoinEnvironmentPaths(workingDirectory, packNodeModulesPath, globalNodeModulesPath, currentNodeModulesPath));
@@ -37,7 +37,7 @@ namespace AnyJob.Python
         }
         private string JoinEnvironmentPaths(params string[] paths)
         {
-            return string.Join(Path.PathSeparator, paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
+            return string.Join(Path.PathSeparator.ToString(), paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
         }
         private string GetEntryModuleName(string entryFile)
         {
