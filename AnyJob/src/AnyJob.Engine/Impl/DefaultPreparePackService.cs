@@ -17,7 +17,7 @@ namespace AnyJob.Impl
             {
                 if (createdNew)
                 {
-                    
+
                 }
                 else
                 {

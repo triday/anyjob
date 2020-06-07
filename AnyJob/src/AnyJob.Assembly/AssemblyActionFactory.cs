@@ -23,7 +23,7 @@ namespace AnyJob.Assembly
         }
         protected void SetInputProperties(IActionContext actionContext, Type type, object instance)
         {
-            var propsMap= type.GetProperties().ToDictionary(p => p.Name, StringComparer.CurrentCultureIgnoreCase);
+            var propsMap = type.GetProperties().ToDictionary(p => p.Name, StringComparer.CurrentCultureIgnoreCase);
             foreach (var kv in actionContext.Parameters.Arguments)
             {
                 var prop = propsMap[kv.Key];
@@ -32,8 +32,8 @@ namespace AnyJob.Assembly
             }
         }
 
-      
-        
+
+
 
     }
 }

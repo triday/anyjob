@@ -9,7 +9,7 @@ namespace AnyJob.Impl
         [TestMethod]
         public void TestBasicType()
         {
-         
+
         }
     }
 }

@@ -27,7 +27,7 @@ namespace AnyJob.Impl
                 Assert.AreEqual(testItem.Version, actionName.Version);
                 Assert.AreEqual(testItem.Input, actionName.ToString());
             }
-           
+
         }
 
         [TestMethod]

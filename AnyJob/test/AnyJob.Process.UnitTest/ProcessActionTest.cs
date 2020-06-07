@@ -54,7 +54,7 @@ namespace AnyJob.Process.UnitTest
         {
             protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
             {
-                return ("ping", "127.0.0.1 -n 2",string.Empty);
+                return ("ping", "127.0.0.1 -n 2", string.Empty);
             }
         }
 
@@ -62,7 +62,7 @@ namespace AnyJob.Process.UnitTest
         {
             protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
             {
-                return ("cmd", "/c echo hello",string.Empty);
+                return ("cmd", "/c echo hello", string.Empty);
             }
         }
 
@@ -70,7 +70,7 @@ namespace AnyJob.Process.UnitTest
         {
             protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
             {
-                return ("java", "-version",string.Empty);
+                return ("java", "-version", string.Empty);
             }
         }
     }

@@ -8,7 +8,7 @@
         /// <summary>
         /// 表示动作的名称
         /// </summary>
-        string Name { get;  }
+        string Name { get; }
         string Pack { get; }
         string Version { get; }
     }

@@ -43,7 +43,7 @@ namespace AnyJob.Impl
             {
                 throw Errors.GetDynamicValueError(ex);
             }
-            
+
         }
         private object GetStringDynamicValue(string text, IActionParameter actionParameter)
         {

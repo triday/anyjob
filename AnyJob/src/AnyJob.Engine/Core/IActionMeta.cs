@@ -10,7 +10,7 @@ namespace AnyJob
         /// <summary>
         /// 获取动作的类型
         /// </summary>
-        string Kind { get;}
+        string Kind { get; }
         /// <summary>
         /// 获取动作的描述信息
         /// </summary>

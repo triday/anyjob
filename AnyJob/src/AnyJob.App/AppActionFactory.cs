@@ -20,7 +20,7 @@ namespace AnyJob.App
         public IAction CreateAction(IActionContext actionContext)
         {
             string entryPoint = actionContext.MetaInfo.EntryPoint;
-            string entryFile = System.IO.Path.GetFullPath(entryPoint, actionContext.RuntimeInfo.WorkingDirectory);
+            string entryFile = System.IO.Path.GetFullPath(System.IO.Path.Combine(actionContext.RuntimeInfo.WorkingDirectory, entryPoint));
             AppInfo appInfo = fileStoreService.GetObject<AppInfo>(entryFile);
             return new AppAction(appInfo, appOption.Value);
         }

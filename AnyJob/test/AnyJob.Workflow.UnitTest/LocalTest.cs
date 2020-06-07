@@ -15,7 +15,8 @@ namespace AnyJob.Workflow
         public void MyTestMethod()
         {
             int val = 0;
-            var task=Task.Run(() => { return 1/val; }).ContinueWith((p) => {
+            var task = Task.Run(() => { return 1 / val; }).ContinueWith((p) =>
+            {
                 if (p.IsCompletedSuccessfully)
                 {
                     Console.WriteLine("hello");
@@ -27,7 +28,7 @@ namespace AnyJob.Workflow
             }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
             Thread.Sleep(3000);
-           
+
 
         }
     }

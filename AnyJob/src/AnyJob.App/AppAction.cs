@@ -31,11 +31,11 @@ namespace AnyJob.App
         }
         protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
         {
-            var items = this.AppInfo.Command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var items = this.AppInfo.Command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             var args = context.Parameters.Arguments;
             var translateItems = items.Select(p => Translate(p, args));
             var fileName = this.FindAppFullPath(context, translateItems.First());
-            return (fileName, string.Join(' ', translateItems.Skip(1)), string.Empty);
+            return (fileName, string.Join(" ", translateItems.Skip(1)), string.Empty);
         }
 
         private string Translate(string item, IDictionary<string, object> input)
@@ -53,7 +53,7 @@ namespace AnyJob.App
 
         private string JoinEnvironmentPaths(params string[] paths)
         {
-            return string.Join(System.IO.Path.PathSeparator, paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
+            return string.Join(System.IO.Path.PathSeparator.ToString(), paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
         }
 
         private string FindAppFullPath(IActionContext context, string appName)
@@ -109,7 +109,7 @@ namespace AnyJob.App
         {
             foreach (var baseDir in searchDirs)
             {
-                string fullName = System.IO.Path.GetFullPath(appName, baseDir);
+                string fullName = System.IO.Path.GetFullPath(System.IO.Path.Combine(baseDir, appName));
                 if (System.IO.File.Exists(fullName))
                 {
                     appFullName = fullName;

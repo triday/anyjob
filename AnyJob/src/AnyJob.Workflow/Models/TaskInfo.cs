@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AnyJob.Workflow.Models
 {
-    public class TaskInfo: GroupInfo
+    public class TaskInfo : GroupInfo
     {
         public IDictionary<string, object> Inputs { get; set; }
         public string Action { get; set; }

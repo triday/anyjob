@@ -19,11 +19,11 @@ namespace AnyJob
         public void TestJsonSchema()
         {
 
-           var schema= JSchema.Parse(@"{
+            var schema = JSchema.Parse(@"{
   'type': 'number'
 }");
             var obj = JToken.FromObject(1);
-            
+
             obj.Validate(schema);
 
         }

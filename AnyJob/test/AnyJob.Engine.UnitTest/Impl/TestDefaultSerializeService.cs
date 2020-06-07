@@ -11,12 +11,12 @@ using AnyJob.DependencyInjection;
 namespace AnyJob.Impl
 {
     [TestClass]
-    public class TestDefaultSerializeService: JobTestBase
+    public class TestDefaultSerializeService : JobTestBase
     {
         [TestMethod]
         public void TestDeserialize()
         {
-            string text="{\"abc\":[\"1\",{}]}";
+            string text = "{\"abc\":[\"1\",{}]}";
             var serializeService = this.GetRequiredService<ISerializeService>();
             var instance = serializeService.Deserialize<ModelAbc>(text);
             var arr = instance.Abc as JArray;
@@ -31,7 +31,8 @@ namespace AnyJob.Impl
             var instance = serializeService.Deserialize<ModelAbc>(text);
 
         }
-        public class ModelAbc {
+        public class ModelAbc
+        {
             public object Abc { get; set; }
         }
         [Schema("schemas.basic-schema.json")]
