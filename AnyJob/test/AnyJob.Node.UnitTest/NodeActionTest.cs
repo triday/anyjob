@@ -56,7 +56,7 @@ namespace AnyJob.Node
                 ExecuteName = string.Empty,
                 ExecutePath = ExecutePath.RootPath(Guid.NewGuid().ToString()),
                 Logger = new ActionLogger(),
-                ServiceProvider = ServiceCenter.CurrentProvider,
+                ServiceProvider = this,
                 Parameters = new ActionParameters()
                 {
                     Arguments = inputs,
