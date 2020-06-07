@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using AnyJob.DependencyInjection;
 
 namespace AnyJob.Impl
@@ -16,7 +17,7 @@ namespace AnyJob.Impl
         public void TestDeserialize()
         {
             string text="{\"abc\":[\"1\",{}]}";
-            var serializeService = ServiceCenter.GetRequiredService<ISerializeService>();
+            var serializeService = this.GetRequiredService<ISerializeService>();
             var instance = serializeService.Deserialize<ModelAbc>(text);
             var arr = instance.Abc as JArray;
             var newArr = new JArray(arr.ToArray());
@@ -26,7 +27,7 @@ namespace AnyJob.Impl
         public void TestDeserializeWithSchema()
         {
             string text = "{}";
-            var serializeService = ServiceCenter.GetRequiredService<ISerializeService>();
+            var serializeService = this.GetRequiredService<ISerializeService>();
             var instance = serializeService.Deserialize<ModelAbc>(text);
 
         }

@@ -6,17 +6,9 @@ using System.Text;
 
 namespace AnyJob.UnitTest
 {
-    public class JobTestBase
+    public class JobTestBase:YS.Knife.Hosting.KnifeHost
     {
 
-        [TestInitialize]
-        public virtual void Before()
-        {
-            AssemblyLoader.LoadAssemblies("Anyjob.*.dll");
-            if (ServiceCenter.CurrentProvider == null)
-            {
-                ServiceCenter.RegisteDomainService();
-            }
-        }
+        
     }
 }

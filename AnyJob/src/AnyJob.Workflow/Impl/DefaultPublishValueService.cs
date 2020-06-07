@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AnyJob.Workflow.Impl
 {
-    [ServiceImplClass]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultPublishValueService : IPublishValueService
     {
         public DefaultPublishValueService(IDynamicValueService dynamicValueService, IConvertService convertService)

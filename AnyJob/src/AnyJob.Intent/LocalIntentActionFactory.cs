@@ -7,7 +7,7 @@ using AnyJob.Impl;
 
 namespace AnyJob.Intent
 {
-    [AnyJobService(Key ="intent")]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     [YS.Knife.DictionaryKey("intent")]
     public class LocalIntentActionFactory : IActionFactoryService
     {

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 
 namespace AnyJob.App
 {
-    [AnyJobService(Key ="app")]
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     [YS.Knife.DictionaryKey("app")]
     public class AppActionFactory : IActionFactoryService
     {
