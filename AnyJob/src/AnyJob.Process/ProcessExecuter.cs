@@ -69,7 +69,6 @@ namespace AnyJob.Process
                             StandardError = errorTextBuilder.ToString(),
                             StandardOutput = outTextBuilder.ToString(),
                             ExitCode = process.ExitCode,
-                            ExecutionTime = process.ExitTime - process.StartTime,
                         };
                     }
                     else
@@ -80,7 +79,6 @@ namespace AnyJob.Process
                             TimeOut = true,
                             StandardError = errorTextBuilder.ToString(),
                             StandardOutput = outTextBuilder.ToString(),
-                            ExecutionTime = process.ExitTime - process.StartTime,
                         };
                     }
                 }
@@ -122,6 +120,5 @@ namespace AnyJob.Process
         public string StandardOutput { get; set; }
         public string StandardError { get; set; }
         public int ExitCode { get; set; }
-        public TimeSpan ExecutionTime { get; set; }
     }
 }

@@ -59,7 +59,7 @@ namespace AnyJob.Process
         protected virtual (string ExchangePath, string InputFile, string OutputFile) CreateExchange(IActionContext context)
         {
             var objectStoreService = context.ServiceProvider.GetRequiredService<IObjectStoreService>();
-            var exchangePath = System.IO.Path.GetTempPath();
+            var exchangePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString());
             System.IO.Directory.CreateDirectory(exchangePath);
             var inputFile = System.IO.Path.Combine(exchangePath, "input.json");
             var outputFile = System.IO.Path.Combine(exchangePath, "output.json");
@@ -91,11 +91,15 @@ namespace AnyJob.Process
                 FileName = fileName
             };
         }
+        protected sealed override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
+        {
+            throw new NotImplementedException();
+        }
         protected abstract (string FileName, string[] Arguments, string StandardInput, IDictionary<string, string> EnvironmentVariables) OnGetStartInfo(IActionContext context, string exchangePath, string inputFile, string outputFile);
         protected override object OnParseResult(IActionContext context, ProcessExecInput input, ProcessExecOutput output)
         {
             var outputFile = input.Arguments.Last();
-            var inputFile = input.Arguments.Reverse().Skip(1).First();
+
             var objectStoreService = context.ServiceProvider.GetRequiredService<IObjectStoreService>();
             var typedResult = objectStoreService.GetObject<TypedProcessResult>(outputFile);
             if (typedResult.Error != null)
