@@ -1,34 +1,14 @@
 (function () {
-    var RESULT_SPLIT_TEXT = "***[[[!@#$%^&*()_!@#$%^&*(!@#$%^&]]]***";
-    var entry = process.argv[2];
-    getStdIn().then((data) => {
-        try {
-            runAction(entry, data);
-            process.exit(0);
-        } catch (e) {
-            process.exit(1);
+    var fs = require('fs');
+    var [_, _, entry, input, output] = process.argv;
+    var text = fs.readFileSync(input, "utf-8");
+    var result = runAction(entry, stripBOM(text));
+    fs.writeFileSync(output, JSON.stringify(result));
+    function stripBOM(content) {
+        if (content.charCodeAt(0) === 0xFEFF) {
+            content = content.slice(1);
         }
-    });
-
-    function getStdIn() {
-        var stdin = process.stdin;
-        let result = '';
-
-        return new Promise(resolve => {
-            if (stdin.isTTY) {
-                resolve(result);
-                return;
-            }
-            stdin.setEncoding('utf8');
-
-            stdin.on('data', (data) => {
-                result += data;
-            });
-            stdin.on('end', () => {
-                resolve(result);
-            });
-        });
-
+        return content;
     }
     /**
      * 
@@ -46,16 +26,14 @@
             var fun_args_define = parseFuncArguments(module.run);
             var fun_args = fun_args_define.map(function (p) { return args[p]; });
             var result = fun.apply(this, fun_args);
-            console.log(RESULT_SPLIT_TEXT);
-            console.log(JSON.stringify({ 'result': result }));
+            return { 'result': result };
         } catch (error) {
             var errorInfo = {
                 message: error.message,
                 type: error.name,
                 stack: error.stack
             };
-            console.log(RESULT_SPLIT_TEXT);
-            console.log(JSON.stringify({ 'error': errorInfo }));
+            return { 'error': errorInfo };
         }
     }
     /**

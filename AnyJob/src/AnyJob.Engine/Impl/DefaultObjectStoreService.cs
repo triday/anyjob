@@ -8,6 +8,7 @@ namespace AnyJob.Impl
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultObjectStoreService : IObjectStoreService
     {
+        static Encoding FileEncoding = new UTF8Encoding(false);
         ISerializeService serializeService;
         public DefaultObjectStoreService(ISerializeService serializeService)
         {
@@ -17,7 +18,7 @@ namespace AnyJob.Impl
         {
             try
             {
-                string text = File.ReadAllText(fileName, Encoding.UTF8);
+                string text = File.ReadAllText(fileName);
                 return serializeService.Deserialize<T>(text);
             }
             catch (Exception ex)
@@ -32,7 +33,7 @@ namespace AnyJob.Impl
             try
             {
                 string text = serializeService.Serialize(obj);
-                File.WriteAllText(fileName, text, Encoding.UTF8);
+                File.WriteAllText(fileName, text, FileEncoding);
             }
             catch (Exception ex)
             {
