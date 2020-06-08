@@ -160,7 +160,8 @@ namespace AnyJob.Impl
                 ExecuteName = executeContext.ExecuteName,
                 ServiceProvider = this.serviceProvider,
                 Parameters = this.ConvertParameter(actionMeta, executeContext.ExecuteParameter),
-                Logger = new ActionLogger()
+                Output = new ActionLogger(),
+                Error = new ActionLogger(),
             };
         }
         protected virtual IActionParameter ConvertParameter(IActionMeta actionMeta, IExecuteParameter executeParameter)

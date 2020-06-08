@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -6,58 +6,32 @@ using System.Threading;
 
 namespace AnyJob.Process
 {
-    public abstract class ProcessAction : IAction
+    public static class ProcessExecuter
     {
-
-        public virtual int OnGetMaximumTimeSeconds(IActionContext context)
+        public static ProcessExecOutput Exec(ProcessExecInput input)
         {
-            return 60 * 10;
-        }
-
-        public virtual object Run(IActionContext context)
-        {
-            string workingDir = context.RuntimeInfo.WorkingDirectory;
-            var (fileName, arguments, stdInput) = this.OnGetCommands(context);
-            IDictionary<string, string> envs = this.OnGetEnvironment(context);
-            string output = this.OnRunProcess(context, workingDir, fileName, arguments, stdInput, envs);
-
-            return OnParseResult(context, output);
-        }
-
-        protected virtual object OnParseResult(IActionContext context, string output)
-        {
-            return output;
-        }
-
-        protected virtual IDictionary<string, string> OnGetEnvironment(IActionContext context)
-        {
-            return new Dictionary<string, string>();
-        }
-
-        protected abstract (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context);
-
-        protected virtual string OnRunProcess(IActionContext context, string workingDir, string fileName, string arguments, string stdInput, IDictionary<string, string> envs)
-        {
-            int timeoutSecond = this.OnGetMaximumTimeSeconds(context);
-            int timeout = timeoutSecond * 1000;
-            ProcessStartInfo startInfo = new ProcessStartInfo(fileName, arguments)
+            var args = string.Join(" ", input.Arguments ?? new string[0]);
+            ProcessStartInfo startInfo = new ProcessStartInfo(input.FileName, args)
             {
-                WorkingDirectory = workingDir,
+                WorkingDirectory = input.WorkingDir,
                 CreateNoWindow = true,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
-                RedirectStandardInput = !string.IsNullOrEmpty(stdInput),
+                RedirectStandardInput = !string.IsNullOrEmpty(input.StandardInput),
                 RedirectStandardError = true,
             };
-            foreach (var env in envs)
+            if (input.Envs != null)
             {
-                startInfo.Environment.Add(env);
+                foreach (var env in input.Envs)
+                {
+                    startInfo.Environment.Add(env);
+                }
             }
             StringBuilder outTextBuilder = new StringBuilder();
             StringBuilder errorTextBuilder = new StringBuilder();
             using (var process = System.Diagnostics.Process.Start(startInfo))
             {
-                WriteStdInput(process, stdInput);
+                WriteStdInput(process, input.StandardInput);
 
                 using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
                 using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
@@ -86,28 +60,33 @@ namespace AnyJob.Process
                     };
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
+                    var timeout = input.MaximumTimeSeconds * 1000;
                     if (process.WaitForExit(timeout) && outputWaitHandle.WaitOne(timeout) && errorWaitHandle.WaitOne(timeout))
                     {
-                        string output = outTextBuilder.ToString();
-                        if (process.ExitCode != 0)
+                        return new ProcessExecOutput
                         {
-                            //when process exitcode is not zero, we should collect the output text.
-                            context.Output.WriteLine(output);
-                            ErrorFactory.FromCode(nameof(Errors.E80000), process.ExitCode);
-                        }
-                        return output;
+                            TimeOut = false,
+                            StandardError = errorTextBuilder.ToString(),
+                            StandardOutput = outTextBuilder.ToString(),
+                            ExitCode = process.ExitCode,
+                            ExecutionTime = process.ExitTime - process.StartTime,
+                        };
                     }
                     else
                     {
-                        //when time out ,we should collect the output text.
-                        string output = outTextBuilder.ToString();
-                        context.Output.WriteLine(output);
-                        throw ErrorFactory.FromCode(nameof(Errors.E80001), timeoutSecond);
+
+                        return new ProcessExecOutput
+                        {
+                            TimeOut = true,
+                            StandardError = errorTextBuilder.ToString(),
+                            StandardOutput = outTextBuilder.ToString(),
+                            ExecutionTime = process.ExitTime - process.StartTime,
+                        };
                     }
                 }
             }
-        }
 
+        }
         private static void WriteStdInput(System.Diagnostics.Process process, string stdInput)
         {
             if (!string.IsNullOrEmpty(stdInput))
@@ -126,15 +105,23 @@ namespace AnyJob.Process
                 process.StandardInput.Close();
             }
         }
-
-        protected virtual void CheckExitCode(IActionContext actionContext, int code)
-        {
-            if (code != 0)
-            {
-                throw ErrorFactory.FromCode(nameof(Errors.E80000), code);
-            }
-        }
-
+    }
+    public class ProcessExecInput
+    {
+        public int MaximumTimeSeconds { get; set; } = 600;
+        public string FileName { get; set; }
+        public string WorkingDir { get; set; }
+        public string[] Arguments { get; set; }
+        public string StandardInput { get; set; }
+        public IDictionary<string, string> Envs { get; set; }
     }
 
+    public class ProcessExecOutput
+    {
+        public bool TimeOut { get; set; }
+        public string StandardOutput { get; set; }
+        public string StandardError { get; set; }
+        public int ExitCode { get; set; }
+        public TimeSpan ExecutionTime { get; set; }
+    }
 }

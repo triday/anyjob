@@ -52,7 +52,8 @@ namespace AnyJob.App.UnitTest
                 {
                     Arguments = inputs
                 },
-                Logger = new ActionLogger(),
+                Output = new ActionLogger(),
+                Error = new ActionLogger(),
                 RuntimeInfo = new ActionRuntime()
                 {
                     WorkingDirectory = System.Environment.CurrentDirectory
