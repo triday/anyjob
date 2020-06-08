@@ -35,7 +35,8 @@ namespace AnyJob.Python
             {
                 ExecuteName = string.Empty,
                 ExecutePath = ExecutePath.RootPath(Guid.NewGuid().ToString()),
-                Logger = new ActionLogger(),
+                Output = new ActionLogger(),
+                Error = new ActionLogger(),
                 ServiceProvider = this,
                 Parameters = new ActionParameters()
                 {

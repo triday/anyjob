@@ -41,7 +41,11 @@ namespace AnyJob
         /// <summary>
         /// 获取执行过程中的日志记录器
         /// </summary>
-        IActionLogger Logger { get; }
+        IActionLogger Output { get; }
+        /// <summary>
+        /// 获取执行过程中的错误信息
+        /// </summary>
+        IActionLogger Error { get; }
 
     }
 }
