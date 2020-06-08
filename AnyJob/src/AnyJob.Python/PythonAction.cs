@@ -6,28 +6,32 @@ using System.Linq;
 
 namespace AnyJob.Python
 {
-    public class PythonAction : TypedProcessAction
+    public class PythonAction : TypedProcessAction2
     {
         public PythonAction(PythonOption pythonOption, string entryFile)
         {
             this.pythonOption = pythonOption;
             this.entryFile = entryFile;
         }
+
         private PythonOption pythonOption;
         private string entryFile;
 
-        protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
+
+        private string GetEntryModuleName(string entryFile)
         {
-            ISerializeService serializeService = context.GetRequiredService<ISerializeService>();
-            string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
-            string paramsText = serializeService.Serialize(context.Parameters.Arguments);
-            string entryModule = this.GetEntryModuleName(this.entryFile);
-            string[] args = new string[] { wrapperPath, entryModule };
-            return (pythonOption.PythonPath, string.Join(" ", args), paramsText);
+            //.py or .pyc
+            string extName = System.IO.Path.GetExtension(entryFile);
+            //.py or .pyc
+            string nameWithOutExt = System.IO.Path.GetFileNameWithoutExtension(entryFile);
+
+            return nameWithOutExt.Replace('/', '.')
+                    .Replace('\\', '.')
+                    .Trim('.');
         }
-        protected override IDictionary<string, string> OnGetEnvironment(IActionContext context)
+        protected IDictionary<string, string> OnGetEnvironment(IActionContext context)
         {
-            var currentEnv = base.OnGetEnvironment(context);
+            var currentEnv = new Dictionary<string, string>();
             string currentNodeModulesPath = System.Environment.GetEnvironmentVariable("PYTHONPATH");
             string packNodeModulesPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(context.RuntimeInfo.WorkingDirectory, pythonOption.PackPythonLibPath));
             string globalNodeModulesPath = System.IO.Path.GetFullPath(pythonOption.GlobalPythonLibPath);
@@ -39,16 +43,13 @@ namespace AnyJob.Python
         {
             return string.Join(Path.PathSeparator.ToString(), paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
         }
-        private string GetEntryModuleName(string entryFile)
+        protected override (string FileName, string[] Arguments, string StandardInput, IDictionary<string, string> EnvironmentVariables) OnGetStartInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
-            //.py or .pyc
-            string extName = System.IO.Path.GetExtension(entryFile);
-            //.py or .pyc
-            string nameWithOutExt = System.IO.Path.GetFileNameWithoutExtension(entryFile);
-
-            return nameWithOutExt.Replace('/', '.')
-                    .Replace('\\', '.')
-                    .Trim('.');
+            string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
+            string entryModule = this.GetEntryModuleName(this.entryFile);
+            string[] args = new string[] { wrapperPath, entryModule, inputFile, outputFile };
+            var envs = this.OnGetEnvironment(context);
+            return (pythonOption.PythonPath, args, string.Empty, envs);
         }
     }
 }
