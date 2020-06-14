@@ -50,27 +50,46 @@ namespace AnyJob.Process.UnitTest
             // Assert.AreEqual("hello", result);
         }
 
-        class PingProcessAction : ProcessAction
+        class PingProcessAction : ProcessAction2
         {
-            protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
+            protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
             {
-                return ("ping", "127.0.0.1 -n 2", string.Empty);
+                return new ProcessExecInput
+                {
+                    WorkingDir= context.RuntimeInfo.WorkingDirectory,
+                    StandardInput=string.Empty,
+                    FileName ="ping",
+                    Arguments = new [] {"127.0.0.1","-t","2"}
+                };
+            }
+
+        }
+
+        class EchoProcessAction : ProcessAction2
+        {
+             protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
+            {
+                return new ProcessExecInput
+                {
+                    WorkingDir= context.RuntimeInfo.WorkingDirectory,
+                    StandardInput=string.Empty,
+                    FileName ="sh",
+                    Arguments = new [] {"-c","\"echo hello\""}
+                };
             }
         }
 
-        class EchoProcessAction : ProcessAction
+        class JavaVersionProcessAction : ProcessAction2
         {
-            protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
+             protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
             {
-                return ("cmd", "/c echo hello", string.Empty);
-            }
-        }
-
-        class JavaVersionProcessAction : ProcessAction
-        {
-            protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
-            {
-                return ("java", "-version", string.Empty);
+                return new ProcessExecInput
+                {
+                    WorkingDir= context.RuntimeInfo.WorkingDirectory,
+                    StandardInput=string.Empty,
+                    FileName ="java",
+                    Arguments = new [] {"-version"}
+                };
             }
         }
     }

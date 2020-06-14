@@ -14,6 +14,12 @@ namespace AnyJob.Node
             this.Option = nodeOption;
             this.EntryFile = entryFile;
         }
+        public NodeAction(string entryFile, NodeOption option)
+        {
+            this.EntryFile = entryFile;
+            this.Option = option;
+
+        }
         public string EntryFile { get; private set; }
         public NodeOption Option { get; private set; }
 
@@ -26,16 +32,18 @@ namespace AnyJob.Node
             currentEnv.Add("NODE_PATH", JoinEnvironmentPaths(packNodeModulesPath, globalNodeModulesPath, currentNodeModulesPath));
             return currentEnv;
         }
-        private string JoinEnvironmentPaths(params string[] paths)
-        {
-            return string.Join(Path.PathSeparator.ToString(), paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
-        }
-        protected override (string FileName, string[] Arguments, string StandardInput, IDictionary<string, string> EnvironmentVariables) OnGetStartInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
+        protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
             string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, Option.WrapperPath));
             string entryFile = Path.Combine(context.RuntimeInfo.WorkingDirectory, this.EntryFile);
-            string[] args = new string[] { wrapperPath, entryFile, inputFile, outputFile };
-            return (Option.NodePath, args, string.Empty, OnGetEnvironment(context));
+            return new ProcessExecInput
+            {
+                WorkingDir = context.RuntimeInfo.WorkingDirectory,
+                FileName = Option.NodePath,
+                StandardInput = string.Empty,
+                Arguments = new string[] { wrapperPath, entryFile, inputFile, outputFile },
+                Envs = this.OnGetEnvironment(context),
+            };
         }
     }
 }

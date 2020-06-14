@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace AnyJob.App
 {
-    public class AppAction : ProcessAction
+    public class AppAction : ProcessAction2
     {
         public AppAction(AppInfo appInfo, AppOption appOption)
         {
@@ -17,26 +17,22 @@ namespace AnyJob.App
         }
         public AppOption AppOption { get; private set; }
         public AppInfo AppInfo { get; private set; }
-        protected override IDictionary<string, string> OnGetEnvironment(IActionContext context)
-        {
-            var baseEnvs = base.OnGetEnvironment(context);
-            if (this.AppInfo.Envs != null)
-            {
-                foreach (var kv in this.AppInfo.Envs)
-                {
-                    baseEnvs.Add(kv);
-                }
-            }
-            return base.OnGetEnvironment(context);
-        }
-        protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
+        protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
         {
             var items = this.AppInfo.Command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             var args = context.Parameters.Arguments;
             var translateItems = items.Select(p => Translate(p, args));
             var fileName = this.FindAppFullPath(context, translateItems.First());
-            return (fileName, string.Join(" ", translateItems.Skip(1)), string.Empty);
+            return new ProcessExecInput
+            {
+                WorkingDir = context.RuntimeInfo.WorkingDirectory,
+                StandardInput = string.Empty,
+                FileName = fileName,
+                Arguments = translateItems.Skip(1).ToArray(),
+                Envs = this.AppInfo.Envs ?? new Dictionary<string, string>()
+            };
         }
+
 
         private string Translate(string item, IDictionary<string, object> input)
         {
@@ -51,10 +47,6 @@ namespace AnyJob.App
             }
         }
 
-        private string JoinEnvironmentPaths(params string[] paths)
-        {
-            return string.Join(System.IO.Path.PathSeparator.ToString(), paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
-        }
 
         private string FindAppFullPath(IActionContext context, string appName)
         {
