@@ -3,71 +3,47 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using System.Linq;
 namespace AnyJob.Process
 {
-    public abstract class TypedProcessAction : ProcessAction
+    public abstract class TypedProcessAction2 : BaseProcessAction
     {
-        const string RESULT_SPLIT_MAGIC_LINE = "***[[[!@#$%^&*()_!@#$%^&*(!@#$%^&]]]***";
-
-        protected override object OnParseResult(IActionContext context, string output)
+        const string ExchangeInputFileName="input.exchange";
+        const string ExchangeOutputFileName="output.exchange";
+        public override sealed object Run(IActionContext context)
         {
-            var index = output.IndexOf(RESULT_SPLIT_MAGIC_LINE);
-            if (index < 0)
-            {
-                context.Output.WriteLine(output);
-                throw ErrorFactory.FromCode(nameof(Errors.E80002));
-            }
-            else
-            {
-                string log = output.Substring(index).TrimEnd();
-                string resultText = output.Substring(index + RESULT_SPLIT_MAGIC_LINE.Length).TrimStart();
-                context.Output.WriteLine(log);
-                var serializeService = context.ServiceProvider.GetService<ISerializeService>();
-                var typedResult = serializeService.Deserialize<TypedProcessResult>(resultText);
-                if (typedResult.Error != null)
-                {
-                    throw new TypedProcessException(typedResult.Error);
-                }
-                else
-                {
-                    return typedResult.Result;
-                }
-            }
-
-        }
-    }
-
-    public abstract class TypedProcessAction2 : ProcessAction2
-    {
-        public override object Run(IActionContext context)
-        {
-            var exchange = this.CreateExchange(context);
+            var exchangePath = this.OnGetExchangeDirectory(context);
             try
             {
-                var execInputInfo = OnCreateExecInputInfo(context, exchange.ExchangePath, exchange.InputFile, exchange.OutputFile);
-                var execOutputInfo = ProcessExecuter.Exec(execInputInfo);
-                this.OnTraceLogger(context, execInputInfo, execOutputInfo);
-                this.OnCheckProcessExecOutput(context, execInputInfo, execOutputInfo);
-                return this.OnParseResult(context, execInputInfo, execOutputInfo);
+                System.IO.Directory.CreateDirectory(exchangePath);
+                var inputFile=System.IO.Path.Combine(exchangePath,ExchangeInputFileName);
+                var outputFile=System.IO.Path.Combine(exchangePath,ExchangeOutputFileName);
+                this.WriteInputFile(context,inputFile);
+                var execInputInfo = OnCreateExecInputInfo(context, exchangePath, inputFile, outputFile);
+                var execOutputInfo = this.StartProcess(context, execInputInfo);
+                return this.ReadOutputFile(context, outputFile);
             }
             finally
             {
-                ClearExchangePath(exchange.ExchangePath);
+                ClearExchangePath(exchangePath);
             }
         }
-        protected virtual (string ExchangePath, string InputFile, string OutputFile) CreateExchange(IActionContext context)
+        protected virtual string OnGetExchangeDirectory(IActionContext context){
+            return  Path.Combine(System.IO.Path.GetTempPath() , Guid.NewGuid().ToString());
+        }
+        protected virtual void WriteInputFile(IActionContext context,string inputFile)
         {
             var objectStoreService = context.ServiceProvider.GetRequiredService<IObjectStoreService>();
-            var exchangePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString());
-            System.IO.Directory.CreateDirectory(exchangePath);
-            var inputFile = System.IO.Path.Combine(exchangePath, "input.json");
-            var outputFile = System.IO.Path.Combine(exchangePath, "output.json");
             objectStoreService.SaveObject(context.Parameters.Arguments, inputFile);
-            return (exchangePath, inputFile, outputFile);
         }
-        protected virtual void ClearExchangePath(string exchangePath)
+       
+        private void ClearExchangePath(string exchangePath)
         {
+            if(!Directory.Exists(exchangePath))
+            {
+                return;
+            }
             foreach (var subDirectory in System.IO.Directory.GetDirectories(exchangePath))
             {
                 ClearExchangePath(subDirectory);
@@ -79,27 +55,10 @@ namespace AnyJob.Process
             System.IO.Directory.Delete(exchangePath);
         }
 
-        protected virtual ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
+        protected abstract ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile);
+        
+        protected virtual object ReadOutputFile(IActionContext context, string outputFile)
         {
-            var (fileName, arguments, stdInput, envs) = this.OnGetStartInfo(context, exchangePath, inputFile, outputFile);
-            return new ProcessExecInput
-            {
-                WorkingDir = context.RuntimeInfo.WorkingDirectory,
-                StandardInput = stdInput,
-                Envs = envs,
-                Arguments = arguments ?? new string[0],
-                FileName = fileName
-            };
-        }
-        protected sealed override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
-        {
-            throw new NotImplementedException();
-        }
-        protected abstract (string FileName, string[] Arguments, string StandardInput, IDictionary<string, string> EnvironmentVariables) OnGetStartInfo(IActionContext context, string exchangePath, string inputFile, string outputFile);
-        protected override object OnParseResult(IActionContext context, ProcessExecInput input, ProcessExecOutput output)
-        {
-            var outputFile = input.Arguments.Last();
-
             var objectStoreService = context.ServiceProvider.GetRequiredService<IObjectStoreService>();
             var typedResult = objectStoreService.GetObject<TypedProcessResult>(outputFile);
             if (typedResult.Error != null)

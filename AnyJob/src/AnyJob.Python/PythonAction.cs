@@ -39,17 +39,18 @@ namespace AnyJob.Python
             currentEnv.Add("PYTHONPATH", JoinEnvironmentPaths(workingDirectory, packNodeModulesPath, globalNodeModulesPath, currentNodeModulesPath));
             return currentEnv;
         }
-        private string JoinEnvironmentPaths(params string[] paths)
-        {
-            return string.Join(Path.PathSeparator.ToString(), paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
-        }
-        protected override (string FileName, string[] Arguments, string StandardInput, IDictionary<string, string> EnvironmentVariables) OnGetStartInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
+        protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
             string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
             string entryModule = this.GetEntryModuleName(this.entryFile);
-            string[] args = new string[] { wrapperPath, entryModule, inputFile, outputFile };
-            var envs = this.OnGetEnvironment(context);
-            return (pythonOption.PythonPath, args, string.Empty, envs);
+            return new ProcessExecInput
+            {
+                WorkingDir = context.RuntimeInfo.WorkingDirectory,
+                FileName = pythonOption.PythonPath,
+                StandardInput = string.Empty,
+                Arguments = new string[] { wrapperPath, entryModule, inputFile, outputFile },
+                Envs = this.OnGetEnvironment(context),
+            };
         }
     }
 }

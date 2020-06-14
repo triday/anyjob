@@ -5,16 +5,17 @@ using System.Text;
 
 namespace AnyJob.Java
 {
-    public class JavaAction : TypedProcessAction
+    public class JavaAction : TypedProcessAction2
     {
         public JavaAction(JavaOption option)
         {
 
         }
 
-        protected override (string FileName, string Arguments, string StandardInput) OnGetCommands(IActionContext context)
+        protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
             throw new NotImplementedException();
         }
+
     }
 }
