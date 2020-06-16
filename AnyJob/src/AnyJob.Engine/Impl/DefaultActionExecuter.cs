@@ -82,7 +82,7 @@ namespace AnyJob.Impl
                 //5 resolve action factory 
                 var actionFactory = this.OnResolveActionFactory(metaInfo);
                 //6 create action context
-                var actionContext = this.OnCreateActionContext(executionContext, runtimeInfo, metaInfo);
+                var actionContext = this.OnCreateActionContext(executionContext, actionName, runtimeInfo, metaInfo);
                 //7 check premission
                 this.OnCheckPremission(actionContext);
                 //8 valid inputs
@@ -149,7 +149,7 @@ namespace AnyJob.Impl
                 throw Errors.CannotGetActionFactory(actionMeta.Kind);
             }
         }
-        protected virtual IActionContext OnCreateActionContext(IExecuteContext executeContext, IActionRuntime actionRuntime, IActionMeta actionMeta)
+        protected virtual IActionContext OnCreateActionContext(IExecuteContext executeContext, IActionName actionName, IActionRuntime actionRuntime, IActionMeta actionMeta)
         {
             return new ActionContext()
             {
@@ -162,6 +162,7 @@ namespace AnyJob.Impl
                 Parameters = this.ConvertParameter(actionMeta, executeContext.ExecuteParameter),
                 Output = new ActionLogger(),
                 Error = new ActionLogger(),
+                Name = actionName
             };
         }
         protected virtual IActionParameter ConvertParameter(IActionMeta actionMeta, IExecuteParameter executeParameter)

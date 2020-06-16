@@ -33,6 +33,7 @@ namespace AnyJob.Python
         {
             return new ActionContext()
             {
+                Name = new ActionName { Pack = "abc", Name = "add" },
                 ExecuteName = string.Empty,
                 ExecutePath = ExecutePath.RootPath(Guid.NewGuid().ToString()),
                 Output = new ActionLogger(),
