@@ -41,6 +41,13 @@ namespace AnyJob.Python
         }
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
+            return InDocker ?
+                CreateDockerInputInfo(context, exchangePath, inputFile, outputFile) :
+                CreateLocalInputInfo(context, exchangePath, inputFile, outputFile);
+
+        }
+        private ProcessExecInput CreateLocalInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
+        {
             string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
             string entryModule = this.GetEntryModuleName(this.entryFile);
             return new ProcessExecInput
@@ -51,6 +58,46 @@ namespace AnyJob.Python
                 Arguments = new string[] { wrapperPath, entryModule, inputFile, outputFile },
                 Envs = this.OnGetEnvironment(context),
             };
+        }
+        private ProcessExecInput CreateDockerInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
+        {
+            string RootDirInDocker = "/anyjob";
+            string PackageDirInDocker = System.IO.Path.Combine(RootDirInDocker,"packs", context.Name.Pack);
+            string wrapperPathInDocker = System.IO.Path.Combine(RootDirInDocker, "python_wrapper.py");
+            string globalLibDirInLocal = System.IO.Path.GetFullPath(pythonOption.GlobalPythonLibPath);
+            string globalLibDirInDocker = System.IO.Path.Combine(RootDirInDocker, pythonOption.GlobalPythonLibPath);
+            string exchangePathInDocker = System.IO.Path.Combine(RootDirInDocker, "exchange");
+            string inputFileInDocker = System.IO.Path.Combine(exchangePathInDocker, Path.GetFileName(inputFile));
+            string outputFileInDocker = System.IO.Path.Combine(exchangePathInDocker,  Path.GetFileName(outputFile));
+            
+            string wrapperPathInLocal = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
+            string entryModule = this.GetEntryModuleName(this.entryFile);
+            string packNodeModulesPathInDocker = System.IO.Path.Combine(PackageDirInDocker, pythonOption.PackPythonLibPath);
+
+            return ProcessExecuter.BuildDockerProcess(
+                pythonOption.DockerImage,
+                new string[] { pythonOption.PythonPath, wrapperPathInDocker, entryModule, inputFileInDocker, outputFileInDocker },
+                PackageDirInDocker,
+                new Dictionary<string,string>
+                {
+                    [context.RuntimeInfo.WorkingDirectory]=PackageDirInDocker,
+                    [wrapperPathInLocal]=wrapperPathInDocker,
+                    [exchangePath]=exchangePathInDocker,
+                    [globalLibDirInLocal]=globalLibDirInDocker
+                },
+                new Dictionary<string,string>
+                {
+                    ["PYTHONPATH"]=JoinEnvironmentPaths(PackageDirInDocker,packNodeModulesPathInDocker,globalLibDirInDocker)
+                },
+                string.Empty);
+                
+        }
+        private bool InDocker
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(this.pythonOption.DockerImage);
+            }
         }
     }
 }

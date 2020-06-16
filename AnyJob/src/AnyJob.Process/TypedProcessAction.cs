@@ -30,7 +30,7 @@ namespace AnyJob.Process
             }
         }
         protected virtual string OnGetExchangeDirectory(IActionContext context){
-            return  Path.Combine(System.IO.Path.GetTempPath() , Guid.NewGuid().ToString());
+            return Path.GetFullPath(Path.Combine("exchange" , Guid.NewGuid().ToString()));
         }
         protected virtual void WriteInputFile(IActionContext context,string inputFile)
         {

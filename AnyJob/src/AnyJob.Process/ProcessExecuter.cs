@@ -3,11 +3,51 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
-
+using System.Linq;
 namespace AnyJob.Process
 {
     public static class ProcessExecuter
     {
+
+        public static ProcessExecInput BuildDockerProcess(string imageName,string[] args,string workingDir=null, IDictionary<string,string> volumeMaps=null,IDictionary<string,string> envs=null,string standardInput=null )
+        {
+            var arguments = new List<string>()
+            {
+                "run",
+                "--rm",
+            };
+            if (!string.IsNullOrEmpty(workingDir))
+            {
+                arguments.Add("-w");
+                arguments.Add(workingDir);
+            }
+            if (volumeMaps != null)
+            {
+                foreach (var kv in volumeMaps)
+                {
+                    arguments.Add("-v");
+                    arguments.Add($"{kv.Key}:{kv.Value}");
+                }
+            }
+            if(envs!=null)
+            {
+                foreach (var kv in envs)
+                {
+                    arguments.Add("-e");
+                    arguments.Add($"{kv.Key}=\"{kv.Value}\"");
+                }
+            }
+            arguments.Add(imageName);
+            arguments.AddRange(args ?? Enumerable.Empty<string>());
+            return new ProcessExecInput
+            {
+                FileName = "docker",
+                StandardInput = standardInput,
+                WorkingDir = string.Empty,
+                Arguments = arguments.ToArray(),
+                Envs = new System.Collections.Generic.Dictionary<string, string>()
+            };
+        }
         public static ProcessExecOutput Exec(ProcessExecInput input)
         {
             var args = string.Join(" ", input.Arguments ?? new string[0]);
