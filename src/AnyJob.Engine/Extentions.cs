@@ -10,7 +10,7 @@ namespace AnyJob
         public static T GetService<T>(this IActionContext context)
         {
             _ = context ?? throw new ArgumentNullException(nameof(context));
-            return context.ServiceProvider.GetService<T>( );
+            return context.ServiceProvider.GetService<T>();
         }
         public static T GetRequiredService<T>(this IActionContext context)
         {

@@ -34,7 +34,7 @@ namespace AnyJob
 
         protected ActionException(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
         {
-          
+
         }
     }
 }
