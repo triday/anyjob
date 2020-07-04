@@ -35,23 +35,11 @@ namespace AnyJob.Process.UnitTest
             Assert.AreEqual("hello", result.Trim());
         }
 
-        [TestMethod]
-        public void TestJavaVersion()
-        {
-            IAction action = new JavaVersionProcessAction();
-            IActionContext actionContext = new ActionContext()
-            {
-                RuntimeInfo = new ActionRuntime()
-                {
-                    WorkingDirectory = System.Environment.CurrentDirectory,
-                }
-            };
-            string result = action.Run(actionContext) as string;
-            // Assert.AreEqual("hello", result);
-        }
+       
 
         class PingProcessAction : ProcessAction2
         {
+            private bool IsWindows = (int)(System.Environment.OSVersion.Platform) < 4;
             protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
             {
                 return new ProcessExecInput
@@ -59,7 +47,7 @@ namespace AnyJob.Process.UnitTest
                     WorkingDir = context.RuntimeInfo.WorkingDirectory,
                     StandardInput = string.Empty,
                     FileName = "ping",
-                    Arguments = new[] { "127.0.0.1", "-t", "2" }
+                    Arguments = IsWindows?new[] { "127.0.0.1", "-n", "2" } : new[] { "127.0.0.1", "-c", "2" }
                 };
             }
 
@@ -79,18 +67,6 @@ namespace AnyJob.Process.UnitTest
             }
         }
 
-        class JavaVersionProcessAction : ProcessAction2
-        {
-            protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
-            {
-                return new ProcessExecInput
-                {
-                    WorkingDir = context.RuntimeInfo.WorkingDirectory,
-                    StandardInput = string.Empty,
-                    FileName = "java",
-                    Arguments = new[] { "-version" }
-                };
-            }
-        }
+        
     }
 }
