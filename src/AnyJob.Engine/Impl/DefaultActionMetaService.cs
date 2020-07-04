@@ -1,10 +1,10 @@
-﻿using AnyJob.Config;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using AnyJob.Config;
 using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Schema;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace AnyJob.Impl
 {

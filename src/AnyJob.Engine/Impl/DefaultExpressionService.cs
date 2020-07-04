@@ -1,6 +1,6 @@
-﻿using AnyJob.DependencyInjection;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq.Dynamic.Core;
+using AnyJob.DependencyInjection;
 
 namespace AnyJob.Impl
 {

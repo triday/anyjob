@@ -1,6 +1,6 @@
+﻿using System.Collections.Generic;
 using AnyJob.App.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace AnyJob.App.UnitTest
 {

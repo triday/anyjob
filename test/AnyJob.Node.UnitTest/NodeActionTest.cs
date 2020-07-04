@@ -1,7 +1,7 @@
+﻿using System;
+using System.Collections.Generic;
 using AnyJob.UnitTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 
 namespace AnyJob.Node
 {

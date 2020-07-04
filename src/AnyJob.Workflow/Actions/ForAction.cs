@@ -1,9 +1,9 @@
-﻿using AnyJob.Workflow.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AnyJob.Workflow.Services;
 
 namespace AnyJob.Workflow.Actions
 {
