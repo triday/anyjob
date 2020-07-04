@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace AnyJob
@@ -75,7 +76,7 @@ namespace AnyJob
             return FromErrorMessage(nameof(ErrorCodes.E20005), name);
         }
 
-        public static ActionException InvalidJsonSchema(Type type)
+        public static ActionException InvalidJsonSchema(Type _)
         {
             return FromErrorMessage(nameof(ErrorCodes.E00011));
         }
@@ -83,13 +84,13 @@ namespace AnyJob
         private static ActionException FromErrorMessage(string name, params object[] args)
         {
             string format = ErrorCodes.ResourceManager.GetString(name);
-            string message = string.Format(format, args);
+            string message = string.Format(CultureInfo.InvariantCulture, format, args);
             return new ActionException(name, message);
         }
         private static ActionException FromErrorMessage(string name, Exception exception, params object[] args)
         {
             string format = ErrorCodes.ResourceManager.GetString(name);
-            string message = string.Format(format, args);
+            string message = string.Format(CultureInfo.InvariantCulture, format, args);
             return new ActionException(name, message, exception);
         }
         private static string ToText(object value)
