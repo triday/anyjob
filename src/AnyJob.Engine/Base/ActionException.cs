@@ -24,6 +24,17 @@ namespace AnyJob
         /// </summary>
         public string ErrorCode { get; private set; }
 
+        public ActionException(string message) : base(message)
+        {
+        }
 
+        public ActionException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected ActionException(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
+        {
+          
+        }
     }
 }
