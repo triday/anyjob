@@ -1,4 +1,4 @@
-namespace AnyJob.Process
+﻿namespace AnyJob.Process
 {
     public abstract class ProcessAction2 : BaseProcessAction
     {
@@ -13,6 +13,6 @@ namespace AnyJob.Process
         {
             return output.StandardOutput;
         }
-      
+
     }
 }

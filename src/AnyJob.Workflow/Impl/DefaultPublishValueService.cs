@@ -1,8 +1,8 @@
-﻿using AnyJob.DependencyInjection;
-using AnyJob.Workflow.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AnyJob.DependencyInjection;
+using AnyJob.Workflow.Services;
 
 namespace AnyJob.Workflow.Impl
 {

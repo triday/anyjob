@@ -1,9 +1,9 @@
-﻿using AnyJob.DependencyInjection;
+﻿using System;
+using System.IO;
+using AnyJob.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
-using System;
-using System.IO;
 
 namespace AnyJob.Impl
 {

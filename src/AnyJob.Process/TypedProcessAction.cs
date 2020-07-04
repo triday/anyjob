@@ -1,25 +1,25 @@
-﻿using AnyJob;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Linq;
+using System.Text;
+using AnyJob;
+using Microsoft.Extensions.DependencyInjection;
 namespace AnyJob.Process
 {
     public abstract class TypedProcessAction2 : BaseProcessAction
     {
-        const string ExchangeInputFileName="input.exchange";
-        const string ExchangeOutputFileName="output.exchange";
+        const string ExchangeInputFileName = "input.exchange";
+        const string ExchangeOutputFileName = "output.exchange";
         public override sealed object Run(IActionContext context)
         {
             var exchangePath = this.OnGetExchangeDirectory(context);
             try
             {
                 System.IO.Directory.CreateDirectory(exchangePath);
-                var inputFile=System.IO.Path.Combine(exchangePath,ExchangeInputFileName);
-                var outputFile=System.IO.Path.Combine(exchangePath,ExchangeOutputFileName);
-                this.WriteInputFile(context,inputFile);
+                var inputFile = System.IO.Path.Combine(exchangePath, ExchangeInputFileName);
+                var outputFile = System.IO.Path.Combine(exchangePath, ExchangeOutputFileName);
+                this.WriteInputFile(context, inputFile);
                 var execInputInfo = OnCreateExecInputInfo(context, exchangePath, inputFile, outputFile);
                 var execOutputInfo = this.StartProcess(context, execInputInfo);
                 return this.ReadOutputFile(context, outputFile);
@@ -29,18 +29,19 @@ namespace AnyJob.Process
                 ClearExchangePath(exchangePath);
             }
         }
-        protected virtual string OnGetExchangeDirectory(IActionContext context){
-            return Path.GetFullPath(Path.Combine("exchange" , Guid.NewGuid().ToString()));
+        protected virtual string OnGetExchangeDirectory(IActionContext context)
+        {
+            return Path.GetFullPath(Path.Combine("exchange", Guid.NewGuid().ToString()));
         }
-        protected virtual void WriteInputFile(IActionContext context,string inputFile)
+        protected virtual void WriteInputFile(IActionContext context, string inputFile)
         {
             var objectStoreService = context.ServiceProvider.GetRequiredService<IObjectStoreService>();
             objectStoreService.SaveObject(context.Parameters.Arguments, inputFile);
         }
-       
+
         private void ClearExchangePath(string exchangePath)
         {
-            if(!Directory.Exists(exchangePath))
+            if (!Directory.Exists(exchangePath))
             {
                 return;
             }
@@ -56,7 +57,7 @@ namespace AnyJob.Process
         }
 
         protected abstract ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile);
-        
+
         protected virtual object ReadOutputFile(IActionContext context, string outputFile)
         {
             var objectStoreService = context.ServiceProvider.GetRequiredService<IObjectStoreService>();

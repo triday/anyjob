@@ -1,8 +1,8 @@
-﻿using AnyJob.Process;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AnyJob.Process;
 
 namespace AnyJob.Python
 {
@@ -62,14 +62,14 @@ namespace AnyJob.Python
         private ProcessExecInput CreateDockerInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
             string RootDirInDocker = "/anyjob";
-            string PackageDirInDocker = System.IO.Path.Combine(RootDirInDocker,"packs", context.Name.Pack);
+            string PackageDirInDocker = System.IO.Path.Combine(RootDirInDocker, "packs", context.Name.Pack);
             string wrapperPathInDocker = System.IO.Path.Combine(RootDirInDocker, "python_wrapper.py");
             string globalLibDirInLocal = System.IO.Path.GetFullPath(pythonOption.GlobalPythonLibPath);
             string globalLibDirInDocker = System.IO.Path.Combine(RootDirInDocker, pythonOption.GlobalPythonLibPath);
             string exchangePathInDocker = System.IO.Path.Combine(RootDirInDocker, "exchange");
             string inputFileInDocker = System.IO.Path.Combine(exchangePathInDocker, Path.GetFileName(inputFile));
-            string outputFileInDocker = System.IO.Path.Combine(exchangePathInDocker,  Path.GetFileName(outputFile));
-            
+            string outputFileInDocker = System.IO.Path.Combine(exchangePathInDocker, Path.GetFileName(outputFile));
+
             string wrapperPathInLocal = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
             string entryModule = this.GetEntryModuleName(this.entryFile);
             string packNodeModulesPathInDocker = System.IO.Path.Combine(PackageDirInDocker, pythonOption.PackPythonLibPath);
@@ -78,19 +78,19 @@ namespace AnyJob.Python
                 pythonOption.DockerImage,
                 new string[] { pythonOption.PythonPath, wrapperPathInDocker, entryModule, inputFileInDocker, outputFileInDocker },
                 PackageDirInDocker,
-                new Dictionary<string,string>
+                new Dictionary<string, string>
                 {
-                    [context.RuntimeInfo.WorkingDirectory]=PackageDirInDocker,
-                    [wrapperPathInLocal]=wrapperPathInDocker,
-                    [exchangePath]=exchangePathInDocker,
-                    [globalLibDirInLocal]=globalLibDirInDocker
+                    [context.RuntimeInfo.WorkingDirectory] = PackageDirInDocker,
+                    [wrapperPathInLocal] = wrapperPathInDocker,
+                    [exchangePath] = exchangePathInDocker,
+                    [globalLibDirInLocal] = globalLibDirInDocker
                 },
-                new Dictionary<string,string>
+                new Dictionary<string, string>
                 {
-                    ["PYTHONPATH"]=JoinEnvironmentPaths(PackageDirInDocker,packNodeModulesPathInDocker,globalLibDirInDocker)
+                    ["PYTHONPATH"] = JoinEnvironmentPaths(PackageDirInDocker, packNodeModulesPathInDocker, globalLibDirInDocker)
                 },
                 string.Empty);
-                
+
         }
         private bool InDocker
         {

@@ -1,5 +1,5 @@
-﻿using AnyJob.DependencyInjection;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using AnyJob.DependencyInjection;
 
 namespace AnyJob.Impl
 {

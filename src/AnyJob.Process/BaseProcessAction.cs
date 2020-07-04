@@ -1,5 +1,5 @@
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Generic;
 namespace AnyJob.Process
 {
     public abstract class BaseProcessAction : IAction

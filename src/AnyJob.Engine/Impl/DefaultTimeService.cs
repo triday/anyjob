@@ -1,5 +1,5 @@
-﻿using AnyJob.DependencyInjection;
-using System;
+﻿using System;
+using AnyJob.DependencyInjection;
 
 namespace AnyJob.Impl
 {

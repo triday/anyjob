@@ -1,6 +1,6 @@
-﻿using AnyJob.DependencyInjection;
+﻿using System.ComponentModel.DataAnnotations;
+using AnyJob.DependencyInjection;
 using YS.Knife;
-using System.ComponentModel.DataAnnotations;
 namespace AnyJob.Config
 {
     /// <summary>

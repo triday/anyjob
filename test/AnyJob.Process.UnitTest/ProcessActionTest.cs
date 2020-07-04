@@ -1,4 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyJob.Process.UnitTest
 {
@@ -56,10 +56,10 @@ namespace AnyJob.Process.UnitTest
             {
                 return new ProcessExecInput
                 {
-                    WorkingDir= context.RuntimeInfo.WorkingDirectory,
-                    StandardInput=string.Empty,
-                    FileName ="ping",
-                    Arguments = new [] {"127.0.0.1","-t","2"}
+                    WorkingDir = context.RuntimeInfo.WorkingDirectory,
+                    StandardInput = string.Empty,
+                    FileName = "ping",
+                    Arguments = new[] { "127.0.0.1", "-t", "2" }
                 };
             }
 
@@ -67,28 +67,28 @@ namespace AnyJob.Process.UnitTest
 
         class EchoProcessAction : ProcessAction2
         {
-             protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
+            protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
             {
                 return new ProcessExecInput
                 {
-                    WorkingDir= context.RuntimeInfo.WorkingDirectory,
-                    StandardInput=string.Empty,
-                    FileName ="sh",
-                    Arguments = new [] {"-c","\"echo hello\""}
+                    WorkingDir = context.RuntimeInfo.WorkingDirectory,
+                    StandardInput = string.Empty,
+                    FileName = "sh",
+                    Arguments = new[] { "-c", "\"echo hello\"" }
                 };
             }
         }
 
         class JavaVersionProcessAction : ProcessAction2
         {
-             protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
+            protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
             {
                 return new ProcessExecInput
                 {
-                    WorkingDir= context.RuntimeInfo.WorkingDirectory,
-                    StandardInput=string.Empty,
-                    FileName ="java",
-                    Arguments = new [] {"-version"}
+                    WorkingDir = context.RuntimeInfo.WorkingDirectory,
+                    StandardInput = string.Empty,
+                    FileName = "java",
+                    Arguments = new[] { "-version" }
                 };
             }
         }

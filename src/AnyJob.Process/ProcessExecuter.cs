@@ -1,15 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Linq;
 namespace AnyJob.Process
 {
     public static class ProcessExecuter
     {
 
-        public static ProcessExecInput BuildDockerProcess(string imageName,string[] args,string workingDir=null, IDictionary<string,string> volumeMaps=null,IDictionary<string,string> envs=null,string standardInput=null )
+        public static ProcessExecInput BuildDockerProcess(string imageName, string[] args, string workingDir = null, IDictionary<string, string> volumeMaps = null, IDictionary<string, string> envs = null, string standardInput = null)
         {
             var arguments = new List<string>()
             {
@@ -29,7 +29,7 @@ namespace AnyJob.Process
                     arguments.Add($"{kv.Key}:{kv.Value}");
                 }
             }
-            if(envs!=null)
+            if (envs != null)
             {
                 foreach (var kv in envs)
                 {

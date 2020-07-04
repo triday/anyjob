@@ -1,7 +1,7 @@
-﻿using AnyJob.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AnyJob.DependencyInjection;
 
 namespace AnyJob.App
 {

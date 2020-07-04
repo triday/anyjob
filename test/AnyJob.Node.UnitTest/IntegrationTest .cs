@@ -1,10 +1,10 @@
-﻿using AnyJob;
-using AnyJob.UnitTest;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AnyJob;
+using AnyJob.UnitTest;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyJob.Node
 {

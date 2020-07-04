@@ -1,12 +1,12 @@
-﻿using AnyJob.UnitTest;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using AnyJob.DependencyInjection;
+using AnyJob.UnitTest;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
-using AnyJob.DependencyInjection;
 
 namespace AnyJob.Impl
 {
