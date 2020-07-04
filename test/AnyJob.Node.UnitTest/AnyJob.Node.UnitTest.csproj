@@ -26,13 +26,13 @@
     <None Update="packs\nodepack\concat.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\nodepack\concat.meta">
+    <None Update="packs\nodepack\concat.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="packs\nodepack\add.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\nodepack\add.meta">
+    <None Update="packs\nodepack\add.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="packs\nodepack\global_ref.js">

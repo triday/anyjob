@@ -1,0 +1,11 @@
+﻿{
+    "enabled": true,
+    "description": "add from node",
+    "entrypoint": "empty.json",
+    "kind": "workflow",
+    "inputs": {
+    },
+    "output": {
+        "type": "object"
+    }
+}

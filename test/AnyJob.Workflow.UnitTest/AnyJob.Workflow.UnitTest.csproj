@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,7 +7,7 @@
 
     <RootNamespace>AnyJob.Workflow</RootNamespace>
 
-    <ApplicationManifest>packs\workflow\add.meta</ApplicationManifest>
+    <ApplicationManifest>packs\workflow\add.action</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,22 +29,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="packs\assembly\add.meta">
+    <None Update="packs\assembly\add.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\workflow\add.meta">
+    <None Update="packs\workflow\add.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="packs\workflow\add100.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\workflow\add100.meta">
+    <None Update="packs\workflow\add100.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="packs\workflow\empty.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="packs\workflow\empty.meta">
+    <None Update="packs\workflow\empty.action">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="packs\workflow\workflow.json">

@@ -1,0 +1,8 @@
+﻿{
+    "enabled": true,
+    "entrypoint": "bcd.json",
+    "kind": "app",
+    "output": {
+        "type": "string"
+    }
+}
