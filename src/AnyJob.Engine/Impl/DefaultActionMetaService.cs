@@ -42,7 +42,7 @@ namespace AnyJob.Impl
             {
                 paths.Add(actionName.Version);
             }
-            paths.Add($"{actionName.Name}.meta");
+            paths.Add($"{actionName.Name}.action");
             return Path.Combine(paths.ToArray());
         }
         protected IActionMeta ConvertToActionMeta(MetaInfo metaInfo)
