@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AnyJob.App.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,12 +8,13 @@ namespace AnyJob.App.UnitTest
     [TestClass]
     public class AppActionTest
     {
+        private bool IsWindows = (int)(System.Environment.OSVersion.Platform) < 4;
         [TestMethod]
         public void TestPingWithCount()
         {
             AppInfo appInfo = new AppInfo()
             {
-                Command = "ping ${host} -n ${count}"
+                Command = IsWindows ? "ping ${host} -n ${count}" : "ping ${host} -c ${count}"
             };
             AppOption appOption = new AppOption();
             AppAction appAction = new AppAction(appInfo, appOption);
@@ -30,7 +32,7 @@ namespace AnyJob.App.UnitTest
         {
             AppInfo appInfo = new AppInfo()
             {
-                Command = "cmd /c echo ${text}"
+                Command = IsWindows ? "cmd /c echo ${text}" : "sh -c 'echo ${text}'"
             };
             AppOption appOption = new AppOption();
             AppAction appAction = new AppAction(appInfo, appOption);
