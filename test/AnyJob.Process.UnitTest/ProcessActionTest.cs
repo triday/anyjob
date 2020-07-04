@@ -35,7 +35,7 @@ namespace AnyJob.Process.UnitTest
             Assert.AreEqual("hello", result.Trim());
         }
 
-       
+
 
         class PingProcessAction : ProcessAction2
         {
@@ -47,7 +47,7 @@ namespace AnyJob.Process.UnitTest
                     WorkingDir = context.RuntimeInfo.WorkingDirectory,
                     StandardInput = string.Empty,
                     FileName = "ping",
-                    Arguments = IsWindows?new[] { "127.0.0.1", "-n", "2" } : new[] { "127.0.0.1", "-c", "2" }
+                    Arguments = IsWindows ? new[] { "127.0.0.1", "-n", "2" } : new[] { "127.0.0.1", "-c", "2" }
                 };
             }
 
@@ -67,6 +67,6 @@ namespace AnyJob.Process.UnitTest
             }
         }
 
-        
+
     }
 }
