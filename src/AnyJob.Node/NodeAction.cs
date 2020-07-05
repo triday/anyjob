@@ -14,12 +14,7 @@ namespace AnyJob.Node
             this.Option = nodeOption;
             this.EntryFile = entryFile;
         }
-        public NodeAction(string entryFile, NodeOption option)
-        {
-            this.EntryFile = entryFile;
-            this.Option = option;
 
-        }
         public string EntryFile { get; private set; }
         public NodeOption Option { get; private set; }
 

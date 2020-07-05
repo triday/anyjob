@@ -8,6 +8,7 @@ namespace AnyJob.Node
     [YS.Knife.OptionsClass("node")]
     public class NodeOption
     {
+        public string DockerImage { get; set; } = "node:14.5";
         public string NodePath { get; set; } = "node";
         public string WrapperPath { get; set; } = "global/node/node_wrapper.js";
         public string GlobalNodeModulesPath { get; set; } = "global/node/node_modules";
