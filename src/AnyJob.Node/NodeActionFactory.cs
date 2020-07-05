@@ -11,16 +11,23 @@ namespace AnyJob.Node
     [YS.Knife.DictionaryKey("node")]
     public class NodeActionFactory : IActionFactoryService
     {
-        public NodeActionFactory(IOptions<NodeOption> option)
+        public NodeActionFactory(NodeOption option)
         {
             this.option = option;
         }
-        private IOptions<NodeOption> option;
+        private NodeOption option;
 
         public IAction CreateAction(IActionContext actionContext)
         {
             var entryFile = actionContext.MetaInfo.EntryPoint;
-            return new NodeAction(option.Value, entryFile);
+            if (string.IsNullOrEmpty(option.DockerImage))
+            {
+                return new NodeAction(option, entryFile);
+            }
+            else
+            {
+                return new DockerNodeAction(option, entryFile);
+            }
         }
 
 
