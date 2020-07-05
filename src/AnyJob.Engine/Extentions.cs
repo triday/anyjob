@@ -18,5 +18,10 @@ namespace AnyJob
             return context.ServiceProvider.GetRequiredService<T>();
         }
 
+        public static string ToUnixPath(this string path)
+        {
+            _ = path ?? throw new ArgumentNullException(nameof(path));
+            return path.Replace('\\', '/');
+        }
     }
 }

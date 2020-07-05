@@ -44,7 +44,7 @@ namespace AnyJob
                 Instance = new JobHost();
             }
             public static JobHost Instance { get; }
-            private JobHost() : base(new string[0])
+            private JobHost() : base(Array.Empty<string>())
             {
 
             }

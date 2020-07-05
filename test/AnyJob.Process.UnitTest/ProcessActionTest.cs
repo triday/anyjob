@@ -55,15 +55,30 @@ namespace AnyJob.Process.UnitTest
 
         class EchoProcessAction : ProcessAction2
         {
+            private bool IsWindows = (int)(System.Environment.OSVersion.Platform) < 4;
             protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
             {
-                return new ProcessExecInput
+                if (IsWindows)
                 {
-                    WorkingDir = context.RuntimeInfo.WorkingDirectory,
-                    StandardInput = string.Empty,
-                    FileName = "sh",
-                    Arguments = new[] { "-c", "\"echo hello\"" }
-                };
+                    return new ProcessExecInput
+                    {
+                        WorkingDir = context.RuntimeInfo.WorkingDirectory,
+                        StandardInput = string.Empty,
+                        FileName = "cmd",
+                        Arguments = new[] { "/c", "\"echo hello\"" }
+                    };
+                }
+                else
+                {
+                    return new ProcessExecInput
+                    {
+                        WorkingDir = context.RuntimeInfo.WorkingDirectory,
+                        StandardInput = string.Empty,
+                        FileName = "sh",
+                        Arguments = new[] { "-c", "\"echo hello\"" }
+                    };
+                }
+
             }
         }
 
