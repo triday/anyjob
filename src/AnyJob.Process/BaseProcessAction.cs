@@ -30,8 +30,12 @@ namespace AnyJob.Process
             }
         }
 
-        protected static string JoinEnvironmentPaths(params string[] paths)
+        protected static string JoinEnvironmentPaths(bool inDocker, params string[] paths)
         {
+            if (inDocker)
+            {
+                return string.Join(":", paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator).ToUnixPath()));
+            }
             return string.Join(System.IO.Path.PathSeparator.ToString(), paths.Where(p => !string.IsNullOrEmpty(p)).Select(p => p.Trim(System.IO.Path.PathSeparator)));
         }
     }

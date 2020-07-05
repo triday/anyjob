@@ -17,8 +17,8 @@ namespace AnyJob.Python
                 { "num1" , 100 },
                 { "num2" , 200 }
             });
-            PythonAction nodeAction = new PythonAction(option, "add.py");
-            object res = nodeAction.Run(context);
+            PythonAction pythonAction = new PythonAction(option, "add.py");
+            object res = pythonAction.Run(context);
             Assert.AreEqual(300, Convert.ToInt32(res));
         }
 
@@ -33,7 +33,7 @@ namespace AnyJob.Python
         {
             return new ActionContext()
             {
-                Name = new ActionName { Pack = "abc", Name = "add" },
+                Name = new ActionName { Pack = "pythonpack", Name = "add" },
                 ExecuteName = string.Empty,
                 ExecutePath = ExecutePath.RootPath(Guid.NewGuid().ToString()),
                 Output = new ActionLogger(),
@@ -45,7 +45,7 @@ namespace AnyJob.Python
                 },
                 RuntimeInfo = new ActionRuntime()
                 {
-                    WorkingDirectory = System.IO.Path.Combine(Environment.CurrentDirectory, "packs/pythonpack"),
+                    WorkingDirectory = System.IO.Path.Combine(Environment.CurrentDirectory, "packs", "pythonpack"),
                 }
 
 
