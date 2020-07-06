@@ -7,7 +7,7 @@
 
     <RootNamespace>AnyJob.Workflow</RootNamespace>
 
-    <ApplicationManifest>packs\workflow\add.action</ApplicationManifest>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,9 +30,6 @@
 
   <ItemGroup>
     <None Update="packs\assembly\add.action">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\workflow\add.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="packs\workflow\add100.json">
