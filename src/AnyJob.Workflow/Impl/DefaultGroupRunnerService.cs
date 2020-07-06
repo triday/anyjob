@@ -73,7 +73,7 @@ namespace AnyJob.Workflow.Impl
             IExecuteContext executeContext = CreateExecuteContext(actionContext, taskDesc, isSubEntryAction);
             return actionExecuterService.Execute(executeContext).ContinueWith((result) =>
             {
-                if (result.IsCompleted && result.Exception != null)
+                if (result.IsCompleted && result.Exception == null)
                 {
                     var executeResult = result.Result;
                     this.PublishResultVars(actionContext, executeResult, taskDesc);
