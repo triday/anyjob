@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AnyJob.App\AnyJob.App.csproj" />
-    <ProjectReference Include="..\AnyJob.UnitTest.Base\AnyJob.UnitTest.Base.csproj" />
   </ItemGroup>
 
   <ItemGroup>

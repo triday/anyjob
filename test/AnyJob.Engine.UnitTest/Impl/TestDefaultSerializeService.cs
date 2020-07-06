@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AnyJob.DependencyInjection;
-using AnyJob.UnitTest;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
@@ -11,7 +10,7 @@ using Newtonsoft.Json.Linq;
 namespace AnyJob.Impl
 {
     [TestClass]
-    public class TestDefaultSerializeService : JobTestBase
+    public class TestDefaultSerializeService : YS.Knife.Hosting.KnifeHost
     {
         [TestMethod]
         public void TestDeserialize()
