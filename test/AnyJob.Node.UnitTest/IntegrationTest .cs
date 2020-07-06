@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AnyJob;
-using AnyJob.UnitTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyJob.Node
 {
     [TestClass]
-    public class IntegrationTest : JobTestBase
+    public class IntegrationTest : YS.Knife.Hosting.KnifeHost
     {
         [TestMethod]
         public void TestAdd()

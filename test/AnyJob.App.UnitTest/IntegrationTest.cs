@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using AnyJob.UnitTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyJob.App
 {
     [TestClass]
-    public class IntegrationTest : JobTestBase
+    public class IntegrationTest : YS.Knife.Hosting.KnifeHost
     {
         [TestMethod]
         public void TestPing()

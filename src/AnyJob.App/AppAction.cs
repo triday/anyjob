@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using AnyJob.App.Model;
 using AnyJob.Process;
 
@@ -19,16 +20,17 @@ namespace AnyJob.App
         public AppInfo AppInfo { get; private set; }
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
         {
-            var items = this.AppInfo.Command.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            var args = context.Parameters.Arguments;
-            var translateItems = items.Select(p => Translate(p, args));
-            var fileName = this.FindAppFullPath(context, translateItems.First());
+            var command = this.AppInfo.Command.Trim();
+            var firstIndex = command.IndexOfAny(new[] { ' ', '\t' });
+            var (app, args) = firstIndex <= 0 ? (command, string.Empty) : (command.Substring(0, firstIndex), command.Substring(firstIndex + 1));
+            var fileName = this.FindAppFullPath(context, app);
+            var translatedArgs = Translate(args, context.Parameters.Arguments);
             return new ProcessExecInput
             {
                 WorkingDir = context.RuntimeInfo.WorkingDirectory,
                 StandardInput = string.Empty,
                 FileName = fileName,
-                Arguments = translateItems.Skip(1).ToArray(),
+                Arguments = new string[] { translatedArgs },
                 Envs = this.AppInfo.Envs ?? new Dictionary<string, string>()
             };
         }
@@ -36,15 +38,15 @@ namespace AnyJob.App
 
         private string Translate(string item, IDictionary<string, object> input)
         {
-            if (item.StartsWith("${") && item.EndsWith("}"))
+            return Regex.Replace(item, "\\$\\{(?<name>\\w+)\\}", (m) =>
             {
-                string key = item.Substring(2, item.Length - 3);
-                return Convert.ToString(input[key]);
-            }
-            else
-            {
-                return item;
-            }
+                var name = m.Groups["name"].Value;
+                if (input.ContainsKey(name))
+                {
+                    return Convert.ToString(input[name]);
+                }
+                return m.Value;
+            });
         }
 
 

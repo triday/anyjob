@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using AnyJob.UnitTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyJob.Node
 {
     [TestClass]
-    public class NodeActionTest : JobTestBase
+    public class NodeActionTest : YS.Knife.Hosting.KnifeHost
     {
         [TestMethod]
         public void TestAdd()

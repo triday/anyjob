@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using AnyJob;
-using AnyJob.UnitTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyJob.Assembly
 {
     [TestClass]
-    public class IntegrationTest : JobTestBase
+    public class IntegrationTest : YS.Knife.Hosting.KnifeHost
     {
         [TestMethod]
         public void TestAdd()

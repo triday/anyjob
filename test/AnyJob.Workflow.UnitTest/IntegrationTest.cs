@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using AnyJob.UnitTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyJob.Workflow
 {
     [TestClass]
-    public class IntegrationTest : JobTestBase
+    public class IntegrationTest : YS.Knife.Hosting.KnifeHost
     {
         [TestMethod]
         public void TestEmpty()
