@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnyJob.Process\AnyJob.Runner.Process.csproj" />
+    <ProjectReference Include="..\AnyJob.Runner.Process\AnyJob.Runner.Process.csproj" />
   </ItemGroup>
 
   <ItemGroup>

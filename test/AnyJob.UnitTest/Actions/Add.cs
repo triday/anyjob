@@ -1,4 +1,4 @@
-﻿using AnyJob.Assembly.Meta;
+﻿using AnyJob.Runner.Assembly.Meta;
 
 using System;
 using System.Collections.Generic;

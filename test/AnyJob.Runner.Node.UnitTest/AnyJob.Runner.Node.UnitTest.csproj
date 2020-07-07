@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AnyJob.Node\AnyJob.Runner.Node.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Runner.Node\AnyJob.Runner.Node.csproj" />
   </ItemGroup>
 
   <ItemGroup>

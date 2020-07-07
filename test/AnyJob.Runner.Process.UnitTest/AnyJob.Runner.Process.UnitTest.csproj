@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AnyJob.Process\AnyJob.Runner.Process.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Runner.Process\AnyJob.Runner.Process.csproj" />
   </ItemGroup>
 
 </Project>

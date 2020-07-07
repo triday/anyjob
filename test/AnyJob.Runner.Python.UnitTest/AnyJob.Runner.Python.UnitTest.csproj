@@ -5,9 +5,7 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>AnyJob.Runner.Workflow</RootNamespace>
-
-
+    <RootNamespace>AnyJob.Runner.Python</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,33 +15,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AnyJob.Assembly\AnyJob.Runner.Assembly.csproj" />
-    <ProjectReference Include="..\..\src\AnyJob.Workflow\AnyJob.Runner.Workflow.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Runner.Python\AnyJob.Runner.Python.csproj" />
   </ItemGroup>
-
   <ItemGroup>
-    <Reference Include="System">
-      <HintPath>System</HintPath>
-    </Reference>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-
   <ItemGroup>
-    <None Update="packs\assembly\add.action">
+    <None Update="packs\pythonpack\concat.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\workflow\add100.json">
+    <None Update="packs\pythonpack\add.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\workflow\add100.action">
+    <None Update="packs\pythonpack\add.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\workflow\empty.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\workflow\empty.action">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\workflow\workflow.json">
+    <None Update="packs\pythonpack\concat.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
