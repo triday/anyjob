@@ -10,18 +10,31 @@ namespace AnyJob.App
     public class IntegrationTest : YS.Knife.Hosting.KnifeHost
     {
         [TestMethod]
-        public void TestPing()
+        public void TestDotVersion()
         {
             var inputs = new Dictionary<string, object>()
             {
-                { "host" , "127.0.0.1" },
-                { "count" , 5 }
+
             };
-            var job = JobEngine.Start("apppack.ping", inputs);
+            var job = JobEngine.Start("apppack.dotversion", inputs);
             var result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
             Assert.IsTrue(result.Result is string);
         }
+
+        //[TestMethod]
+        //public void TestPing()
+        //{
+        //    var inputs = new Dictionary<string, object>()
+        //    {
+        //        { "host" , "127.0.0.1" },
+        //        { "count" , 5 }
+        //    };
+        //    var job = JobEngine.Start("apppack.ping", inputs);
+        //    var result = job.Task.Result;
+        //    Assert.IsTrue(result.IsSuccess);
+        //    Assert.IsTrue(result.Result is string);
+        //}
         //[TestMethod]
         //public void TestFromPackBin()
         //{
