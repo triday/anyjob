@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AnyJob.Assembly\AnyJob.Runner.Assembly.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Runner.Assembly\AnyJob.Runner.Assembly.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,37 +5,37 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Engine", "src\AnyJob.Engine\AnyJob.Engine.csproj", "{144A3A46-DCC8-42B6-BB91-D2495A6DC474}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Workflow", "src\AnyJob.Workflow\AnyJob.Runner.Workflow.csproj", "{F798D9BD-EAB6-41CA-B1DC-5E86730E568E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Workflow", "src\AnyJob.Runner.Workflow\AnyJob.Runner.Workflow.csproj", "{F798D9BD-EAB6-41CA-B1DC-5E86730E568E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Intent", "src\AnyJob.Intent\AnyJob.Runner.Intent.csproj", "{D795DDCB-B616-4369-A7A1-8183F76E695D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Intent", "src\AnyJob.Runner.Intent\AnyJob.Runner.Intent.csproj", "{D795DDCB-B616-4369-A7A1-8183F76E695D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Assembly", "src\AnyJob.Assembly\AnyJob.Runner.Assembly.csproj", "{DA09F936-73FF-4CB6-921F-B6189C6B6DE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Assembly", "src\AnyJob.Runner.Assembly\AnyJob.Runner.Assembly.csproj", "{DA09F936-73FF-4CB6-921F-B6189C6B6DE8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B03DEFA0-9B4F-4E7D-A298-CA733B693E39}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Engine.UnitTest", "test\AnyJob.Engine.UnitTest\AnyJob.Engine.UnitTest.csproj", "{73557B1E-F612-4951-BD65-9DF8FB061E34}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Process", "src\AnyJob.Process\AnyJob.Runner.Process.csproj", "{DCCFBC58-BDF6-4943-B4BD-E0E6CF9A5417}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Process", "src\AnyJob.Runner.Process\AnyJob.Runner.Process.csproj", "{DCCFBC58-BDF6-4943-B4BD-E0E6CF9A5417}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Process.UnitTest", "test\AnyJob.Process.UnitTest\AnyJob.Runner.Process.UnitTest.csproj", "{32C50DB6-BBDC-48FD-BEBD-70D19BC69020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Process.UnitTest", "test\AnyJob.Runner.Process.UnitTest\AnyJob.Runner.Process.UnitTest.csproj", "{32C50DB6-BBDC-48FD-BEBD-70D19BC69020}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.App", "src\AnyJob.App\AnyJob.Runner.App.csproj", "{A1DF8275-9FB8-4CE4-B396-209E3EB78859}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.App", "src\AnyJob.Runner.App\AnyJob.Runner.App.csproj", "{A1DF8275-9FB8-4CE4-B396-209E3EB78859}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.App.UnitTest", "test\AnyJob.App.UnitTest\AnyJob.Runner.App.UnitTest.csproj", "{0AE7871D-68BA-4A20-AE9A-BA3B5157B843}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.App.UnitTest", "test\AnyJob.Runner.App.UnitTest\AnyJob.Runner.App.UnitTest.csproj", "{0AE7871D-68BA-4A20-AE9A-BA3B5157B843}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Node", "src\AnyJob.Node\AnyJob.Runner.Node.csproj", "{6603AD3D-7F66-476E-9B40-15B36A5459DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Node", "src\AnyJob.Runner.Node\AnyJob.Runner.Node.csproj", "{6603AD3D-7F66-476E-9B40-15B36A5459DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Node.UnitTest", "test\AnyJob.Node.UnitTest\AnyJob.Runner.Node.UnitTest.csproj", "{0434C434-D90B-485C-BE6A-69B8648034F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Node.UnitTest", "test\AnyJob.Runner.Node.UnitTest\AnyJob.Runner.Node.UnitTest.csproj", "{0434C434-D90B-485C-BE6A-69B8648034F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Workflow.UnitTest", "test\AnyJob.Workflow.UnitTest\AnyJob.Runner.Workflow.UnitTest.csproj", "{CBF69CA3-EEF6-48C9-BCF0-28329C5B7684}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Workflow.UnitTest", "test\AnyJob.Runner.Workflow.UnitTest\AnyJob.Runner.Workflow.UnitTest.csproj", "{CBF69CA3-EEF6-48C9-BCF0-28329C5B7684}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Assembly.UnitTest", "test\AnyJob.Assembly.UnitTest\AnyJob.Runner.Assembly.UnitTest.csproj", "{33F78A75-877A-4D25-B1C2-630DE2A6BA5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Assembly.UnitTest", "test\AnyJob.Runner.Assembly.UnitTest\AnyJob.Runner.Assembly.UnitTest.csproj", "{33F78A75-877A-4D25-B1C2-630DE2A6BA5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Python", "src\AnyJob.Python\AnyJob.Runner.Python.csproj", "{2202F98D-9C2D-47ED-B2DB-2187A5D89E32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Python", "src\AnyJob.Runner.Python\AnyJob.Runner.Python.csproj", "{2202F98D-9C2D-47ED-B2DB-2187A5D89E32}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Python.UnitTest", "test\AnyJob.Python.UnitTest\AnyJob.Runner.Python.UnitTest.csproj", "{2F9B3462-C39E-4F50-A5B3-B62AA7D07B0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Python.UnitTest", "test\AnyJob.Runner.Python.UnitTest\AnyJob.Runner.Python.UnitTest.csproj", "{2F9B3462-C39E-4F50-A5B3-B62AA7D07B0D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Java", "src\AnyJob.Java\AnyJob.Runner.Java.csproj", "{419B76BF-DC8B-44CE-A676-36729AB743A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Java", "src\AnyJob.Runner.Java\AnyJob.Runner.Java.csproj", "{419B76BF-DC8B-44CE-A676-36729AB743A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}"
 EndProject
