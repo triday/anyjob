@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Workflow.Config
+namespace AnyJob.Runner.Workflow.Config
 {
     public class WorkflowOption
     {

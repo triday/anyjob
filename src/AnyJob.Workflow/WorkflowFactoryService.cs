@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using AnyJob.DependencyInjection;
 using AnyJob.Impl;
-using AnyJob.Workflow.Config;
-using AnyJob.Workflow.Models;
+using AnyJob.Runner.Workflow.Config;
+using AnyJob.Runner.Workflow.Models;
 using Microsoft.Extensions.Options;
 
-namespace AnyJob.Workflow
+namespace AnyJob.Runner.Workflow
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     [YS.Knife.DictionaryKey("workflow")]

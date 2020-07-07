@@ -5,7 +5,7 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>AnyJob.Workflow</RootNamespace>
+    <RootNamespace>AnyJob.Runner.Workflow</RootNamespace>
 
 
   </PropertyGroup>
@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AnyJob.Assembly\AnyJob.Assembly.csproj" />
-    <ProjectReference Include="..\..\src\AnyJob.Workflow\AnyJob.Workflow.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Assembly\AnyJob.Runner.Assembly.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Workflow\AnyJob.Runner.Workflow.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AnyJob.Workflow.Services;
+using AnyJob.Runner.Workflow.Services;
 
-namespace AnyJob.Workflow.Actions
+namespace AnyJob.Runner.Workflow.Actions
 {
     public class ForAction : SubGroupAction
     {

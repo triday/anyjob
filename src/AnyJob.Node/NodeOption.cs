@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AnyJob.DependencyInjection;
 
-namespace AnyJob.Node
+namespace AnyJob.Runner.Node
 {
     [YS.Knife.OptionsClass("node")]
     public class NodeOption

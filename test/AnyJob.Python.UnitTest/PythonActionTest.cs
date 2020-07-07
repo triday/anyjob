@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AnyJob.Python
+namespace AnyJob.Runner.Python
 {
     [TestClass]
     public class PythonActionTest : YS.Knife.Hosting.KnifeHost

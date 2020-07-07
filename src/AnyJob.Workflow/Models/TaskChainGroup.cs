@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Workflow.Models
+namespace AnyJob.Runner.Workflow.Models
 {
     public class TaskChainGroup
     {

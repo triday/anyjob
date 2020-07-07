@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AnyJob.Intent
+namespace AnyJob.Runner.Intent
 {
     public class IntentAction : IAction
     {

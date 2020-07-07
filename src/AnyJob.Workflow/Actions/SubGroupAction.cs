@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AnyJob.Workflow.Config;
-using AnyJob.Workflow.Models;
+using AnyJob.Runner.Workflow.Config;
+using AnyJob.Runner.Workflow.Models;
 using Microsoft.Extensions.Options;
 
-namespace AnyJob.Workflow.Actions
+namespace AnyJob.Runner.Workflow.Actions
 {
     public abstract class SubGroupAction : IAction
     {

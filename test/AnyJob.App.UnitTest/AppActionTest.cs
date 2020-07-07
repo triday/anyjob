@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using AnyJob.App.Model;
+using AnyJob.Runner.App.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AnyJob.App.UnitTest
+namespace AnyJob.Runner.App.UnitTest
 {
     [TestClass]
     public class AppActionTest

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AnyJob.Process;
+using AnyJob.Runner.Process;
 
-namespace AnyJob.Java
+namespace AnyJob.Runner.Java
 {
     public class JavaAction : TypedProcessAction2
     {

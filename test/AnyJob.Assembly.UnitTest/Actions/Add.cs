@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Assembly.Actions
+namespace AnyJob.Runner.Assembly.Actions
 {
     public class Add : IAction
     {

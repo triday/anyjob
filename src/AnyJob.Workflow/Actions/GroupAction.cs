@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AnyJob.Workflow.Models;
-using AnyJob.Workflow.Services;
+using AnyJob.Runner.Workflow.Models;
+using AnyJob.Runner.Workflow.Services;
 
-namespace AnyJob.Workflow.Actions
+namespace AnyJob.Runner.Workflow.Actions
 {
     public class GroupAction : SubGroupAction
     {

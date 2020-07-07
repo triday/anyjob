@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using AnyJob.Process;
+using AnyJob.Runner.Process;
 
-namespace AnyJob.Python
+namespace AnyJob.Runner.Python
 {
     public class PythonAction : TypedProcessAction2
     {

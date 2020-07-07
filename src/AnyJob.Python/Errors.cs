@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Python
+namespace AnyJob.Runner.Python
 {
     partial class Errors
     {

@@ -5,7 +5,7 @@ using AnyJob;
 using AnyJob.DependencyInjection;
 using AnyJob.Impl;
 
-namespace AnyJob.Intent
+namespace AnyJob.Runner.Intent
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     [YS.Knife.DictionaryKey("intent")]

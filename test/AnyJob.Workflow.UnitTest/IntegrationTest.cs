@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AnyJob.Workflow
+namespace AnyJob.Runner.Workflow
 {
     [TestClass]
     public class IntegrationTest : YS.Knife.Hosting.KnifeHost

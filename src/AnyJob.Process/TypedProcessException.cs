@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Process
+namespace AnyJob.Runner.Process
 {
     [Serializable]
     public class TypedProcessException : ActionException

@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AnyJob.Workflow
+namespace AnyJob.Runner.Workflow
 {
     [TestClass]
     public class MyTestClass

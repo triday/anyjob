@@ -5,10 +5,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using AnyJob.App.Model;
-using AnyJob.Process;
+using AnyJob.Runner.App.Model;
+using AnyJob.Runner.Process;
 
-namespace AnyJob.App
+namespace AnyJob.Runner.App
 {
     public class AppAction : ProcessAction2
     {

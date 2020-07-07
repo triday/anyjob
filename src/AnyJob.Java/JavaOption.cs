@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AnyJob.DependencyInjection;
 
-namespace AnyJob.Java
+namespace AnyJob.Runner.Java
 {
     [YS.Knife.OptionsClass("java")]
     public class JavaOption

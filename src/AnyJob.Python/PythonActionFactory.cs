@@ -2,7 +2,7 @@
 using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace AnyJob.Python
+namespace AnyJob.Runner.Python
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     [YS.Knife.DictionaryKey("python")]

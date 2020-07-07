@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace AnyJob.App.Model
+namespace AnyJob.Runner.App.Model
 {
     public class AppInfo
     {

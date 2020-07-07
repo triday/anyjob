@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Workflow.Services
+namespace AnyJob.Runner.Workflow.Services
 {
     public static class Extentions
     {

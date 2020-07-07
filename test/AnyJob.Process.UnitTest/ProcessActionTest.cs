@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AnyJob.Process.UnitTest
+namespace AnyJob.Runner.Process.UnitTest
 {
     [TestClass]
     public class ProcessActionTest

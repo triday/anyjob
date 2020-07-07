@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnyJob.Workflow.Actions
+namespace AnyJob.Runner.Workflow.Actions
 {
     public class ForeachAction : SubGroupAction
     {

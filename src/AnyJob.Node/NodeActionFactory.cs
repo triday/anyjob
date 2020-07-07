@@ -4,7 +4,7 @@ using System.Text;
 using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace AnyJob.Node
+namespace AnyJob.Runner.Node
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
 

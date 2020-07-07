@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using AnyJob.Process;
+using AnyJob.Runner.Process;
 
-namespace AnyJob.Node
+namespace AnyJob.Runner.Node
 {
     public class DockerNodeAction : TypedProcessAction2
     {
