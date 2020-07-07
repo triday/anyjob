@@ -1,4 +1,4 @@
-﻿namespace AnyJob.Process
+﻿namespace AnyJob.Runner.Process
 {
     public abstract class ProcessAction2 : BaseProcessAction
     {

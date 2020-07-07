@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using AnyJob;
 using Microsoft.Extensions.DependencyInjection;
-namespace AnyJob.Process
+namespace AnyJob.Runner.Process
 {
     public abstract class TypedProcessAction2 : BaseProcessAction
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AnyJob;
-using AnyJob.Process;
+using AnyJob.Runner.Process;
 using Microsoft.Extensions.DependencyInjection;
-namespace AnyJob.Node
+namespace AnyJob.Runner.Node
 {
     public class NodeAction : TypedProcessAction2
     {

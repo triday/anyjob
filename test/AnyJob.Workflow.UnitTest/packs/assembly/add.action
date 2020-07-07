@@ -1,7 +1,7 @@
 ﻿{
     "enabled": true,
     "description": "add from node",
-    "entrypoint": "AnyJob.Workflow.Actions.Add,AnyJob.Workflow.UnitTest",
+    "entrypoint": "AnyJob.Runner.Workflow.Actions.Add,AnyJob.Runner.Workflow.UnitTest",
     "kind": "assembly",
     "inputs": {
         "num1": {

@@ -5,12 +5,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AnyJob.DependencyInjection;
-using AnyJob.Workflow.Config;
-using AnyJob.Workflow.Models;
-using AnyJob.Workflow.Services;
+using AnyJob.Runner.Workflow.Config;
+using AnyJob.Runner.Workflow.Models;
+using AnyJob.Runner.Workflow.Services;
 using Microsoft.Extensions.Options;
 
-namespace AnyJob.Workflow.Impl
+namespace AnyJob.Runner.Workflow.Impl
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultGroupRunnerService : IGroupRunnerService

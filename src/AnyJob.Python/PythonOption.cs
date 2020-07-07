@@ -1,6 +1,6 @@
 ﻿using AnyJob.DependencyInjection;
 
-namespace AnyJob.Python
+namespace AnyJob.Runner.Python
 {
     [YS.Knife.OptionsClass("python")]
     public class PythonOption

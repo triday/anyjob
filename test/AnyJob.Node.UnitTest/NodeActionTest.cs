@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AnyJob.Node
+namespace AnyJob.Runner.Node
 {
     [TestClass]
     public class NodeActionTest : YS.Knife.Hosting.KnifeHost

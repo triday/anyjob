@@ -5,7 +5,7 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>AnyJob.Node</RootNamespace>
+    <RootNamespace>AnyJob.Runner.Python</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,32 +15,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AnyJob.Node\AnyJob.Node.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Python\AnyJob.Runner.Python.csproj" />
   </ItemGroup>
-
   <ItemGroup>
-    <None Update="global\node\node_modules\globalmodule.js">
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="packs\pythonpack\concat.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\nodepack\concat.js">
+    <None Update="packs\pythonpack\add.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\nodepack\concat.action">
+    <None Update="packs\pythonpack\add.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="packs\nodepack\add.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\nodepack\add.action">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\nodepack\global_ref.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\nodepack\pack_ref.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\nodepack\node_modules\packmodule.js">
+    <None Update="packs\pythonpack\concat.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

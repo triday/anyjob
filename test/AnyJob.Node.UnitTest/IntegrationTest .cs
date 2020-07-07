@@ -5,7 +5,7 @@ using System.Text;
 using AnyJob;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AnyJob.Node
+namespace AnyJob.Runner.Node
 {
     [TestClass]
     public class IntegrationTest : YS.Knife.Hosting.KnifeHost

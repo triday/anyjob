@@ -1,8 +1,8 @@
-﻿using AnyJob.App.Model;
-using AnyJob.DependencyInjection;
+﻿using AnyJob.DependencyInjection;
+using AnyJob.Runner.App.Model;
 using Microsoft.Extensions.Options;
 
-namespace AnyJob.App
+namespace AnyJob.Runner.App
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     [YS.Knife.DictionaryKey("app")]

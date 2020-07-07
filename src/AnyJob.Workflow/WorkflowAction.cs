@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using AnyJob.Workflow.Models;
-using AnyJob.Workflow.Services;
+using AnyJob.Runner.Workflow.Models;
+using AnyJob.Runner.Workflow.Services;
 
-namespace AnyJob.Workflow
+namespace AnyJob.Runner.Workflow
 {
     public class WorkflowAction : IAction
     {

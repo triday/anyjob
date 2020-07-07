@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using AnyJob.Workflow.Models;
+using AnyJob.Runner.Workflow.Models;
 
-namespace AnyJob.Workflow.Services
+namespace AnyJob.Runner.Workflow.Services
 {
     public interface IGroupRunnerService
     {

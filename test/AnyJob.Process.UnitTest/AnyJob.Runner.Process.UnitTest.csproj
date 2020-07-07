@@ -5,7 +5,7 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>AnyJob.Process</RootNamespace>
+    <RootNamespace>AnyJob.Runner.Process</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AnyJob.Process\AnyJob.Process.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Process\AnyJob.Runner.Process.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Workflow
+namespace AnyJob.Runner.Workflow
 {
     public sealed class WorkflowError
     {
