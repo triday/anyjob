@@ -32,7 +32,7 @@ namespace AnyJob.App.UnitTest
         {
             AppInfo appInfo = new AppInfo()
             {
-                Command = IsWindows ? "cmd /c echo ${text}" : "sh -c 'echo ${text}'"
+                Command = IsWindows ? "cmd /c echo ${text}" : "sh -c \"echo ${text}\""
             };
             AppOption appOption = new AppOption();
             AppAction appAction = new AppAction(appInfo, appOption);
