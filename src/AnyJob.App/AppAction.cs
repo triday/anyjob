@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -18,8 +19,16 @@ namespace AnyJob.App
         }
         public AppOption AppOption { get; private set; }
         public AppInfo AppInfo { get; private set; }
+
+        public override object Run(IActionContext context)
+        {
+            this.CheckPlatforms(this.AppInfo, context);
+            return base.Run(context);
+        }
+
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
         {
+
             var command = this.AppInfo.Command.Trim();
             var firstIndex = command.IndexOfAny(new[] { ' ', '\t' });
             var (app, args) = firstIndex <= 0 ? (command, string.Empty) : (command.Substring(0, firstIndex), command.Substring(firstIndex + 1));
@@ -47,6 +56,16 @@ namespace AnyJob.App
                 }
                 return m.Value;
             });
+        }
+        private void CheckPlatforms(AppInfo appInfo, IActionContext context)
+        {
+            var currentPlatform = context.RuntimeInfo.OSPlatForm.ToString();
+            var supportPlatforms = (appInfo.SupportPlatforms ?? Array.Empty<string>());
+            if (!supportPlatforms.Contains(currentPlatform, StringComparer.InvariantCultureIgnoreCase))
+            {
+                throw new ActionException($"The app action '{context.Name}' not support platform '{currentPlatform}.'");
+            }
+
         }
 
 

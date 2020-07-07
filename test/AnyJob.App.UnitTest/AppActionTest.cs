@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using AnyJob.App.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,6 +16,7 @@ namespace AnyJob.App.UnitTest
             AppInfo appInfo = new AppInfo()
             {
                 Command = IsWindows ? "ping ${host} -n ${count}" : "ping ${host} -c ${count}"
+
             };
             AppOption appOption = new AppOption();
             AppAction appAction = new AppAction(appInfo, appOption);
@@ -56,10 +58,11 @@ namespace AnyJob.App.UnitTest
                 },
                 Output = new ActionLogger(),
                 Error = new ActionLogger(),
+
                 RuntimeInfo = new ActionRuntime()
                 {
-                    WorkingDirectory = System.Environment.CurrentDirectory
-
+                    WorkingDirectory = System.Environment.CurrentDirectory,
+                    OSPlatForm = OSPlatform.Windows
                 }
             };
         }
