@@ -1,25 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="global\node\node_wrapper.js" />
-  </ItemGroup>
-
   <ItemGroup>
     <Content Include="global\node\node_wrapper.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\AnyJob.Runner.Process\AnyJob.Runner.Process.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="global\node\node_modules\" />
   </ItemGroup>
-
 </Project>

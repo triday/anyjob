@@ -1,13 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\AnyJob.Engine\AnyJob.Engine.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="ErrorMessage.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -15,12 +9,10 @@
       <DependentUpon>ErrorMessage.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="ErrorMessage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorMessage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
 </Project>
