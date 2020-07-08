@@ -9,11 +9,6 @@
     <ProjectReference Include="..\..\src\AnyJob.Runner.Workflow\AnyJob.Runner.Workflow.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System">
-      <HintPath>System</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <None Update="packs\assembly\add.action">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
