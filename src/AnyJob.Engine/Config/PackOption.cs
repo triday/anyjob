@@ -1,5 +1,4 @@
-﻿using AnyJob.DependencyInjection;
-using YS.Knife;
+﻿using YS.Knife;
 namespace AnyJob.Config
 {
     /// <summary>

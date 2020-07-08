@@ -1,6 +1,4 @@
-﻿using AnyJob.DependencyInjection;
-
-namespace AnyJob.Impl
+﻿namespace AnyJob.Impl
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultExpressionTemplateService : IExpressionTemplateService

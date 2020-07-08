@@ -1,6 +1,4 @@
-﻿using System;
-using AnyJob.DependencyInjection;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace AnyJob.Runner.Python
 {

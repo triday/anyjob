@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AnyJob.DependencyInjection;
-
-namespace AnyJob.Runner.Node
+﻿namespace AnyJob.Runner.Node
 {
     [YS.Knife.OptionsClass("node")]
     public class NodeOption

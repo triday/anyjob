@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AnyJob.Runner.Python
+﻿namespace AnyJob.Runner.Python
 {
     partial class Errors
     {

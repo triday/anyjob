@@ -1,5 +1,4 @@
-﻿using AnyJob.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace AnyJob.Impl
 {

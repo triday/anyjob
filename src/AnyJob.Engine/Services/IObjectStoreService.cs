@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AnyJob
+﻿namespace AnyJob
 {
     /// <summary>
     /// 表示对象的本地存储服务
