@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using AnyJob;
 using AnyJob.Runner.Process;
-using Microsoft.Extensions.DependencyInjection;
 namespace AnyJob.Runner.Node
 {
     public class NodeAction : TypedProcessAction2

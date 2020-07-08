@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using AnyJob.Config;
-using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Schema;
 

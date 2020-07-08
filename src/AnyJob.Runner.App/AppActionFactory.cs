@@ -1,5 +1,4 @@
-﻿using AnyJob.DependencyInjection;
-using AnyJob.Runner.App.Model;
+﻿using AnyJob.Runner.App.Model;
 using Microsoft.Extensions.Options;
 
 namespace AnyJob.Runner.App

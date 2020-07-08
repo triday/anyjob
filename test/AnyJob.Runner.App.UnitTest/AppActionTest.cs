@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AnyJob.Runner.App.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

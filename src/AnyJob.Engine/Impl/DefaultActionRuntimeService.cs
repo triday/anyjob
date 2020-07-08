@@ -2,7 +2,6 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using AnyJob.Config;
-using AnyJob.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 namespace AnyJob.Impl

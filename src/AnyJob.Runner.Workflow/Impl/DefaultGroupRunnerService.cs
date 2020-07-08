@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using AnyJob.DependencyInjection;
 using AnyJob.Runner.Workflow.Config;
 using AnyJob.Runner.Workflow.Models;
 using AnyJob.Runner.Workflow.Services;

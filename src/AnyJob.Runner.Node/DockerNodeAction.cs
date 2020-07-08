@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using AnyJob.Runner.Process;
 
 namespace AnyJob.Runner.Node

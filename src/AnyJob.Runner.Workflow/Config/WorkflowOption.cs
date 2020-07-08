@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AnyJob.Runner.Workflow.Config
+﻿namespace AnyJob.Runner.Workflow.Config
 {
     public class WorkflowOption
     {

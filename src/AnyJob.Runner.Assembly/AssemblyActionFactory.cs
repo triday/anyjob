@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using AnyJob.DependencyInjection;
 namespace AnyJob.Runner.Assembly
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
