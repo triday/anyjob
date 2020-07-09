@@ -1,4 +1,5 @@
-﻿using AnyJob.Runner.Workflow.Models;
+﻿using System;
+using AnyJob.Runner.Workflow.Models;
 
 namespace AnyJob.Runner.Workflow
 {
@@ -15,6 +16,7 @@ namespace AnyJob.Runner.Workflow
 
         public IAction CreateAction(IActionContext actionContext)
         {
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
             string workingDir = actionContext.RuntimeInfo.WorkingDirectory;
             string entryPoint = actionContext.MetaInfo.EntryPoint;
             string entryFile = System.IO.Path.Combine(workingDir, entryPoint);

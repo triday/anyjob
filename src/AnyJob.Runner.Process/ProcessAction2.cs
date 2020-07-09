@@ -1,4 +1,6 @@
-﻿namespace AnyJob.Runner.Process
+﻿using System;
+
+namespace AnyJob.Runner.Process
 {
     public abstract class ProcessAction2 : BaseProcessAction
     {
@@ -11,6 +13,7 @@
         protected abstract ProcessExecInput OnCreateExecInputInfo(IActionContext context);
         protected virtual object OnParseResult(IActionContext context, ProcessExecInput input, ProcessExecOutput output)
         {
+            _ = output ?? throw new ArgumentNullException(nameof(output));
             return output.StandardOutput;
         }
 

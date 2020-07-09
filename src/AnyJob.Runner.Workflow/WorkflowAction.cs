@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AnyJob.Runner.Workflow.Models;
 using AnyJob.Runner.Workflow.Services;
 
@@ -31,26 +32,35 @@ namespace AnyJob.Runner.Workflow
         }
         protected virtual void PublishGlobalVars(IActionContext context, IPublishValueService publishValueService)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             if (this.WorkflowInfo == null || this.WorkflowInfo.GlobalVars == null) return;
             publishValueService.PublishGlobalVars(context.Parameters, this.WorkflowInfo.GlobalVars);
         }
         protected virtual Task RunSetup(IActionContext context, IGroupRunnerService groupRunnerService)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
+            _ = groupRunnerService ?? throw new ArgumentNullException(nameof(groupRunnerService));
             if (this.WorkflowInfo == null || this.WorkflowInfo.Setup == null) return Task.CompletedTask;
             return groupRunnerService.RunGroup(context, this.WorkflowInfo.Setup);
         }
         protected virtual Task RunBody(IActionContext context, IGroupRunnerService groupRunnerService)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
+            _ = groupRunnerService ?? throw new ArgumentNullException(nameof(groupRunnerService));
             if (this.WorkflowInfo == null || this.WorkflowInfo.Body == null) return Task.CompletedTask;
             return groupRunnerService.RunGroup(context, this.WorkflowInfo.Body);
         }
         protected virtual Task RunTeardown(IActionContext context, IGroupRunnerService groupRunnerService)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
+            _ = groupRunnerService ?? throw new ArgumentNullException(nameof(groupRunnerService));
             if (this.WorkflowInfo == null || this.WorkflowInfo.TearDown == null) return Task.CompletedTask;
             return groupRunnerService.RunGroup(context, this.WorkflowInfo.TearDown);
         }
         protected virtual object ParseResult(IActionContext context, IDynamicValueService dynamicValueService)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
+            _ = dynamicValueService ?? throw new ArgumentNullException(nameof(dynamicValueService));
             if (this.WorkflowInfo == null) return null;
             return dynamicValueService.GetDynamicValue(this.WorkflowInfo.Output, context.Parameters);
         }

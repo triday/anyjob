@@ -16,6 +16,7 @@ namespace AnyJob.Impl
         private IExpressionService expressionService;
         public object GetDynamicValue(object value, IActionParameter actionParameter)
         {
+            _ = actionParameter ?? throw new ArgumentNullException(nameof(actionParameter));
             try
             {
                 if (value == null) return null;

@@ -1,4 +1,5 @@
-﻿using AnyJob.Runner.App.Model;
+﻿using System;
+using AnyJob.Runner.App.Model;
 using Microsoft.Extensions.Options;
 
 namespace AnyJob.Runner.App
@@ -18,6 +19,7 @@ namespace AnyJob.Runner.App
 
         public IAction CreateAction(IActionContext actionContext)
         {
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
             string entryPoint = actionContext.MetaInfo.EntryPoint;
             string entryFile = System.IO.Path.GetFullPath(System.IO.Path.Combine(actionContext.RuntimeInfo.WorkingDirectory, entryPoint));
             AppInfo appInfo = fileStoreService.GetObject<AppInfo>(entryFile);

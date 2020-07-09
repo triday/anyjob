@@ -56,7 +56,7 @@ namespace AnyJob.Runner.App.UnitTest
                     Arguments = inputs
                 },
                 Output = new ActionLogger(),
-                Error = new ActionLogger(),
+                ExecuteError = new ActionLogger(),
 
                 RuntimeInfo = new ActionRuntime()
                 {

@@ -43,6 +43,7 @@ namespace AnyJob.Impl
 
         public JSchema GetJSchema(Type type)
         {
+            _ = type ?? throw new ArgumentNullException(nameof(type));
             var schemaAttr = Attribute.GetCustomAttribute(type, typeof(SchemaAttribute)) as SchemaAttribute;
             if (schemaAttr == null) return null;
             using (var stream = type.Assembly.GetManifestResourceStream(schemaAttr.SchemaFile))

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
+using Microsoft.Extensions.Logging;
 
 namespace AnyJob.Impl
 {
@@ -12,6 +13,7 @@ namespace AnyJob.Impl
         }
         public void TraceState(ITraceInfo traceInfo)
         {
+            _ = traceInfo ?? throw new ArgumentNullException(nameof(traceInfo));
             logger.LogInformation("{0}...{1} [{2}]",
                traceInfo.ExecuteContext.ExecutePath.RootId,
                traceInfo.ExecuteContext.ExecutePath.ExecuteId,
