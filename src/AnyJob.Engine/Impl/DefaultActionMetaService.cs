@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AnyJob.Config;
@@ -32,6 +33,7 @@ namespace AnyJob.Impl
         }
         protected virtual string OnGetMetaFile(IActionName actionName)
         {
+            _ = actionName ?? throw new ArgumentNullException(nameof(actionName));
             List<string> paths = new List<string>()
             {
                 packOption.Value.RootDir
@@ -62,7 +64,7 @@ namespace AnyJob.Impl
 
 
 
-        public class MetaInfo
+        protected class MetaInfo
         {
             public string Kind { get; set; }
 

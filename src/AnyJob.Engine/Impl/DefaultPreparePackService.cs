@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 
 namespace AnyJob.Impl
 {
@@ -7,6 +8,7 @@ namespace AnyJob.Impl
     {
         public void PreparePack(IActionName actionName, IActionRuntime actionRuntime)
         {
+            _ = actionName ?? throw new ArgumentNullException(nameof(actionName));
             string key = $"{actionName.Pack}@{actionName.Version}";
             using (Mutex mut = new Mutex(false, key, out bool createdNew))
             {

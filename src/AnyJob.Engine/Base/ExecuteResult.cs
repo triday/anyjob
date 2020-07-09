@@ -10,7 +10,7 @@ namespace AnyJob
         /// <summary>
         /// 获取或设置执行过程的错误
         /// </summary>
-        public Exception Error { get; set; }
+        public Exception ExecuteError { get; set; }
         /// <summary>
         /// Action的运行结果
         /// </summary>
@@ -22,7 +22,7 @@ namespace AnyJob
         {
             get
             {
-                return this.Error == null;
+                return this.ExecuteError == null;
             }
         }
 
@@ -30,7 +30,7 @@ namespace AnyJob
         {
             return new ExecuteResult()
             {
-                Error = error
+                ExecuteError = error
             };
         }
         public static ExecuteResult FromResult(object result)

@@ -50,6 +50,7 @@ namespace AnyJob.Runner.Process
         }
         public static ProcessExecOutput Exec(ProcessExecInput input)
         {
+            _ = input ?? throw new ArgumentNullException(nameof(input));
             var args = string.Join(" ", input.Arguments ?? Array.Empty<string>());
             ProcessStartInfo startInfo = new ProcessStartInfo(input.FileName, args)
             {

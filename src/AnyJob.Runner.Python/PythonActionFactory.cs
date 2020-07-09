@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System;
+using Microsoft.Extensions.Options;
 
 namespace AnyJob.Runner.Python
 {
@@ -13,6 +14,7 @@ namespace AnyJob.Runner.Python
         private IOptions<PythonOption> option;
         public IAction CreateAction(IActionContext actionContext)
         {
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
             var entryFile = actionContext.MetaInfo.EntryPoint;
             this.AssertEntryFileExits(entryFile, actionContext);
             return new PythonAction(option.Value, entryFile);

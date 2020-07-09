@@ -40,6 +40,7 @@ namespace AnyJob.Impl
 
         public Task<ExecuteResult> Execute(IExecuteContext executeContext)
         {
+            _ = executeContext ?? throw new ArgumentNullException(nameof(executeContext));
             var traceInfo = new TraceInfo()
             {
                 ExecuteContext = executeContext
@@ -63,8 +64,11 @@ namespace AnyJob.Impl
             }, executeContext.Token);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:不捕获常规异常类型", Justification = "<挂起>")]
         protected virtual ExecuteResult OnExecute(IExecuteContext executionContext, TraceInfo traceInfo)
         {
+            _ = executionContext ?? throw new ArgumentNullException(nameof(executionContext));
+            _ = traceInfo ?? throw new ArgumentNullException(nameof(traceInfo));
             try
             {
                 //1 resolve action name
@@ -115,6 +119,7 @@ namespace AnyJob.Impl
 
         protected virtual IActionRuntime OnGetActionRuntime(IActionName actionName)
         {
+            _ = actionName ?? throw new ArgumentNullException(nameof(actionName));
             var actionRuntime = runtimeService.GetRunTime(actionName);
             if (actionRuntime == null)
             {
@@ -129,6 +134,7 @@ namespace AnyJob.Impl
         }
         protected virtual IActionMeta OnGetActionMeta(IActionName actionName)
         {
+            _ = actionName ?? throw new ArgumentNullException(nameof(actionName));
             var actionMeta = this.metaService.GetActionMeta(actionName);
             if (actionMeta == null)
             {
@@ -139,6 +145,7 @@ namespace AnyJob.Impl
 
         protected virtual IActionFactoryService OnResolveActionFactory(IActionMeta actionMeta)
         {
+            _ = actionMeta ?? throw new ArgumentNullException(nameof(actionMeta));
             if (this.actionFactoryMap.TryGetValue(actionMeta.Kind, out var actionFactory))
             {
                 return actionFactory;
@@ -150,6 +157,7 @@ namespace AnyJob.Impl
         }
         protected virtual IActionContext OnCreateActionContext(IExecuteContext executeContext, IActionName actionName, IActionRuntime actionRuntime, IActionMeta actionMeta)
         {
+            _ = executeContext ?? throw new ArgumentNullException(nameof(executeContext));
             return new ActionContext()
             {
                 ExecutePath = executeContext.ExecutePath,
@@ -160,12 +168,14 @@ namespace AnyJob.Impl
                 ServiceProvider = this.serviceProvider,
                 Parameters = this.ConvertParameter(actionMeta, executeContext.ExecuteParameter),
                 Output = new ActionLogger(),
-                Error = new ActionLogger(),
+                ExecuteError = new ActionLogger(),
                 Name = actionName
             };
         }
         protected virtual IActionParameter ConvertParameter(IActionMeta actionMeta, IExecuteParameter executeParameter)
         {
+            _ = actionMeta ?? throw new ArgumentNullException(nameof(actionMeta));
+            _ = executeParameter ?? throw new ArgumentNullException(nameof(executeParameter));
             var runtimeArgs = new Dictionary<string, object>();
             if (actionMeta.Inputs != null)
             {
@@ -195,6 +205,7 @@ namespace AnyJob.Impl
 
         protected virtual void OnCheckPremission(IActionContext actionContext)
         {
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
             if (!actionContext.MetaInfo.Enabled)
             {
                 throw Errors.ActionIsDisabled(actionContext.Name.ToString());
@@ -207,6 +218,7 @@ namespace AnyJob.Impl
 
         protected virtual IAction OnCreateActionInstance(IActionFactoryService actionFactoryService, IActionContext actionContext)
         {
+            _ = actionFactoryService ?? throw new ArgumentNullException(nameof(actionFactoryService));
             var action = actionFactoryService.CreateAction(actionContext);
             if (action == null)
             {
@@ -215,8 +227,11 @@ namespace AnyJob.Impl
             return action;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:不捕获常规异常类型", Justification = "<挂起>")]
         protected virtual object OnRunAction(IAction action, IExecuteContext executeContext, IActionContext actionContext)
         {
+            _ = executeContext ?? throw new ArgumentNullException(nameof(executeContext));
+            _ = action ?? throw new ArgumentNullException(nameof(action));
             int loopCount = Math.Max(1, executeContext.ActionRetryCount);
             Exception error = null;
             for (int i = 0; i < loopCount && !executeContext.Token.IsCancellationRequested; i++)
@@ -246,6 +261,7 @@ namespace AnyJob.Impl
 
         protected virtual void OnTraceState(TraceInfo traceInfo, ExecuteState state, ExecuteResult result = null)
         {
+            _ = traceInfo ?? throw new ArgumentNullException(nameof(traceInfo));
             traceInfo.State = state;
             traceInfo.Result = result;
             traceService.TraceState(traceInfo);

@@ -14,6 +14,7 @@ namespace AnyJob.Runner.Assembly
 
         public IAction CreateAction(IActionContext actionContext)
         {
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
             string typeName = actionContext.MetaInfo.EntryPoint;
             var actionType = Type.GetType(typeName);
             var instance = Activator.CreateInstance(actionType);
@@ -22,6 +23,8 @@ namespace AnyJob.Runner.Assembly
         }
         protected void SetInputProperties(IActionContext actionContext, Type type, object instance)
         {
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
+            _ = type ?? throw new ArgumentNullException(nameof(type));
             var propsMap = type.GetProperties().ToDictionary(p => p.Name, StringComparer.CurrentCultureIgnoreCase);
             foreach (var kv in actionContext.Parameters.Arguments)
             {

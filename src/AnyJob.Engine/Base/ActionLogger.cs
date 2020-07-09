@@ -21,7 +21,7 @@ namespace AnyJob
                 }
                 else
                 {
-                    string line = string.Format(fmt, args);
+                    string line = string.Format(System.Globalization.CultureInfo.InvariantCulture, fmt, args);
                     stringBuilder.AppendLine(line);
                 }
             }

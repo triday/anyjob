@@ -9,7 +9,7 @@ namespace AnyJob.Impl
         {
             try
             {
-                return System.Convert.ChangeType(value, targetType);
+                return System.Convert.ChangeType(value, targetType, System.Globalization.CultureInfo.InvariantCulture);
             }
             catch (Exception ex)
             {

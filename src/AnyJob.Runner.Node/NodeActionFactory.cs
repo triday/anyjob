@@ -1,4 +1,6 @@
-﻿namespace AnyJob.Runner.Node
+﻿using System;
+
+namespace AnyJob.Runner.Node
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
 
@@ -13,6 +15,7 @@
 
         public IAction CreateAction(IActionContext actionContext)
         {
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
             var entryFile = actionContext.MetaInfo.EntryPoint;
             if (string.IsNullOrEmpty(option.DockerImage))
             {
