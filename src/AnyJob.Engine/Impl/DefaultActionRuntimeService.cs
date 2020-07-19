@@ -19,7 +19,7 @@ namespace AnyJob.Impl
             _ = actionName ?? throw new ArgumentNullException(nameof(actionName));
             try
             {
-                string packDir = Path.Combine(this.packOption.Value.RootDir, actionName.Pack, actionName.Version ?? string.Empty);
+                string packDir = Path.Combine(this.packOption.Value.RootDir, actionName.Provider, actionName.Pack, actionName.Version);
                 return new ActionRuntime()
                 {
                     WorkingDirectory = Path.GetFullPath(packDir),
