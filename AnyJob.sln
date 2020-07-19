@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Java", "src\A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Runner.Golang", "src\AnyJob.Runner.Golang\AnyJob.Runner.Golang.csproj", "{5067BD5A-D7BC-4E8F-A067-FBFD42A78723}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,10 @@ Global
 		{419B76BF-DC8B-44CE-A676-36729AB743A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{419B76BF-DC8B-44CE-A676-36729AB743A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{419B76BF-DC8B-44CE-A676-36729AB743A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5067BD5A-D7BC-4E8F-A067-FBFD42A78723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5067BD5A-D7BC-4E8F-A067-FBFD42A78723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5067BD5A-D7BC-4E8F-A067-FBFD42A78723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5067BD5A-D7BC-4E8F-A067-FBFD42A78723}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +136,7 @@ Global
 		{2202F98D-9C2D-47ED-B2DB-2187A5D89E32} = {7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}
 		{2F9B3462-C39E-4F50-A5B3-B62AA7D07B0D} = {B03DEFA0-9B4F-4E7D-A298-CA733B693E39}
 		{419B76BF-DC8B-44CE-A676-36729AB743A4} = {7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}
+		{5067BD5A-D7BC-4E8F-A067-FBFD42A78723} = {7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CBF58BD-693A-4AED-85E9-3F8FCC07DE00}
