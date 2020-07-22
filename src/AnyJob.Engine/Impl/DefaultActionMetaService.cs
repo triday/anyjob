@@ -36,14 +36,12 @@ namespace AnyJob.Impl
             _ = actionName ?? throw new ArgumentNullException(nameof(actionName));
             List<string> paths = new List<string>()
             {
-                packOption.Value.RootDir
+                packOption.Value.RootDir,
+                actionName.Provider,
+                actionName.Pack,
+                actionName.Version,
+                $"{actionName.Name}.action"
             };
-            paths.Add(actionName.Pack);
-            if (!string.IsNullOrEmpty(actionName.Version))
-            {
-                paths.Add(actionName.Version);
-            }
-            paths.Add($"{actionName.Name}.action");
             return Path.Combine(paths.ToArray());
         }
         protected IActionMeta ConvertToActionMeta(MetaInfo metaInfo)
