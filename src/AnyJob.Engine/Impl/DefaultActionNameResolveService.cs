@@ -17,7 +17,7 @@ namespace AnyJob.Impl
 
         public virtual IActionName ResolverName(string fullName)
         {
-            var match = ActionFullnameRegex.Match(fullName);
+            var match = ActionFullnameRegex.Match(fullName ?? string.Empty);
             if (match.Success)
             {
                 var pack = match.Groups["pack"].Value;
