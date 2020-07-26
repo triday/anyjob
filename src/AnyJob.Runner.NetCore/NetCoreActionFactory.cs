@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-namespace AnyJob.Runner.Assembly
+namespace AnyJob.Runner.NetCore
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
-    [YS.Knife.DictionaryKey("assembly")]
-    public class AssemblyActionFactory : IActionFactoryService
+    [YS.Knife.DictionaryKey("netcore")]
+    public class NetCoreActionFactory : IActionFactoryService
     {
-        public AssemblyActionFactory(IConvertService convertService)
+        public NetCoreActionFactory(IConvertService convertService)
         {
             this.convertService = convertService;
         }
