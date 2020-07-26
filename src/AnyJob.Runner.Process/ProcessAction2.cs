@@ -14,7 +14,7 @@ namespace AnyJob.Runner.Process
         protected virtual object OnParseResult(IActionContext context, ProcessExecInput input, ProcessExecOutput output)
         {
             _ = output ?? throw new ArgumentNullException(nameof(output));
-            return output.StandardOutput;
+            return output.ExitCode;
         }
 
     }

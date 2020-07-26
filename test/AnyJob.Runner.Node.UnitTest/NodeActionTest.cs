@@ -20,28 +20,7 @@ namespace AnyJob.Runner.Node
             object res = nodeAction.Run(context);
             Assert.AreEqual(300, Convert.ToInt32(res));
         }
-        [TestMethod]
-        public void TestGlobalRef()
-        {
-            var option = this.CreateOption();
-            var context = this.CreateActionContext(new Dictionary<string, object>()
-            {
-            });
-            NodeAction nodeAction = new NodeAction(option, "global_ref.js");
-            object res = nodeAction.Run(context);
-            Assert.AreEqual("ok", res);
-        }
-        [TestMethod]
-        public void TestPackRef()
-        {
-            var option = this.CreateOption();
-            var context = this.CreateActionContext(new Dictionary<string, object>()
-            {
-            });
-            NodeAction nodeAction = new NodeAction(option, "pack_ref.js");
-            object res = nodeAction.Run(context);
-            Assert.AreEqual("ok", res);
-        }
+
         private NodeOption CreateOption()
         {
             return new NodeOption()
