@@ -6,7 +6,7 @@ using YS.Knife.Test;
 
 namespace AnyJob.Runner.Python.IntegrationTest
 {
-    //[TestClass]
+    [TestClass]
     public class TestEnvironment
     {
         [AssemblyInitialize()]
@@ -14,8 +14,7 @@ namespace AnyJob.Runner.Python.IntegrationTest
         {
             var availablePort = Utility.GetAvailableTcpPort(80);
             var readyPort = Utility.GetAvailableTcpPort(8901);
-            //StartContainer(availablePort);
-            //SetConnectionString(availablePort);
+            StartContainer(availablePort, readyPort);
         }
 
         [AssemblyCleanup()]
@@ -30,25 +29,10 @@ namespace AnyJob.Runner.Python.IntegrationTest
             DockerCompose.Up(new Dictionary<string, object>
             {
                 ["PROVIDER_PORT"] = providerPort,
-                ["REPORT_TO_HOST_PORT"] = reportToHostPort
-            });
+            }, (int)reportToHostPort, 20);
+
+            Environment.SetEnvironmentVariable("pack__providers__default", $"http://localhost:{providerPort}");
         }
-        private static void SetConnectionString(uint port, string password)
-        {
-            // var mySqlConnectionStringBuilder = new MySqlConnectionStringBuilder
-            // {
-            //     Server = "127.0.0.1",
-            //     Port = port,
-            //     Database = "SequenceContext",
-            //     UserID = "root",
-            //     Password = password
-            // };
-            // Environment.SetEnvironmentVariable("ConnectionStrings__@DbType", "mysql");
-            // Environment.SetEnvironmentVariable("ConnectionStrings__SequenceContext", mySqlConnectionStringBuilder.ConnectionString);
-        }
-
-
-
 
     }
 }
