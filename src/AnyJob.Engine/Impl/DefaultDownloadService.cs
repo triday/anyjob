@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AnyJob.Config;
@@ -11,9 +12,10 @@ namespace AnyJob.Engine.Impl
     {
         readonly PackOption packOption;
         readonly ILogger logger;
-        public DefaultDownloadService(PackOption packOption)
+        public DefaultDownloadService(PackOption packOption, ILogger<DefaultDownloadService> logger)
         {
             this.packOption = packOption;
+            this.logger = logger;
         }
         public async Task DownLoadFile(DownloadInfo downloadInfo)
         {
@@ -51,10 +53,13 @@ namespace AnyJob.Engine.Impl
         {
             var directoryName = Path.GetDirectoryName(targetFile);
             Directory.CreateDirectory(directoryName);
-            using (var fileStream = new FileStream(targetFile, FileMode.CreateNew))
+
+            using (var fileStream = new FileStream(targetFile, FileMode.Create))
             {
                 source.CopyTo(fileStream);
             }
+
+
         }
     }
 }

@@ -26,6 +26,7 @@ namespace AnyJob.Impl
         {
             try
             {
+                return JsonConvert.DeserializeObject<T>(text);
                 JObject obj = JObject.Parse(text);
                 var schema = GetJSchema(typeof(T));
                 if (schema != null && !obj.IsValid(schema))

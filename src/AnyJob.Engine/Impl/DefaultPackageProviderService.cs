@@ -5,6 +5,7 @@ using AnyJob.Config;
 
 namespace AnyJob.Impl
 {
+    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
     public class DefaultPackageProviderService : IPackageProviderService
     {
         readonly PackOption packOption;
@@ -12,26 +13,32 @@ namespace AnyJob.Impl
         public DefaultPackageProviderService(PackOption packOption, ISerializeService serializeService)
         {
             this.packOption = packOption;
+            this.serializeService = serializeService;
         }
         public List<PackageFileInfo> GetAllPackageFiles(string provider, string package, string version)
         {
             var baseUrl = GetServiceBaseUrl(provider);
+            var baseUri = new Uri(baseUrl);
             using (var client = new HttpClient())
             {
-                var url = new Uri(baseUrl);
-                var fullUrl = new Uri(new Uri(baseUrl), $"packages/{package}/{version}/files");
+                var fullUrl = new Uri(baseUri, $"packages/{package}/{version}/files");
                 var content = client.GetStringAsync(fullUrl).GetAwaiter().GetResult();
-                return serializeService.Deserialize<List<PackageFileInfo>>(content);
+                var packageFiles = serializeService.Deserialize<List<PackageFileInfo>>(content);
+                packageFiles.ForEach(f =>
+                {
+                    f.FileUrl = new Uri(baseUri, f.FileUrl).ToString();
+                });
+                return packageFiles;
             }
         }
 
         public string GetLatestPackageVersion(string provider, string package)
         {
             var baseUrl = GetServiceBaseUrl(provider);
+            var baseUri = new Uri(baseUrl);
             using (var client = new HttpClient())
             {
-                var url = new Uri(baseUrl);
-                var fullUrl = new Uri(new Uri(baseUrl), $"packages/{package}/versions/latest");
+                var fullUrl = new Uri(baseUri, $"packages/{package}/versions/latest");
                 var content = client.GetStringAsync(fullUrl).GetAwaiter().GetResult();
                 return serializeService.Deserialize<PackageVersionInfo>(content).Version;
             }
