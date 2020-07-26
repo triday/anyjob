@@ -5,7 +5,6 @@
     <RootNamespace>AnyJob.Runner.Workflow</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AnyJob.Runner.Assembly\AnyJob.Runner.Assembly.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.Workflow\AnyJob.Runner.Workflow.csproj" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AnyJob.Runner.Assembly
+namespace AnyJob.Runner.NetCore
 {
     [TestClass]
     public class IntegrationTest : YS.Knife.Hosting.KnifeHost
