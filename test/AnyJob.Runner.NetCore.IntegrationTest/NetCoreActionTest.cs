@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyJob.Runner.NetCore.IntegrationTest
@@ -14,10 +15,10 @@ namespace AnyJob.Runner.NetCore.IntegrationTest
                 { "num1" , 100 },
                 { "num2" , 200 }
             };
-            var job = JobEngine.Start("nodepack.add", inputs);
+            var job = JobEngine.Start("netcorepack.add", inputs);
             var result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(300L, result.Result);
+            Assert.AreEqual(300.0, result.Result);
         }
 
         [TestMethod]
@@ -30,7 +31,7 @@ namespace AnyJob.Runner.NetCore.IntegrationTest
                 { "a" ,arg1 },
                 { "b" ,arg2 }
             };
-            var job = JobEngine.Start("nodepack.concat", inputs);
+            var job = JobEngine.Start("netcorepack.concat", inputs);
             var result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
             var resultText = result.Result as string;

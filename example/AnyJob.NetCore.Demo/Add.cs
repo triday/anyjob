@@ -1,4 +1,6 @@
-﻿namespace AnyJob.Runner.Assembly.Actions
+﻿using System;
+
+namespace AnyJob.NetCore.Demo
 {
     public class Add : IAction
     {

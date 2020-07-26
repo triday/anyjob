@@ -1,8 +1,8 @@
 ﻿{
     "enabled": true,
     "description": "add from node",
-    "entrypoint": "AnyJob.Runner.Assembly.Actions.Add,AnyJob.Runner.Assembly.UnitTest",
-    "kind": "assembly",
+    "entrypoint": "AnyJob.NetCore.Demo.Add,AnyJob.NetCore.Demo.dll",
+    "kind": "netcore",
     "inputs": {
         "num1": {
             "type": "number"
