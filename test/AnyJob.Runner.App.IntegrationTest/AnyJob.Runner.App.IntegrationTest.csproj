@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <RootNamespace>AnyJob.Runner.App</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="apppack\0.0.1\dotversion.action" />
+    <None Remove="apppack\0.0.1\dotversion.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="apppack\0.0.1\dotversion.action">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="apppack\0.0.1\dotversion.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="YS.Knife.Hosting" Version="1.2.8" />
+        <PackageReference Include="YS.Knife.Test" Version="1.2.8" />
+    </ItemGroup>
+
+    <ItemGroup>
+    <ProjectReference Include="..\..\src\AnyJob.Runner.App\AnyJob.Runner.App.csproj" />
+  </ItemGroup>
+
+
+
+</Project>
