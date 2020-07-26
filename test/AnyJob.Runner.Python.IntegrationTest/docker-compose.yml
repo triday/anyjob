@@ -12,4 +12,4 @@ services:
     image: ysknife/wait-compose-ready
     environment:
       REPORT_TO_HOST_PORT: ${REPORT_TO_HOST_PORT:-8901}
-      WAIT_HOSTS: provider:80
+      WAIT_HOSTS: "provider:80"
