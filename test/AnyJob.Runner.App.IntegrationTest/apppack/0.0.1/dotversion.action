@@ -1,0 +1,10 @@
+﻿{
+    "enabled": true,
+    "entrypoint": "dotversion.json",
+    "kind": "app",
+    "inputs": {
+    },
+    "output": {
+        "type": "string"
+    }
+}

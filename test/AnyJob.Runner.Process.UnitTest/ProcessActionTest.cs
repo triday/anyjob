@@ -18,7 +18,7 @@ namespace AnyJob.Runner.Process.UnitTest
             };
             object result = action.Run(actionContext);
             Assert.IsNotNull(result);
-            Assert.AreEqual(0,result);
+            Assert.AreEqual(0, result);
         }
 
         [TestMethod]
