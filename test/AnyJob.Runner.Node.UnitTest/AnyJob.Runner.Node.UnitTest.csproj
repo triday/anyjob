@@ -8,28 +8,7 @@
     <ProjectReference Include="..\..\src\AnyJob.Runner.Node\AnyJob.Runner.Node.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="global\node\node_modules\globalmodule.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\nodepack\concat.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\nodepack\concat.action">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="packs\nodepack\add.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\nodepack\add.action">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\nodepack\global_ref.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\nodepack\pack_ref.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="packs\nodepack\node_modules\packmodule.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

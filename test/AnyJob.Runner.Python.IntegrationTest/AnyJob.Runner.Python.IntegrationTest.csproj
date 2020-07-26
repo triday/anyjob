@@ -1,21 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\AnyJob.Runner.Python\AnyJob.Runner.Python.csproj" />
+    </ItemGroup>
   <ItemGroup>
     <PackageReference Include="YS.Knife.Hosting" Version="1.2.8" />
     <PackageReference Include="YS.Knife.Test" Version="1.2.8" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\AnyJob.Engine\AnyJob.Engine.csproj" />
-    <ProjectReference Include="..\..\src\AnyJob.Runner.Python\AnyJob.Runner.Python.csproj" />
-  </ItemGroup>
-
-
 
 </Project>

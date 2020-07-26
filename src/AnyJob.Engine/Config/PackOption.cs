@@ -19,6 +19,6 @@ namespace AnyJob.Config
             ["default"] = "http://localhost"
         };
 
-        public string DownLoadCacheDir = "downloads";
+        public string DownLoadCacheDir { get; set; } = "downloads";
     }
 }
