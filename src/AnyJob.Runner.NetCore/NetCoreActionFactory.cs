@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 namespace AnyJob.Runner.NetCore
 {
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
@@ -15,11 +16,26 @@ namespace AnyJob.Runner.NetCore
         public IAction CreateAction(IActionContext actionContext)
         {
             _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
-            string typeName = actionContext.MetaInfo.EntryPoint;
-            var actionType = Type.GetType(typeName);
+            var (assemblyFile, typeName) = SplitAssemblyName(actionContext);
+            var assembly = Assembly.LoadFrom(assemblyFile);
+
+            var actionType = assembly.GetType(typeName);
             var instance = Activator.CreateInstance(actionType);
             SetInputProperties(actionContext, actionType, instance);
             return instance as IAction;
+        }
+        private (string AssemblyFile, string TypeName) SplitAssemblyName(IActionContext actionContext)
+        {
+            string entryPoint = actionContext.MetaInfo.EntryPoint;
+            var index = entryPoint.LastIndexOf(',');
+            if (index <= 0)
+            {
+                throw new Exception("Incorrect entry point format.");
+            }
+            var assemblyFile = entryPoint.Substring(index + 1);
+            string assemblyFullFile = System.IO.Path.GetFullPath(System.IO.Path.Combine(actionContext.RuntimeInfo.WorkingDirectory, assemblyFile));
+            var typeName = entryPoint.Substring(0, index).Trim();
+            return (assemblyFullFile, typeName);
         }
         protected void SetInputProperties(IActionContext actionContext, Type type, object instance)
         {
