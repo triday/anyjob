@@ -6,7 +6,7 @@ services:
     ports:
       - "${PROVIDER_PORT:-80}:80"
     volumes:
-      - ./apppack:/anyjob/packs/apppack
+      - ./netcorepack:/anyjob/packs/netcorepack
 
   wait-compose-ready:
     image: ysknife/wait-compose-ready
