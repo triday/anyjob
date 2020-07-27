@@ -1,4 +1,4 @@
-namespace AnyJob.NetCore.Demo
+﻿namespace AnyJob.NetCore.Demo
 {
     public class Hello : IAction
     {
