@@ -3,7 +3,7 @@
         "entry": ["add"],
         "tasks": {
             "add": {
-                "action": "assembly.add",
+                "action": "workflowpack.add",
                 "inputs": {
                     "num1": "<% num %>",
                     "num2": 100
