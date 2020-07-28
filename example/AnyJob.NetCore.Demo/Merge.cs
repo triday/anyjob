@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 namespace AnyJob.NetCore.Demo
 {
     public class Merge : IAction
@@ -11,10 +11,8 @@ namespace AnyJob.NetCore.Demo
         public object Run(IActionContext context)
         {
             var result = new List<PersonInfo>();
-            if (Persons != null)
-            {
-                result.AddRange(Persons);
-            }
+
+            result.AddRange(Persons ?? Enumerable.Empty<PersonInfo>());
             if (Other != null)
             {
                 result.Add(Other);

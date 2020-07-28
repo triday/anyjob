@@ -14,16 +14,17 @@ namespace AnyJob.Runner.Workflow.IntegrationTest
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual("empty", result.Result);
         }
+        [TestMethod]
         public void ShouldSuccessWhenRunAdd100Workflow()
         {
-            // var inputs = new Dictionary<string, object>()
-            // {
-            //     { "num" , 500 },
-            // };
-            // var job = JobEngine.Start("workflowpack.add100", inputs);
-            // var result = job.Task.Result;
-            // Assert.IsTrue(result.IsSuccess);
-            // Assert.AreEqual(600.0, result.Result);
+            var inputs = new Dictionary<string, object>()
+             {
+                 { "num" , 500 },
+             };
+            var job = JobEngine.Start("workflowpack.add100", inputs);
+            var result = job.Task.Result;
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(600L, result.Result);
         }
     }
 }
