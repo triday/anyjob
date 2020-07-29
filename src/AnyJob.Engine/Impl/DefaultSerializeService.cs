@@ -26,6 +26,7 @@ namespace AnyJob.Impl
         {
             try
             {
+                return JsonConvert.DeserializeObject<T>(text);
                 JObject obj = JObject.Parse(text);
                 var schema = GetJSchema(typeof(T));
                 if (schema != null && !obj.IsValid(schema))
@@ -43,6 +44,7 @@ namespace AnyJob.Impl
 
         public JSchema GetJSchema(Type type)
         {
+            _ = type ?? throw new ArgumentNullException(nameof(type));
             var schemaAttr = Attribute.GetCustomAttribute(type, typeof(SchemaAttribute)) as SchemaAttribute;
             if (schemaAttr == null) return null;
             using (var stream = type.Assembly.GetManifestResourceStream(schemaAttr.SchemaFile))

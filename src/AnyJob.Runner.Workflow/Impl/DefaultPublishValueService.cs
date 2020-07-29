@@ -1,4 +1,5 @@
-﻿using AnyJob.Runner.Workflow.Services;
+﻿using System;
+using AnyJob.Runner.Workflow.Services;
 
 namespace AnyJob.Runner.Workflow.Impl
 {
@@ -14,6 +15,7 @@ namespace AnyJob.Runner.Workflow.Impl
         private IDynamicValueService dynamicValueService;
         public void PublishGlobalVars(string key, object value, IActionParameter actionParameters)
         {
+            _ = actionParameters ?? throw new ArgumentNullException(nameof(actionParameters));
             object dynamicKey = dynamicValueService.GetDynamicValue(key, actionParameters);
             string dynamicKeyText = (string)convertService.Convert(dynamicKey, typeof(string));
             object dynamicValue = dynamicValueService.GetDynamicValue(value, actionParameters);
@@ -22,6 +24,7 @@ namespace AnyJob.Runner.Workflow.Impl
 
         public void PublishVars(string key, object value, IActionParameter actionParameters)
         {
+            _ = actionParameters ?? throw new ArgumentNullException(nameof(actionParameters));
             object dynamicKey = dynamicValueService.GetDynamicValue(key, actionParameters);
             string dynamicKeyText = (string)convertService.Convert(dynamicKey, typeof(string));
             object dynamicValue = dynamicValueService.GetDynamicValue(value, actionParameters);

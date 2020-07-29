@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace AnyJob.Runner.Workflow.Services
 {
@@ -6,6 +7,7 @@ namespace AnyJob.Runner.Workflow.Services
     {
         public static void PublishGlobalVars(this IPublishValueService publishValueService, IActionParameter actionParameter, IDictionary<string, object> values)
         {
+            _ = publishValueService ?? throw new ArgumentNullException(nameof(publishValueService));
             if (values == null) return;
             foreach (var kv in values)
             {
@@ -14,6 +16,7 @@ namespace AnyJob.Runner.Workflow.Services
         }
         public static void PublishVars(this IPublishValueService publishValueService, IActionParameter actionParameter, IDictionary<string, object> values)
         {
+            _ = publishValueService ?? throw new ArgumentNullException(nameof(publishValueService));
             if (values == null) return;
             foreach (var kv in values)
             {

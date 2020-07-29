@@ -8,14 +8,14 @@
 
         public bool IsExpression(string text)
         {
-            return text != null && text.StartsWith(PrefixText) && text.EndsWith(SuffixText);
+            return text != null && text.StartsWith(PrefixText, System.StringComparison.InvariantCulture) && text.EndsWith(SuffixText, System.StringComparison.InvariantCulture);
         }
 
         public string PickExpression(string text)
         {
             if (IsExpression(text))
             {
-                return text.Substring(PrefixText.Length, text.Length - PrefixText.Length - SuffixText.Length);
+                return text?.Substring(PrefixText.Length, text.Length - PrefixText.Length - SuffixText.Length);
             }
             return null;
         }

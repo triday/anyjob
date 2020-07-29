@@ -20,14 +20,14 @@ namespace AnyJob.Runner.Workflow
 
         private static WorkflowException FromErrorMessage(string name, params object[] args)
         {
-            string format = ErrorMessage.ResourceManager.GetString(name);
-            string message = string.Format(format, args);
+            string format = ErrorMessage.ResourceManager.GetString(name, System.Globalization.CultureInfo.InvariantCulture);
+            string message = string.Format(System.Globalization.CultureInfo.InvariantCulture, format, args);
             return new WorkflowException(name, message);
         }
         private static WorkflowException FromErrorMessage(string name, Exception exception, params object[] args)
         {
-            string format = ErrorMessage.ResourceManager.GetString(name);
-            string message = string.Format(format, args);
+            string format = ErrorMessage.ResourceManager.GetString(name, System.Globalization.CultureInfo.InvariantCulture);
+            string message = string.Format(System.Globalization.CultureInfo.InvariantCulture, format, args);
             return new WorkflowException(name, message, exception);
         }
     }
