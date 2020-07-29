@@ -27,6 +27,7 @@ namespace AnyJob.Runner.App.UnitTest
             var context = this.CreateActionContext(inputs);
             object res = appAction.Run(context);
             Assert.IsNotNull(res);
+            Assert.AreEqual(0, res);
         }
         [TestMethod]
         public void TestEchoAbc()
@@ -44,7 +45,7 @@ namespace AnyJob.Runner.App.UnitTest
             var context = this.CreateActionContext(inputs);
             object res = appAction.Run(context);
             Assert.IsNotNull(res);
-            Assert.AreEqual("abc", System.Convert.ToString(res).Trim());
+            Assert.AreEqual(0, res);
         }
 
         private IActionContext CreateActionContext(IDictionary<string, object> inputs)
@@ -56,7 +57,7 @@ namespace AnyJob.Runner.App.UnitTest
                     Arguments = inputs
                 },
                 Output = new ActionLogger(),
-                Error = new ActionLogger(),
+                ExecuteError = new ActionLogger(),
 
                 RuntimeInfo = new ActionRuntime()
                 {

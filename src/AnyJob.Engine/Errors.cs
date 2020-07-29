@@ -81,13 +81,13 @@ namespace AnyJob
 
         private static ActionException FromErrorMessage(string name, params object[] args)
         {
-            string format = ErrorCodes.ResourceManager.GetString(name);
+            string format = ErrorCodes.ResourceManager.GetString(name, CultureInfo.InvariantCulture);
             string message = string.Format(CultureInfo.InvariantCulture, format, args);
             return new ActionException(name, message);
         }
         private static ActionException FromErrorMessage(string name, Exception exception, params object[] args)
         {
-            string format = ErrorCodes.ResourceManager.GetString(name);
+            string format = ErrorCodes.ResourceManager.GetString(name, CultureInfo.InvariantCulture);
             string message = string.Format(CultureInfo.InvariantCulture, format, args);
             return new ActionException(name, message, exception);
         }

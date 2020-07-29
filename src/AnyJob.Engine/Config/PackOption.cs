@@ -1,4 +1,5 @@
-﻿using YS.Knife;
+﻿using System.Collections.Generic;
+using YS.Knife;
 namespace AnyJob.Config
 {
     /// <summary>
@@ -10,7 +11,14 @@ namespace AnyJob.Config
         /// <summary>
         /// 获取或设置根目录(相对或绝对)
         /// </summary>
-        public string RootDir { get; set; } = "packs";
+        public string RootDir { get; set; } = "actions";
 
+        public string DefaultProviderName { get; set; } = "default";
+        public IDictionary<string, string> Providers { get; set; } = new Dictionary<string, string>()
+        {
+            ["default"] = "http://localhost"
+        };
+
+        public string DownLoadCacheDir { get; set; } = "downloads";
     }
 }

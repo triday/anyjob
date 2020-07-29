@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -12,6 +13,7 @@ namespace AnyJob
         static JToken MaskNumberValue = JToken.FromObject(0.0);
         public JsonSchemaType(JSchema jSchema)
         {
+            _ = jSchema ?? throw new ArgumentNullException(nameof(jSchema));
             if (jSchema.ExtensionData.TryGetValue("must", out var token))
             {
                 this.IsMust = token.ToObject<bool>();
