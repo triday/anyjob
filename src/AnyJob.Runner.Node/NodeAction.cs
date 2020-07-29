@@ -17,6 +17,7 @@ namespace AnyJob.Runner.Node
 
         protected virtual IDictionary<string, string> OnGetEnvironment(IActionContext context, bool inDocker)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             var currentEnv = new Dictionary<string, string>();
             string currentNodeModulesPath = System.Environment.GetEnvironmentVariable("NODE_PATH");
             string packNodeModulesPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(context.RuntimeInfo.WorkingDirectory, Option.PackNodeModulesPath));
@@ -26,6 +27,7 @@ namespace AnyJob.Runner.Node
         }
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, Option.WrapperPath));
             string entryFile = Path.Combine(context.RuntimeInfo.WorkingDirectory, this.EntryFile);
             return new ProcessExecInput

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace AnyJob.Impl
@@ -26,6 +27,7 @@ namespace AnyJob.Impl
         private IActionExecuterService actionExecuterService;
 
         #region 字段
+        private object locker = new object();
         private const int MAX_JOB_COUNT = 100;
         private ConcurrentDictionary<string, Job> currentJobs = new ConcurrentDictionary<string, Job>();
         #endregion
@@ -59,7 +61,7 @@ namespace AnyJob.Impl
                 throw new ArgumentNullException(nameof(jobStartInfo));
             }
 
-            lock (this)
+            lock (locker)
             {
                 if (this.currentJobs.Count >= MAX_JOB_COUNT)
                 {
@@ -68,7 +70,7 @@ namespace AnyJob.Impl
                 }
                 var spy = this.OnCreateSpy(jobStartInfo);
                 var executePath = this.OnCreateExecutePath(jobStartInfo);
-                var context = this.OnCreateExecuteContext(jobStartInfo, spy.Token, executePath);
+                var context = this.OnCreateExecuteContext(jobStartInfo, executePath, spy.Token);
                 var task = actionExecuterService.Execute(context);
                 var jobinfo = new Job() { ExecutionId = executePath.ExecuteId, StartInfo = jobStartInfo, Spy = spy, Task = task };
                 currentJobs[executePath.ExecuteId] = jobinfo;
@@ -83,7 +85,7 @@ namespace AnyJob.Impl
                     {
                         this.logger.LogWarning($"Can not remove job info in engine [{ executePath.ExecuteId}].");
                     }
-                });
+                }, TaskScheduler.Current);
                 return jobinfo;
             }
         }
@@ -94,6 +96,7 @@ namespace AnyJob.Impl
 
         protected virtual IExecutePath OnCreateExecutePath(JobStartInfo jobStartInfo)
         {
+            _ = jobStartInfo ?? throw new ArgumentNullException(nameof(jobStartInfo));
             if (string.IsNullOrEmpty(jobStartInfo.ExecutionId))
             {
 
@@ -106,9 +109,9 @@ namespace AnyJob.Impl
             }
         }
 
-        protected virtual IExecuteContext OnCreateExecuteContext(JobStartInfo jobStartInfo, CancellationToken token, IExecutePath path)
+        protected virtual IExecuteContext OnCreateExecuteContext(JobStartInfo jobStartInfo, IExecutePath path, CancellationToken token)
         {
-
+            _ = jobStartInfo ?? throw new ArgumentNullException(nameof(jobStartInfo));
             var parameters = new ExecuteParameter()
             {
                 Context = new ReadOnlyDictionary<string, object>(jobStartInfo.Context ?? new Dictionary<string, object>()),

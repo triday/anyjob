@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -36,7 +37,7 @@ namespace AnyJob.Runner.Workflow.Actions
             IActionExecuterService actionExecuterService = context.GetRequiredService<IActionExecuterService>();
             int index = this.StartIndex;
             var allTasks = new List<Task>();
-            foreach (var item in source)
+            foreach (var item in source ?? Array.Empty<object>())
             {
                 var task = RunStep(context, index++, item, idGenService, actionExecuterService);
                 allTasks.Add(task);
@@ -49,25 +50,22 @@ namespace AnyJob.Runner.Workflow.Actions
             IIdGenService idGenService = context.GetRequiredService<IIdGenService>();
             IActionExecuterService actionExecuterService = context.GetRequiredService<IActionExecuterService>();
             int index = this.StartIndex;
-            foreach (var item in source)
+            foreach (var item in source ?? Array.Empty<object>())
             {
                 RunStep(context, index++, item, idGenService, actionExecuterService).Wait();
             }
         }
 
-        protected Task RunStep(IActionContext actionContext, int index, object item, IIdGenService idGenService, IActionExecuterService actionExecuterService)
+        protected async Task RunStep(IActionContext actionContext, int index, object item, IIdGenService idGenService, IActionExecuterService actionExecuterService)
         {
+            _ = actionExecuterService ?? throw new ArgumentNullException(nameof(actionExecuterService));
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
+            _ = idGenService ?? throw new ArgumentNullException(nameof(idGenService));
             IExecuteContext executeContext = this.OnCreateExecuteContext(actionContext, idGenService, index, item);
-            return actionExecuterService.Execute(executeContext).ContinueWith((result) =>
-            {
-                if (result.IsCompleted)
-                {
-
-                }
-            });
+            var result = await actionExecuterService.Execute(executeContext);
 
         }
-        private IExecuteContext OnCreateExecuteContext(IActionContext actionContext, IIdGenService idGenService, int index, object item)
+        private IExecuteContext OnCreateExecuteContext(IActionContext actionContext, IIdGenService idGenService, int index, object _)
         {
             string newid = idGenService.NewId();
             return new ExecuteContext()
