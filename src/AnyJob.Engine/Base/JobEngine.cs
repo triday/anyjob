@@ -36,17 +36,19 @@ namespace AnyJob
         }
 
 
-        class JobHost : YS.Knife.Hosting.KnifeHost
-        {
-            static JobHost()
-            {
-                Instance = new JobHost();
-            }
-            public static JobHost Instance { get; }
-            private JobHost() : base(Array.Empty<string>())
-            {
 
-            }
+    }
+
+    public class JobHost : YS.Knife.Hosting.KnifeHost
+    {
+        static JobHost()
+        {
+            Instance = new JobHost();
+        }
+        public static JobHost Instance { get; }
+        private JobHost() : base(Array.Empty<string>())
+        {
+
         }
     }
 }
