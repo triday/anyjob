@@ -20,13 +20,14 @@ namespace AnyJob.Runner.App
 
         public override object Run(IActionContext context)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             this.CheckPlatforms(this.AppInfo, context);
             return base.Run(context);
         }
 
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
         {
-
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             var command = this.AppInfo.Command.Trim();
             var firstIndex = command.IndexOfAny(new[] { ' ', '\t' });
             var (app, args) = firstIndex <= 0 ? (command, string.Empty) : (command.Substring(0, firstIndex), command.Substring(firstIndex + 1));
@@ -50,7 +51,7 @@ namespace AnyJob.Runner.App
                 var name = m.Groups["name"].Value;
                 if (input.ContainsKey(name))
                 {
-                    return Convert.ToString(input[name]);
+                    return Convert.ToString(input[name], System.Globalization.CultureInfo.InvariantCulture);
                 }
                 return m.Value;
             });

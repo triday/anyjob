@@ -1,0 +1,15 @@
+﻿version: '3.3'
+
+services:
+  provider:
+    image: anyjob/anyjob-file-provider
+    ports:
+      - "${PROVIDER_PORT:-80}:80"
+    volumes:
+      - ./netcorepack:/anyjob/packs/netcorepack
+
+  wait-compose-ready:
+    image: ysknife/wait-compose-ready
+    environment:
+      REPORT_TO_HOST_PORT: ${REPORT_TO_HOST_PORT:-8901}
+      WAIT_HOSTS: "provider:80"

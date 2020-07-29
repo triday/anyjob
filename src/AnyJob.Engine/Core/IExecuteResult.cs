@@ -7,7 +7,7 @@ namespace AnyJob
     /// </summary>
     public interface IExecuteResult
     {
-        Exception Error { get; set; }
+        Exception ExecuteError { get; set; }
         bool IsSuccess { get; }
         object Result { get; set; }
     }

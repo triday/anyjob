@@ -30,6 +30,7 @@ namespace AnyJob.Runner.Python
         }
         protected IDictionary<string, string> OnGetEnvironment(IActionContext context, bool inDocker)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             var currentEnv = new Dictionary<string, string>();
             string currentNodeModulesPath = System.Environment.GetEnvironmentVariable("PYTHONPATH");
             string packNodeModulesPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(context.RuntimeInfo.WorkingDirectory, pythonOption.PackPythonLibPath));
@@ -40,12 +41,13 @@ namespace AnyJob.Runner.Python
         }
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             return InDocker ?
                 CreateDockerInputInfo(context, exchangePath, inputFile, outputFile) :
                 CreateLocalInputInfo(context, exchangePath, inputFile, outputFile);
 
         }
-        private ProcessExecInput CreateLocalInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
+        private ProcessExecInput CreateLocalInputInfo(IActionContext context, string _, string inputFile, string outputFile)
         {
             string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
             string entryModule = this.GetEntryModuleName(this.entryFile);

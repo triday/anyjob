@@ -45,7 +45,7 @@ namespace AnyJob
         /// <summary>
         /// 获取执行过程中的错误信息
         /// </summary>
-        IActionLogger Error { get; }
+        IActionLogger ExecuteError { get; }
 
     }
 }

@@ -21,19 +21,20 @@ namespace AnyJob.Runner.Workflow.Impl
         IDynamicValueService dynamicValueService;
         IConvertService convertService;
 
-        public DefaultGroupRunnerService(IActionExecuterService actionExecuterService, IPublishValueService publishValueService, IIdGenService idGenService, IDynamicValueService dynamicValueService, IConvertService convertService, IOptions<WorkflowOption> workflowOption)
+        public DefaultGroupRunnerService(IActionExecuterService actionExecuterService, IPublishValueService publishValueService, IIdGenService idGenService, IDynamicValueService dynamicValueService, IConvertService convertService, WorkflowOption workflowOption)
         {
             this.actionExecuterService = actionExecuterService;
             this.publishValueService = publishValueService;
             this.idGenService = idGenService;
             this.dynamicValueService = dynamicValueService;
             this.convertService = convertService;
-            this.workflowOption = workflowOption.Value;
+            this.workflowOption = workflowOption;
         }
 
 
         public virtual Task RunGroup(IActionContext actionContext, GroupInfo groupInfo)
         {
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
             if (groupInfo == null) return Task.CompletedTask;
             publishValueService.PublishVars(actionContext.Parameters, groupInfo.Vars);
             var tasks = GetRunTasks(string.Empty, groupInfo.Entry, groupInfo);
@@ -84,7 +85,7 @@ namespace AnyJob.Runner.Workflow.Impl
                 {
                     throw WorkflowError.TaskEexcuteError(taskDesc.TaskName, result.Exception);
                 }
-            }, actionContext.Token);
+            }, actionContext.Token, TaskContinuationOptions.None, TaskScheduler.Current);
         }
 
 
@@ -94,7 +95,7 @@ namespace AnyJob.Runner.Workflow.Impl
         private void PublishResultVars(IActionContext actionContext, IExecuteResult result, TaskDesc taskDesc)
         {
             publishValueService.PublishVars($"{taskDesc.TaskName}_result", result.Result, actionContext.Parameters);
-            publishValueService.PublishVars($"{taskDesc.TaskName}_error", result.Error, actionContext.Parameters);
+            publishValueService.PublishVars($"{taskDesc.TaskName}_error", result.ExecuteError, actionContext.Parameters);
             //publishValueService.PublishVar($"{taskDesc.TaskName}_log", result., actionContext.Parameters);
 
         }
@@ -174,6 +175,8 @@ namespace AnyJob.Runner.Workflow.Impl
         }
         protected virtual IExecuteParameter OnCreateExecuteParameter(IActionContext actionContext, TaskDesc taskDesc, bool isSubEntryAction)
         {
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
+            _ = taskDesc ?? throw new ArgumentNullException(nameof(taskDesc));
             Dictionary<string, object> inputs = new Dictionary<string, object>();
             if (taskDesc.TaskInfo.Inputs != null)
             {
