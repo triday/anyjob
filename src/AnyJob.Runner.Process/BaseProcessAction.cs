@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 namespace AnyJob.Runner.Process
 {
     public abstract class BaseProcessAction : IAction
@@ -14,11 +15,17 @@ namespace AnyJob.Runner.Process
         }
         protected virtual void OnTraceLogger(IActionContext context, ProcessExecInput input, ProcessExecOutput output)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
+            _ = output ?? throw new ArgumentNullException(nameof(output));
             context.Output?.WriteLine(output.StandardOutput);
-            context.Error?.WriteLine(output.StandardError);
+            context.ExecuteError?.WriteLine(output.StandardError);
         }
-        protected virtual void OnCheckProcessExecOutput(IActionContext actionContext, ProcessExecInput input, ProcessExecOutput output)
+        protected virtual void OnCheckProcessExecOutput(IActionContext context, ProcessExecInput input, ProcessExecOutput output)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
+            _ = input ?? throw new ArgumentNullException(nameof(input));
+            _ = output ?? throw new ArgumentNullException(nameof(output));
+
             if (output.TimeOut)
             {
                 throw ErrorFactory.FromCode(nameof(Errors.E80001), input.MaximumTimeSeconds);

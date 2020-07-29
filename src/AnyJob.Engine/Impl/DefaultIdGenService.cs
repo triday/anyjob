@@ -12,7 +12,7 @@ namespace AnyJob.Impl
 
         private Guid NewSequenceGuid()
         {
-            byte[] timestampBytes = BitConverter.GetBytes(DateTimeOffset.Now.Ticks);
+            byte[] timestampBytes = BitConverter.GetBytes(DateTimeOffset.Now.UtcTicks);
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(timestampBytes);

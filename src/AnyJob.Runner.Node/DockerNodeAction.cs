@@ -18,6 +18,7 @@ namespace AnyJob.Runner.Node
 
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             return CreateDockerInputInfo(context, exchangePath, inputFile, outputFile);
         }
 

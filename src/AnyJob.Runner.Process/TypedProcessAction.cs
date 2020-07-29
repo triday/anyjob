@@ -32,6 +32,7 @@ namespace AnyJob.Runner.Process
         }
         protected virtual void WriteInputFile(IActionContext context, string inputFile)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             var objectStoreService = context.ServiceProvider.GetRequiredService<IObjectStoreService>();
             objectStoreService.SaveObject(context.Parameters.Arguments, inputFile);
         }
@@ -57,6 +58,7 @@ namespace AnyJob.Runner.Process
 
         protected virtual object ReadOutputFile(IActionContext context, string outputFile)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             var objectStoreService = context.ServiceProvider.GetRequiredService<IObjectStoreService>();
             var typedResult = objectStoreService.GetObject<TypedProcessResult>(outputFile);
             if (typedResult.Error != null)
