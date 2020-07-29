@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AnyJob.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "list-provider"
+    }
+  }
+}

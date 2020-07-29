@@ -6,6 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.abc.json" />
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.abc.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\AnyJob.Engine\AnyJob.Engine.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.App\AnyJob.Runner.App.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.Golang\AnyJob.Runner.Golang.csproj" />
@@ -17,6 +31,8 @@
   </ItemGroup>
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.6.0" />
+    <PackageReference Include="ConsoleTables" Version="2.4.2" />
+    <PackageReference Include="Colorful.Console" Version="1.2.10" />
     </ItemGroup>
 
 </Project>
