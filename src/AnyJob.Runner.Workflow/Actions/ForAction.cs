@@ -31,7 +31,7 @@ namespace AnyJob.Runner.Workflow.Actions
         {
             IIdGenService idGenService = context.GetRequiredService<IIdGenService>();
             IActionExecuterService actionExecuterService = context.GetRequiredService<IActionExecuterService>();
-            foreach (var val in values)
+            foreach (var val in values ?? Enumerable.Empty<int>())
             {
                 RunStep(context, val, idGenService, actionExecuterService).Wait();
             }
@@ -45,16 +45,15 @@ namespace AnyJob.Runner.Workflow.Actions
             Task.WaitAll(allTasks);
         }
 
-        protected Task RunStep(IActionContext actionContext, int value, IIdGenService idGenService, IActionExecuterService actionExecuterService)
+        protected async Task RunStep(IActionContext actionContext, int value, IIdGenService idGenService, IActionExecuterService actionExecuterService)
         {
+            _ = actionExecuterService ?? throw new ArgumentNullException(nameof(actionExecuterService));
+            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
+            _ = idGenService ?? throw new ArgumentNullException(nameof(idGenService));
             IExecuteContext executeContext = this.OnCreateExecuteContext(actionContext, idGenService, value);
-            return actionExecuterService.Execute(executeContext).ContinueWith((result) =>
-            {
-                if (result.IsCompleted)
-                {
+            var result = await actionExecuterService.Execute(executeContext);
 
-                }
-            });
+
 
         }
         private IExecuteContext OnCreateExecuteContext(IActionContext actionContext, IIdGenService idGenService, int value)

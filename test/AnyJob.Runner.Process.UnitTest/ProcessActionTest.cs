@@ -18,6 +18,7 @@ namespace AnyJob.Runner.Process.UnitTest
             };
             object result = action.Run(actionContext);
             Assert.IsNotNull(result);
+            Assert.AreEqual(0, result);
         }
 
         [TestMethod]
@@ -29,10 +30,12 @@ namespace AnyJob.Runner.Process.UnitTest
                 RuntimeInfo = new ActionRuntime()
                 {
                     WorkingDirectory = System.Environment.CurrentDirectory,
-                }
+                },
+                Output = new ActionLogger(),
             };
-            string result = action.Run(actionContext) as string;
-            Assert.AreEqual("hello", result.Trim());
+            object result = action.Run(actionContext);
+            Assert.AreEqual(0, result);
+            Assert.AreEqual("hello", actionContext.Output.ToString().Trim());
         }
 
 

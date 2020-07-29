@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AnyJob.Runner.Intent
@@ -17,9 +18,9 @@ namespace AnyJob.Runner.Intent
             var execContext = this.OnCreateExecuteContext(context);
             var task = executerService.Execute(execContext);
             Task.WaitAll(task);
-            if (task.Result.Error != null)
+            if (task.Result.ExecuteError != null)
             {
-                throw task.Result.Error;
+                throw task.Result.ExecuteError;
             }
             return this.OnHandlerResult(task.Result.Result);
         }
@@ -30,6 +31,7 @@ namespace AnyJob.Runner.Intent
         }
         private Dictionary<string, object> GetActualInputs(IActionContext context, IExpressionService expressionService)
         {
+            _ = context ?? throw new ArgumentNullException(nameof(context));
             Dictionary<string, object> args = new Dictionary<string, object>();
             if (this.InputMaps != null)
             {

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <RootNamespace>AnyJob.Runner.App</RootNamespace>
+  </PropertyGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="YS.Knife.Hosting" Version="1.2.8" />
+        <PackageReference Include="YS.Knife.Test" Version="1.2.8" />
+    </ItemGroup>
+
+    <ItemGroup>
+    <ProjectReference Include="..\..\src\AnyJob.Runner.App\AnyJob.Runner.App.csproj" />
+  </ItemGroup>
+
+
+
+</Project>

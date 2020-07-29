@@ -36,7 +36,7 @@ namespace AnyJob.Runner.Python
                 ExecuteName = string.Empty,
                 ExecutePath = ExecutePath.RootPath(Guid.NewGuid().ToString()),
                 Output = new ActionLogger(),
-                Error = new ActionLogger(),
+                ExecuteError = new ActionLogger(),
                 ServiceProvider = this,
                 Parameters = new ActionParameters()
                 {
