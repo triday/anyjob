@@ -9,6 +9,7 @@ namespace AnyJob.CLI.Commands
     [Verb("add-provider", HelpText = "Add a new package provider.")]
     public class AddProvider : ICommand
     {
+
         [Option("name", Required = true, HelpText = "provider name")]
         public string Name { get; set; }
         [Option("address", Required = true, HelpText = "provider url address.")]
@@ -21,6 +22,8 @@ namespace AnyJob.CLI.Commands
                 Console.WriteFormatted("The name '{0}' already exists.", Color.White, new Colorful.Formatter(this.Name, Color.Yellow));
                 return 1;
             }
+            packOptions.Providers[Name] = Address;
+            Utils.AppSettings.MergeOptions(packOptions);
             return 0;
         }
     }
