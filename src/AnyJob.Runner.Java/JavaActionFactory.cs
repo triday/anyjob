@@ -1,4 +1,4 @@
-using AnyJob;
+﻿using AnyJob;
 
 namespace src.AnyJob.Runner.Java
 {
