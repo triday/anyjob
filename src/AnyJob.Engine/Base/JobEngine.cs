@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace AnyJob
 {
@@ -49,6 +53,19 @@ namespace AnyJob
         private JobHost() : base(Array.Empty<string>())
         {
 
+        }
+        protected override void OnConfigureAppConfiguration(HostBuilderContext hostBuilderContext, IConfigurationBuilder configurationBuilder)
+        {
+            base.OnConfigureAppConfiguration(hostBuilderContext, configurationBuilder);
+
+            var appFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".anyjob");
+            configurationBuilder.InsertSourceAfter<JsonConfigurationSource>(new JsonConfigurationSource
+            {
+                FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(appFolder),
+                Optional = false,
+                ReloadOnChange = true,
+                Path = Path.Combine("appsettings.json")
+            });
         }
     }
 }
