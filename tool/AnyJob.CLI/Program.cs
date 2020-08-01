@@ -9,7 +9,6 @@ namespace AnyJob.CLI
     {
         static int Main(string[] args)
         {
-
             Console.WriteAscii("ANYJOB", Color.DarkCyan);
 
             var commands = System.Reflection.Assembly.GetExecutingAssembly().GetTypes().Where(p => p.IsClass && typeof(ICommand).IsAssignableFrom(p)).ToArray();

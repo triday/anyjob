@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -18,10 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\AnyJob.Engine\AnyJob.Engine.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.App\AnyJob.Runner.App.csproj" />
-    <ProjectReference Include="..\..\src\AnyJob.Runner.Golang\AnyJob.Runner.Golang.csproj" />
-    <ProjectReference Include="..\..\src\AnyJob.Runner.Intent\AnyJob.Runner.Intent.csproj" />
-    <ProjectReference Include="..\..\src\AnyJob.Runner.Java\AnyJob.Runner.Java.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.NetCore\AnyJob.Runner.NetCore.csproj" />
+      <ProjectReference Include="..\..\src\AnyJob.Runner.NetCore\AnyJob.Runner.Node.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.Python\AnyJob.Runner.Python.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.Workflow\AnyJob.Runner.Workflow.csproj" />
   </ItemGroup>
