@@ -66,7 +66,7 @@ namespace AnyJob
             configurationBuilder.InsertSourceAfter<JsonConfigurationSource>(new JsonConfigurationSource
             {
                 FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(appFolder),
-                Optional = false,
+                Optional = true,
                 ReloadOnChange = true,
                 Path = Path.Combine("appsettings.json")
             });
