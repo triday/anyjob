@@ -59,6 +59,10 @@ namespace AnyJob
             base.OnConfigureAppConfiguration(hostBuilderContext, configurationBuilder);
 
             var appFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".anyjob");
+            if (!Directory.Exists(appFolder))
+            {
+                Directory.CreateDirectory(appFolder);
+            }
             configurationBuilder.InsertSourceAfter<JsonConfigurationSource>(new JsonConfigurationSource
             {
                 FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(appFolder),
