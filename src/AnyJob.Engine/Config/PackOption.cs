@@ -16,7 +16,7 @@ namespace AnyJob.Config
         public string DefaultProviderName { get; set; } = "default";
         public IDictionary<string, string> Providers { get; set; } = new Dictionary<string, string>()
         {
-            ["default"] = "http://localhost"
+            ["default"] = "http://139.155.203.179"
         };
 
         public string DownLoadCacheDir { get; set; } = "downloads";
