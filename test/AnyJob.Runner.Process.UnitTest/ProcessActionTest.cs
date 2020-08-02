@@ -31,11 +31,11 @@ namespace AnyJob.Runner.Process.UnitTest
                 {
                     WorkingDirectory = System.Environment.CurrentDirectory,
                 },
-                Output = new ActionLogger(),
+                Logger = new ActionLogger(),
             };
             object result = action.Run(actionContext);
             Assert.AreEqual(0, result);
-            Assert.AreEqual("hello", actionContext.Output.ToString().Trim());
+            Assert.AreEqual("hello", actionContext.Logger.ToString().Trim());
         }
 
 

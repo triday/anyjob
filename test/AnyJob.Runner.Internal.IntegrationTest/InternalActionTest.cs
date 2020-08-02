@@ -37,5 +37,21 @@ namespace AnyJob.Runner.Internal.IntegrationTest
             var resultText = result.Result as string;
             Assert.AreEqual(arg1.Length + arg2.Length, resultText.Length);
         }
+
+        [TestMethod]
+        public void ShouldSuccessWhenHelloActionCalled()
+        {
+
+            var inputs = new Dictionary<string, object>()
+            {
+                { "name" ,"Bob" }
+            };
+            var job = JobEngine.Start("internalpack.hello", inputs);
+            var result = job.Task.Result;
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(null, result.Result);
+            Assert.AreEqual("Hello,Bob", result.Logger.Trim());
+
+        }
     }
 }

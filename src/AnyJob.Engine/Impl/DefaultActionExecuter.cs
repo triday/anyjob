@@ -69,6 +69,7 @@ namespace AnyJob.Impl
         {
             _ = executionContext ?? throw new ArgumentNullException(nameof(executionContext));
             _ = traceInfo ?? throw new ArgumentNullException(nameof(traceInfo));
+            IActionContext actionContext = null;
             try
             {
                 //1 resolve action name
@@ -85,7 +86,8 @@ namespace AnyJob.Impl
                 //5 resolve action factory 
                 var actionFactory = this.OnResolveActionFactory(metaInfo);
                 //6 create action context
-                var actionContext = this.OnCreateActionContext(executionContext, actionName, runtimeInfo, metaInfo);
+                actionContext = this.OnCreateActionContext(executionContext, actionName, runtimeInfo, metaInfo);
+
                 //7 check premission
                 this.OnCheckPremission(actionContext);
                 //8 valid inputs
@@ -96,12 +98,11 @@ namespace AnyJob.Impl
                 var result = OnRunAction(actionInstance, executionContext, actionContext);
                 //11 valid output
                 this.OnValidOutput(actionContext, result);
-
-                return ExecuteResult.FromResult(result);
+                return ExecuteResult.FromResult(result, actionContext.Logger.ToString());
             }
             catch (Exception ex)
             {
-                return ExecuteResult.FromError(ex);
+                return ExecuteResult.FromError(ex, actionContext?.Logger?.ToString());
             }
         }
         #region ExecuteSteps
@@ -167,8 +168,7 @@ namespace AnyJob.Impl
                 ExecuteName = executeContext.ExecuteName,
                 ServiceProvider = this.serviceProvider,
                 Parameters = this.ConvertParameter(actionMeta, executeContext.ExecuteParameter),
-                Output = new ActionLogger(),
-                ExecuteError = new ActionLogger(),
+                Logger = new ActionLogger(),
                 Name = actionName
             };
         }

@@ -1,0 +1,14 @@
+﻿{
+    "enabled": true,
+    "description": "hello action",
+    "entrypoint": "AnyJob.Internal.Demo.Hello,AnyJob.Internal.Demo.dll",
+    "kind": "internal",
+    "inputs": {
+        "name": {
+            "type": "string"
+        }
+    },
+    "output": {
+        "type": "null"
+    }
+}

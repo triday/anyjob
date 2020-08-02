@@ -35,8 +35,7 @@ namespace AnyJob.Runner.Python
                 Name = new ActionName { Pack = "pythonpack", Name = "add" },
                 ExecuteName = string.Empty,
                 ExecutePath = ExecutePath.RootPath(Guid.NewGuid().ToString()),
-                Output = new ActionLogger(),
-                ExecuteError = new ActionLogger(),
+                Logger = new ActionLogger(),
                 ServiceProvider = this,
                 Parameters = new ActionParameters()
                 {

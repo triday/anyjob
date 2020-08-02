@@ -69,7 +69,6 @@ namespace AnyJob.Runner.Process
                 }
             }
             StringBuilder outTextBuilder = new StringBuilder();
-            StringBuilder errorTextBuilder = new StringBuilder();
             using (var process = System.Diagnostics.Process.Start(startInfo))
             {
                 WriteStdInput(process, input.StandardInput);
@@ -96,7 +95,7 @@ namespace AnyJob.Runner.Process
                         }
                         else
                         {
-                            errorTextBuilder.AppendLine(e.Data);
+                            outTextBuilder.AppendLine(e.Data);
                         }
                     };
                     process.BeginOutputReadLine();
@@ -107,7 +106,6 @@ namespace AnyJob.Runner.Process
                         return new ProcessExecOutput
                         {
                             TimeOut = false,
-                            StandardError = errorTextBuilder.ToString(),
                             StandardOutput = outTextBuilder.ToString(),
                             ExitCode = process.ExitCode,
                         };
@@ -118,7 +116,6 @@ namespace AnyJob.Runner.Process
                         return new ProcessExecOutput
                         {
                             TimeOut = true,
-                            StandardError = errorTextBuilder.ToString(),
                             StandardOutput = outTextBuilder.ToString(),
                         };
                     }
@@ -159,7 +156,6 @@ namespace AnyJob.Runner.Process
     {
         public bool TimeOut { get; set; }
         public string StandardOutput { get; set; }
-        public string StandardError { get; set; }
         public int ExitCode { get; set; }
     }
 }
