@@ -12,8 +12,7 @@ namespace AnyJob
         public string ExecuteName { get; set; }
         public IActionRuntime RuntimeInfo { get; set; }
         public IServiceProvider ServiceProvider { get; set; }
-        public IActionLogger Output { get; set; }
-        public IActionLogger ExecuteError { get; set; }
+        public IActionLogger Logger { get; set; }
         public IActionName Name { get; set; }
     }
 }

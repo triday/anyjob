@@ -17,8 +17,7 @@ namespace AnyJob.Runner.Process
         {
             _ = context ?? throw new ArgumentNullException(nameof(context));
             _ = output ?? throw new ArgumentNullException(nameof(output));
-            context.Output?.WriteLine(output.StandardOutput);
-            context.ExecuteError?.WriteLine(output.StandardError);
+            context.Logger?.WriteLine(output.StandardOutput);
         }
         protected virtual void OnCheckProcessExecOutput(IActionContext context, ProcessExecInput input, ProcessExecOutput output)
         {

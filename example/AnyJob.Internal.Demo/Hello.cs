@@ -6,7 +6,7 @@
 
         public object Run(IActionContext context)
         {
-            context.Output.WriteLine("Hello,{0}", this.Name);
+            context.Logger.WriteLine("Hello,{0}", this.Name);
             return null;
         }
     }
