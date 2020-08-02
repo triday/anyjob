@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json.Linq;
 
 namespace AnyJob.Impl
 {
@@ -7,9 +8,15 @@ namespace AnyJob.Impl
     {
         public object Convert(object value, Type targetType)
         {
+            _ = targetType ?? throw new ArgumentNullException(nameof(targetType));
             try
             {
-                return System.Convert.ChangeType(value, targetType, System.Globalization.CultureInfo.InvariantCulture);
+                if (value != null && targetType.IsAssignableFrom(value.GetType()))
+                {
+                    return value;
+                }
+                var jtoken = JToken.FromObject(value);
+                return jtoken.ToObject(targetType);
             }
             catch (Exception ex)
             {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 
 namespace AnyJob.Runner.Internal.IntegrationTest
 {
@@ -41,7 +42,6 @@ namespace AnyJob.Runner.Internal.IntegrationTest
         [TestMethod]
         public void ShouldSuccessWhenHelloActionCalled()
         {
-
             var inputs = new Dictionary<string, object>()
             {
                 { "name" ,"Bob" }
@@ -51,7 +51,27 @@ namespace AnyJob.Runner.Internal.IntegrationTest
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(null, result.Result);
             Assert.AreEqual("Hello,Bob", result.Logger.Trim());
+        }
+        [TestMethod]
+        public void ShouldSuccessWhenMergeComplexObject()
+        {
+            var inputs = new Dictionary<string, object>()
+            {
+                { "persons" , new [] {
+                    new { id=1001,name="zhangsan" }
+                    }
+                },
 
+                { "other", new { id=1002,name="lisi" } }
+            };
+            var job = JobEngine.Start("internalpack.merge", inputs);
+            var result = job.Task.Result;
+            Assert.IsTrue(result.IsSuccess);
+            var fullResult = JsonConvert.SerializeObject(result.Result, Formatting.None, new JsonSerializerSettings
+            {
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+            });
+            Assert.AreEqual("[{\"id\":1001,\"name\":\"zhangsan\"},{\"id\":1002,\"name\":\"lisi\"}]", fullResult);
         }
     }
 }

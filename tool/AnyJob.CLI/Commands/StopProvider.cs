@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AnyJob.CLI.Utils;
+﻿using AnyJob.CLI.Utils;
 using CommandLine;
 
 namespace AnyJob.CLI.Commands
