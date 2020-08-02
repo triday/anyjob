@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AnyJob.NetCore.Demo
+﻿namespace AnyJob.NetCore.Demo
 {
     public class Add : IAction
     {

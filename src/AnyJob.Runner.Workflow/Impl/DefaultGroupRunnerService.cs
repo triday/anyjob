@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using AnyJob.Runner.Workflow.Config;
 using AnyJob.Runner.Workflow.Models;
 using AnyJob.Runner.Workflow.Services;
-using Microsoft.Extensions.Options;
 
 namespace AnyJob.Runner.Workflow.Impl
 {

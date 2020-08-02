@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AnyJob.CLI
+﻿namespace AnyJob.CLI
 {
     public interface ICommand
     {

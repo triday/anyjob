@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AnyJob.Internal.Demo
+﻿namespace AnyJob.Internal.Demo
 {
     public class Add : IAction
     {
