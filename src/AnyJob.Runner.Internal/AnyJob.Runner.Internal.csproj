@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\AnyJob.Engine\AnyJob.Engine.csproj" />
+  </ItemGroup>
+
+</Project>
