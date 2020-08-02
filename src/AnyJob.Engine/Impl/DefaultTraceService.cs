@@ -14,8 +14,9 @@ namespace AnyJob.Impl
         public void TraceState(ITraceInfo traceInfo)
         {
             _ = traceInfo ?? throw new ArgumentNullException(nameof(traceInfo));
-            logger.LogInformation("{0}...{1} [{2}]",
-               traceInfo.ExecuteContext.ExecutePath.RootId,
+            logger.LogInformation("{0:HH:mm:ss} {1}{2} [{3}] {4}",
+                DateTime.Now,
+               new string(' ', (traceInfo.ExecuteContext.ExecutePath.Depth - 1) * 4),
                traceInfo.ExecuteContext.ExecutePath.ExecuteId,
                traceInfo.ExecuteContext.ActionFullName,
                traceInfo.State);
