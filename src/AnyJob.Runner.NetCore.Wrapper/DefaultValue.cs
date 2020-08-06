@@ -7,7 +7,7 @@ namespace AnyJob.Runner.NetCore.Wrapper
 {
     class DefaultValue
     {
-        static MethodInfo DefaultValueMethod = typeof(DefaultValue).GetMethod(nameof(Default), BindingFlags.Static | BindingFlags.Public| BindingFlags.NonPublic);
+        static MethodInfo DefaultValueMethod = typeof(DefaultValue).GetMethod(nameof(Default), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
         public static object Get(Type type)
         {
             return DefaultValueMethod.MakeGenericMethod(type).Invoke(null, Array.Empty<object>());

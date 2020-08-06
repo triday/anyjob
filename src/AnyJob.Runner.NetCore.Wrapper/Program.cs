@@ -8,7 +8,7 @@ namespace AnyJob.Runner.NetCore.Wrapper
 {
     class Program
     {
-       
+
         static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
@@ -40,21 +40,21 @@ namespace AnyJob.Runner.NetCore.Wrapper
             if (invokeResult == null) return null;
             if (method.ReturnType.IsGenericType)
             {
-                if (method.ReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>)||method.ReturnType.GetGenericTypeDefinition()==typeof(Task<>))
+                if (method.ReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>) || method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
                 {
                     return (invokeResult as dynamic).Result;
                 }
             }
-            if (method.ReturnType == typeof(Task)||method.ReturnType==typeof(ValueTask))
+            if (method.ReturnType == typeof(Task) || method.ReturnType == typeof(ValueTask))
             {
                 (invokeResult as dynamic).GetAwaiter().GetResult();
                 return null;
             }
-          
-          
+
+
 
             return invokeResult;
-            
+
         }
 
         private static object GetTaskResult(MethodInfo method, object methodReturn)

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AnyJob.NetCore.Demo
 {
-    public  class Static
+    public class Static
     {
         public static int Add(int num1, int num2)
         {
