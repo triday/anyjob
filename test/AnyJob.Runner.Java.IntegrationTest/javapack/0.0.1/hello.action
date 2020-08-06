@@ -1,0 +1,14 @@
+﻿{
+    "enabled": true,
+    "description": "hello action",
+    "entrypoint": "AnyJob.Java.Demo-1.0.jar,demo.Instance.hello",
+    "kind": "java",
+    "inputs": {
+        "name": {
+            "type": "string"
+        }
+    },
+    "output": {
+        "type": "null"
+    }
+}

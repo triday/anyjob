@@ -6,6 +6,6 @@
         public string JavaPath { get; set; } = "java";
         public string WrapperPath { get; set; } = "global/java/jar_libs/java_wrapper.jar";
         public string GlobalJarsPath { get; set; } = "global/java/jar_libs";
-        public string PackJarsPath { get; set; } = ".";
+        public string PackJarsPath { get; set; } = "jar_libs";
     }
 }
