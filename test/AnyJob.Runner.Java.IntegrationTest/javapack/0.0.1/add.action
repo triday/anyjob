@@ -1,0 +1,17 @@
+﻿{
+    "enabled": true,
+    "description": "add from node",
+    "entrypoint": "AnyJob.Java.Demo-1.0.jar/demo.Instance.add",
+    "kind": "java",
+    "inputs": {
+        "num1": {
+            "type": "number"
+        },
+        "num2": {
+            "type": "number"
+        }
+    },
+    "output": {
+        "type": "number"
+    }
+}
