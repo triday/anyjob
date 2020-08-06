@@ -65,13 +65,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.CLI", "tool\AnyJob.C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tool", "tool", "{53A41B58-4E95-4EA1-A844-C7CD0F7D9C22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Runner.Internal", "src\AnyJob.Runner.Internal\AnyJob.Runner.Internal.csproj", "{874F98BB-47D2-449E-A5FC-41EA24D759A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Internal", "src\AnyJob.Runner.Internal\AnyJob.Runner.Internal.csproj", "{874F98BB-47D2-449E-A5FC-41EA24D759A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "internal", "internal", "{4D2BE62D-6E8A-46D0-B5D7-68FE5337D8BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Runner.Internal.IntegrationTest", "test\AnyJob.Runner.Internal.IntegrationTest\AnyJob.Runner.Internal.IntegrationTest.csproj", "{1B60F957-5182-466D-B89A-D5ADCA65CF99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Internal.IntegrationTest", "test\AnyJob.Runner.Internal.IntegrationTest\AnyJob.Runner.Internal.IntegrationTest.csproj", "{1B60F957-5182-466D-B89A-D5ADCA65CF99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Internal.Demo", "example\AnyJob.Internal.Demo\AnyJob.Internal.Demo.csproj", "{3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Internal.Demo", "example\AnyJob.Internal.Demo\AnyJob.Internal.Demo.csproj", "{3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Runner.NetCore.Wrapper", "src\AnyJob.Runner.NetCore.Wrapper\AnyJob.Runner.NetCore.Wrapper.csproj", "{3374EB89-5549-4283-BC38-8FA237546814}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -179,6 +181,10 @@ Global
 		{3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3374EB89-5549-4283-BC38-8FA237546814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3374EB89-5549-4283-BC38-8FA237546814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3374EB89-5549-4283-BC38-8FA237546814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3374EB89-5549-4283-BC38-8FA237546814}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -215,6 +221,7 @@ Global
 		{4D2BE62D-6E8A-46D0-B5D7-68FE5337D8BB} = {B03DEFA0-9B4F-4E7D-A298-CA733B693E39}
 		{1B60F957-5182-466D-B89A-D5ADCA65CF99} = {4D2BE62D-6E8A-46D0-B5D7-68FE5337D8BB}
 		{3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A} = {AB642BE0-CF55-11EA-8FB7-27BC7BBA8417}
+		{3374EB89-5549-4283-BC38-8FA237546814} = {7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CBF58BD-693A-4AED-85E9-3F8FCC07DE00}
