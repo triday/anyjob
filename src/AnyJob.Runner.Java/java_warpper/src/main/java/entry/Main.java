@@ -26,6 +26,7 @@ public class Main {
             Class cls = Class.forName(className);
             Method method = getMethod(cls, funcName);
             JSONObject inputs = readFromInputFile(inputFile);
+            if(inputs==null) inputs = new JSONObject();
             Object[] actionArgs = parseArgument(inputs, method);
             Object result = invokeMethod(method, cls, actionArgs);
             writeToOutputFile(outputFile, result);
