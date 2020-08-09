@@ -1,0 +1,35 @@
+﻿{
+    "enabled": true,
+    "description": "merge complex objects",
+    "entrypoint": "AnyJob.NetCore.Demo.dll,AnyJob.NetCore.Demo.Static,Merge",
+    "kind": "netcore",
+    "inputs": {
+        "persons": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "number" },
+                    "name": { "type": "string" }
+                }
+            }
+        },
+        "other": {
+            "type": "object",
+            "properties": {
+                "id": { "type": "number" },
+                "name": { "type": "string" }
+            }
+        }
+    },
+    "output": {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "id": { "type": "number" },
+                "name": { "type": "string" }
+            }
+        }
+    }
+}
