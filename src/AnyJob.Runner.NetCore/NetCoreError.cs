@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Localization;
+﻿using Microsoft.Extensions.Localization;
 using YS.Knife;
 
 namespace AnyJob.Runner.NetCore
@@ -16,9 +13,20 @@ namespace AnyJob.Runner.NetCore
             this.stringLocalizer = stringLocalizer;
         }
 
+
         public ActionException InvalidEntryFormat(string entry)
         {
-            return new ActionException();
+            return CreateException("E400100", entry);
+        }
+        public ActionException CanNotFindAssemblyFile(string assemblyFile)
+        {
+            return CreateException("E400109", assemblyFile);
+        }
+
+        private ActionException CreateException(string code, params object[] args)
+        {
+            string message = stringLocalizer[code, args];
+            return new ActionException(code, message);
         }
     }
 }
