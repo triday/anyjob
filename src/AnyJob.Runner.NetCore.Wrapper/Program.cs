@@ -13,7 +13,7 @@ namespace AnyJob.Runner.NetCore.Wrapper
         {
             if (args.Length != 5)
             {
-               throw new Exception("Usage: NetCore_Wrapper {{assemblyFile}} {{typeName}} {{methodName}} {{inputFile}} {{outputFile}}.");
+                throw new Exception("Usage: NetCore_Wrapper {{assemblyFile}} {{typeName}} {{methodName}} {{inputFile}} {{outputFile}}.");
             }
             string assemblyName = args[0];
             string typeName = args[1];
