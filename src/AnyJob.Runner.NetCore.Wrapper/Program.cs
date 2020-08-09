@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -8,88 +9,166 @@ namespace AnyJob.Runner.NetCore.Wrapper
 {
     class Program
     {
-
-        static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
         static void Main(string[] args)
         {
-            var document = JsonDocument.Parse("{\"num1\":100,\"num12\":200}");
-            var type = typeof(Test);
-            var methodInfo = type.GetMethod("Add");
-            var arguments = ParseArguments(document, methodInfo);
-            var res = InvokeMethod(type, methodInfo, arguments);
-            //string dll = args[0];
-            //string type = args[1];
-            //string method = args[2];
-            //string inputFile = args[3];
-            //string outputFile = args[4];
-            Console.WriteLine("Hello World!");
-
+            if (args.Length != 5)
+            {
+                Console.WriteLine("Usage: NetCore_Wrapper {{assemblyName}} {{typeName}} {{methodName}} {{inputFile}} {{outputFile}}.");
+            }
+            string assemblyName = args[0];
+            string typeName = args[1];
+            string methodName = args[2];
+            string inputFile = args[3];
+            string outputFile = args[4];
+            try
+            {
+                var assembly = LoadAssembly(assemblyName);
+                var type = LoadType(assembly, typeName);
+                var method = FindMethod(type, methodName);
+                var document = ReadInputFile(inputFile);
+                var arguments = ParseArguments(document, method);
+                var result = InvokeMethod(type, method, arguments);
+                WriteToOutput(result, outputFile);
+            }
+#pragma warning disable CA1031 // 不捕获常规异常类型
+            catch (Exception ex)
+#pragma warning restore CA1031 // 不捕获常规异常类型
+            {
+                WriteToOutput(ex, outputFile);
+            }
         }
 
-        private static Assembly LoadAssembly(string dll)
+        private static void WriteToOutput(object resultOrException, string filePath)
         {
-            return Assembly.LoadFrom(dll);
+            try
+            {
+                if (resultOrException is Exception exception)
+                {
+                    JsonUtils.WriteResultToFile(new Dictionary<string, object>
+                    {
+                        ["error"] = TypedError.FromException(exception)
+                    }, filePath); ;
+                }
+                else
+                {
+                    JsonUtils.WriteResultToFile(new Dictionary<string, object>
+                    {
+                        ["result"] = resultOrException
+                    }, filePath);
+                }
+            }
+#pragma warning disable CA1031 // 不捕获常规异常类型
+            catch (Exception ex)
+#pragma warning restore CA1031 // 不捕获常规异常类型
+            {
+                Console.WriteLine($"Write to output file failure, the output file '{filePath}'.");
+                Console.WriteLine(ex);
+            }
+        }
+
+        private static Assembly LoadAssembly(string assembly)
+        {
+            try
+            {
+                return Assembly.LoadFrom(assembly);
+            }
+            catch (Exception ex)
+            {
+
+                throw CodeException.LoadAssemblyError(assembly, ex);
+            }
+
+        }
+        private static Type LoadType(Assembly assembly, string type)
+        {
+            try
+            {
+                return assembly.GetType(type, true);
+            }
+            catch (Exception ex)
+            {
+                throw CodeException.LoadTypeError(type, assembly.FullName, ex);
+            }
+
+        }
+        private static MethodInfo FindMethod(Type type, string methodName)
+        {
+            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
+                        .Where(p => p.Name == methodName).ToList();
+            if (methods.Count > 1)
+            {
+                throw CodeException.DuplicateMethodError(methodName, type);
+            }
+            if (methods.Count == 0)
+            {
+                throw CodeException.MethodNotFoundError(methodName, type);
+            }
+            return methods.First();
+        }
+
+        private static JsonDocument ReadInputFile(string filePath)
+        {
+            try
+            {
+                return JsonUtils.FromFile(filePath);
+            }
+            catch (Exception ex)
+            {
+                throw CodeException.ReadInputFileError(filePath, ex);
+            }
         }
         private static object InvokeMethod(Type type, MethodInfo method, object[] arguments)
         {
-            var instance = method.IsStatic ? null : Activator.CreateInstance(type);
-            var invokeResult = method.Invoke(instance, arguments);
-            if (invokeResult == null) return null;
-            if (method.ReturnType.IsGenericType)
+            try
             {
-                if (method.ReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>) || method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                var instance = method.IsStatic ? null : Activator.CreateInstance(type);
+                var invokeResult = method.Invoke(instance, arguments);
+                if (invokeResult == null) return null;
+                if (method.ReturnType.IsGenericType)
                 {
-                    return (invokeResult as dynamic).Result;
+                    if (method.ReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>) || method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                    {
+                        return (invokeResult as dynamic).Result;
+                    }
                 }
+                if (method.ReturnType == typeof(Task) || method.ReturnType == typeof(ValueTask))
+                {
+                    (invokeResult as dynamic).GetAwaiter().GetResult();
+                    return null;
+                }
+                return invokeResult;
             }
-            if (method.ReturnType == typeof(Task) || method.ReturnType == typeof(ValueTask))
+            catch (Exception ex)
             {
-                (invokeResult as dynamic).GetAwaiter().GetResult();
-                return null;
-            }
-
-
-
-            return invokeResult;
-
-        }
-
-        private static object GetTaskResult(MethodInfo method, object methodReturn)
-        {
-            if (method.ReturnType.IsGenericType)
-            {
-                return (methodReturn as dynamic).Result;
-            }
-            else
-            {
-                (methodReturn as Task).Wait();
-                return null;
+                throw CodeException.InvokeMethodError(ex);
             }
         }
 
-        private static Type GetType(Assembly assembly, string typeName)
-        {
-            return assembly.GetType(typeName);
-        }
         private static object[] ParseArguments(JsonDocument document, MethodInfo methodInfo)
         {
             return methodInfo.GetParameters().Select(p =>
              {
                  if (document.RootElement.TryGetProperty(p.Name, out var jsonElement))
                  {
-                     return JsonSerializer.Deserialize(jsonElement.GetRawText(), p.ParameterType, JsonSerializerOptions);
+                     return JsonUtils.Deserialize(jsonElement.GetRawText(), p.ParameterType);
                  }
                  else
                  {
                      return DefaultValue.Get(p.ParameterType);
                  }
              }).ToArray();
-
         }
+        private static object DeserializeParameter(JsonElement jsonElement, ParameterInfo parameterInfo)
+        {
+            try
+            {
+                return JsonUtils.Deserialize(jsonElement.GetRawText(), parameterInfo.ParameterType);
+            }
+            catch (Exception ex)
+            {
 
-
+                throw CodeException.ConvertParameterValueError(parameterInfo, ex);
+            }
+        }
     }
 }

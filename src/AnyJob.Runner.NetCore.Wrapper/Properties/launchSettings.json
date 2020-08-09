@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AnyJob.Runner.NetCore.Wrapper": {
+      "commandName": "Project",
+      "commandLineArgs": "E:\\Repos\\anyjob\\example\\AnyJob.NetCore.Demo\\bin\\Debug\\netstandard2.0\\AnyJob.NetCore.Demo.dll AnyJob.NetCore.Demo.Instance Add2 E:\\Repos\\anyjob\\src\\AnyJob.Runner.NetCore.Wrapper\\input.json output.json"
+    }
+  }
+}

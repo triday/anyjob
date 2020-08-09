@@ -89,7 +89,7 @@ public class Main {
     private static Method getMethod(Class cls, String funcName) {
         List<Method> methods = Arrays.stream(cls.getMethods()).filter(p -> p.getName().equals(funcName)).collect(Collectors.toList());
         if (methods.size() == 0) {
-            throw new RuntimeException(String.format("Can not find method in class '%s'.", cls.getTypeName()));
+            throw new RuntimeException(String.format("Can not find method '%s' in class '%s'.",,funcName, cls.getTypeName()));
         }
         if (methods.size() > 1) {
             throw new RuntimeException(String.format("Duplicate method '%s' in class '%s'.", funcName, cls.getTypeName()));
