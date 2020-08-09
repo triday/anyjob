@@ -10,9 +10,11 @@ namespace AnyJob.Runner.NetCore
     [DictionaryKey("netcore")]
     public class NetCoreActionFactory : IActionFactoryService
     {
+        private readonly NetCoreError netCoreError;
         private readonly NetCoreOptions netCoreOptions;
-        public NetCoreActionFactory(NetCoreOptions netCoreOptions)
+        public NetCoreActionFactory(NetCoreError netCoreError, NetCoreOptions netCoreOptions)
         {
+            this.netCoreError = netCoreError;
             this.netCoreOptions = netCoreOptions;
         }
         public IAction CreateAction(IActionContext actionContext)
@@ -27,7 +29,7 @@ namespace AnyJob.Runner.NetCore
             var items = entry.Split(',').Select(p => p.Trim()).ToArray();
             if (items.Length != 3)
             {
-
+                throw netCoreError.InvalidEntryFormat(entry);
             }
             return new NetCoreEntryInfo
             {

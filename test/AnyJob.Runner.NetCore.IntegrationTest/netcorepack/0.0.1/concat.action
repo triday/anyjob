@@ -1,7 +1,7 @@
 ﻿{
     "enabled": true,
     "description": "add from node",
-    "entrypoint": "AnyJob.NetCore.Demo.Concat,AnyJob.NetCore.Demo.dll",
+    "entrypoint": "AnyJob.NetCore.Demo.dll,AnyJob.NetCore.Demo.Instance,Concat",
     "kind": "netcore",
     "inputs": {
         "a": {

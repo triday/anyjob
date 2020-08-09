@@ -18,7 +18,7 @@ namespace AnyJob.Runner.NetCore.IntegrationTest
             var job = JobEngine.Start("netcorepack.add", inputs);
             var result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(300.0, result.Result);
+            Assert.AreEqual(300L, result.Result);
         }
 
         [TestMethod]
