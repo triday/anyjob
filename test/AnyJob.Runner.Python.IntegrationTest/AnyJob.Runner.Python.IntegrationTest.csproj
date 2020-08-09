@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
@@ -8,8 +8,8 @@
         <ProjectReference Include="..\..\src\AnyJob.Runner.Python\AnyJob.Runner.Python.csproj" />
     </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="YS.Knife.Hosting" Version="1.2.8" />
-    <PackageReference Include="YS.Knife.Test" Version="1.2.8" />
+    <PackageReference Include="YS.Knife.Hosting" Version="1.2.9" />
+    <PackageReference Include="YS.Knife.Test" Version="1.2.9" />
   </ItemGroup>
 
 </Project>
