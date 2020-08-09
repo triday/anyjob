@@ -1,0 +1,17 @@
+﻿{
+    "enabled": true,
+    "description": "add from node",
+    "entrypoint": "AnyJob.NetCore.Demo.dll,AnyJob.NetCore.Demo.TaskResult,Add",
+    "kind": "netcore",
+    "inputs": {
+        "num1": {
+            "type": "number"
+        },
+        "num2": {
+            "type": "number"
+        }
+    },
+    "output": {
+        "type": "number"
+    }
+}

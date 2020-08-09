@@ -1,0 +1,14 @@
+﻿{
+    "enabled": true,
+    "description": "hello action",
+    "entrypoint": "AnyJob.NetCore.Demo.dll,AnyJob.NetCore.Demo.Static,Hello",
+    "kind": "netcore",
+    "inputs": {
+        "name": {
+            "type": "string"
+        }
+    },
+    "output": {
+        "type": "null"
+    }
+}
