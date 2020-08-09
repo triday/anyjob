@@ -1,53 +1,40 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using YS.Knife;
+
 namespace AnyJob.Runner.NetCore
 {
-    [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
-    [YS.Knife.DictionaryKey("netcore")]
+    [ServiceClass(Lifetime = ServiceLifetime.Singleton)]
+    [DictionaryKey("netcore")]
     public class NetCoreActionFactory : IActionFactoryService
     {
-        public NetCoreActionFactory(IConvertService convertService)
+        private readonly NetCoreOptions netCoreOptions;
+        public NetCoreActionFactory(NetCoreOptions netCoreOptions)
         {
-            this.convertService = convertService;
+            this.netCoreOptions = netCoreOptions;
         }
-        private IConvertService convertService;
-
         public IAction CreateAction(IActionContext actionContext)
         {
             _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
-            var (assemblyFile, typeName) = SplitAssemblyName(actionContext);
-            var assembly = Assembly.LoadFrom(assemblyFile);
+            var entryInfo = ParseEntryInfo(actionContext.MetaInfo.EntryPoint);
+            return new NetCoreAction(entryInfo, netCoreOptions);
+        }
 
-            var actionType = assembly.GetType(typeName);
-            var instance = Activator.CreateInstance(actionType);
-            SetInputProperties(actionContext, actionType, instance);
-            return instance as IAction;
-        }
-        private (string AssemblyFile, string TypeName) SplitAssemblyName(IActionContext actionContext)
+        private NetCoreEntryInfo ParseEntryInfo(string entry)
         {
-            string entryPoint = actionContext.MetaInfo.EntryPoint;
-            var index = entryPoint.LastIndexOf(',');
-            if (index <= 0)
+            var items = entry.Split(',').Select(p => p.Trim()).ToArray();
+            if (items.Length != 3)
             {
-                throw new Exception("Incorrect entry point format.");
+
             }
-            var assemblyFile = entryPoint.Substring(index + 1);
-            string assemblyFullFile = System.IO.Path.GetFullPath(System.IO.Path.Combine(actionContext.RuntimeInfo.WorkingDirectory, assemblyFile));
-            var typeName = entryPoint.Substring(0, index).Trim();
-            return (assemblyFullFile, typeName);
-        }
-        protected void SetInputProperties(IActionContext actionContext, Type type, object instance)
-        {
-            _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
-            _ = type ?? throw new ArgumentNullException(nameof(type));
-            var propsMap = type.GetProperties().ToDictionary(p => p.Name, StringComparer.CurrentCultureIgnoreCase);
-            foreach (var kv in actionContext.Parameters.Arguments)
+            return new NetCoreEntryInfo
             {
-                var prop = propsMap[kv.Key];
-                var value = this.convertService.Convert(kv.Value, prop.PropertyType);
-                prop.SetValue(instance, value);
-            }
+                Assembly = items[0],
+                Type = items[1],
+                Method = items[2],
+            };
         }
 
 

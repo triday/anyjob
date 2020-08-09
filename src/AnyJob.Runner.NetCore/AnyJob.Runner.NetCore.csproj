@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\AnyJob.Engine\AnyJob.Engine.csproj" />
+    <ProjectReference Include="..\AnyJob.Runner.Process\AnyJob.Runner.Process.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="global\netcore\3.1\" />
   </ItemGroup>
 </Project>
