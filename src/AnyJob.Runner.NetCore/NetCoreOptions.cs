@@ -10,6 +10,6 @@ namespace AnyJob.Runner.NetCore
     public class NetCoreOptions
     {
         public string DotnetPath { get; set; } = "dotnet";
-        public string WrapperPath { get; set; } = "global/netcore/libs/netcore_wrapper.dll";
+        public string WrapperPath { get; set; } = "global/netcore/3.1/NetCore_Wrapper.dll";
     }
 }
