@@ -63,63 +63,63 @@ namespace AnyJob.Runner.NetCore.Wrapper {
         /// <summary>
         ///   查找类似 Load assembly &apos;{0}&apos; failure. 的本地化字符串。
         /// </summary>
-        internal static string E400101 {
+        internal static string E400121 {
             get {
-                return ResourceManager.GetString("E400101", resourceCulture);
+                return ResourceManager.GetString("E400121", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Can not reslove type &apos;{0}&apos; in assembly &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
-        internal static string E400102 {
+        internal static string E400122 {
             get {
-                return ResourceManager.GetString("E400102", resourceCulture);
+                return ResourceManager.GetString("E400122", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Duplicate method &apos;{0}&apos; in type &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
-        internal static string E400103 {
+        internal static string E400123 {
             get {
-                return ResourceManager.GetString("E400103", resourceCulture);
+                return ResourceManager.GetString("E400123", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Can not find method &apos;{0}&apos; in type &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
-        internal static string E400104 {
+        internal static string E400124 {
             get {
-                return ResourceManager.GetString("E400104", resourceCulture);
+                return ResourceManager.GetString("E400124", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Read inputfile error, the file path is &apos;{0}&apos;. 的本地化字符串。
         /// </summary>
-        internal static string E400105 {
+        internal static string E400125 {
             get {
-                return ResourceManager.GetString("E400105", resourceCulture);
+                return ResourceManager.GetString("E400125", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Can not convert parameter &apos;{0}&apos; value. 的本地化字符串。
         /// </summary>
-        internal static string E400106 {
+        internal static string E400126 {
             get {
-                return ResourceManager.GetString("E400106", resourceCulture);
+                return ResourceManager.GetString("E400126", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Invoke action method error. 的本地化字符串。
         /// </summary>
-        internal static string E400107 {
+        internal static string E400127 {
             get {
-                return ResourceManager.GetString("E400107", resourceCulture);
+                return ResourceManager.GetString("E400127", resourceCulture);
             }
         }
     }

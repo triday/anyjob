@@ -38,32 +38,32 @@ namespace AnyJob.Runner.NetCore.Wrapper
 
         public static CodeException LoadAssemblyError(string assemblyName, Exception exception)
         {
-            return FromErrorCode(nameof(ErrorCode.E400101), exception, assemblyName);
+            return FromErrorCode(nameof(ErrorCode.E400121), exception, assemblyName);
         }
         public static CodeException LoadTypeError(string typeName, string assemblyName, Exception exception)
         {
-            return FromErrorCode(nameof(ErrorCode.E400102), exception, typeName, assemblyName);
+            return FromErrorCode(nameof(ErrorCode.E400122), exception, typeName, assemblyName);
         }
         public static CodeException DuplicateMethodError(string methodName, Type type)
         {
-            return FromErrorCode(nameof(ErrorCode.E400103), methodName, type.FullName);
+            return FromErrorCode(nameof(ErrorCode.E400123), methodName, type.FullName);
         }
         public static CodeException MethodNotFoundError(string methodName, Type type)
         {
-            return FromErrorCode(nameof(ErrorCode.E400104), methodName, type.FullName);
+            return FromErrorCode(nameof(ErrorCode.E400124), methodName, type.FullName);
         }
         public static CodeException ReadInputFileError(string filePath, Exception exception)
         {
-            return FromErrorCode(nameof(ErrorCode.E400105), exception, filePath);
+            return FromErrorCode(nameof(ErrorCode.E400125), exception, filePath);
         }
         public static CodeException ConvertParameterValueError(ParameterInfo parameterInfo, Exception exception)
         {
-            return FromErrorCode(nameof(ErrorCode.E400106), exception, parameterInfo.Name);
+            return FromErrorCode(nameof(ErrorCode.E400126), exception, parameterInfo.Name);
         }
 
         public static CodeException InvokeMethodError(Exception exception)
         {
-            return FromErrorCode(nameof(ErrorCode.E400107), exception);
+            return FromErrorCode(nameof(ErrorCode.E400127), exception);
         }
         private static CodeException FromErrorCode(string code, Exception exception, params object[] args)
         {
