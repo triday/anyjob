@@ -1,17 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <ItemGroup>
-    <None Remove="global\netcore\3.1\NetCore_Wrapper.dll" />
-    <None Remove="global\netcore\3.1\NetCore_Wrapper.runtimeconfig.json" />
-    <None Remove="global\netcore\3.1\System.Text.Json.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="global\netcore\3.1\NetCore_Wrapper.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="global\netcore\3.1\NetCore_Wrapper.runtimeconfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="global\netcore\3.1\System.Text.Json.dll">
+    <Content Include="global\netcore\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
