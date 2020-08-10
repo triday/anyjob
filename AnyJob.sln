@@ -48,6 +48,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.App.IntegrationTest", "test\AnyJob.Runner.App.IntegrationTest\AnyJob.Runner.App.IntegrationTest.csproj", "{FACCDEE2-7E9C-429F-86CA-CFB1E2C41BD9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.NetCore", "src\AnyJob.Runner.NetCore\AnyJob.Runner.NetCore.csproj", "{E50D131C-EAFA-4489-B14E-8B5D220B4753}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3374EB89-5549-4283-BC38-8FA237546814} = {3374EB89-5549-4283-BC38-8FA237546814}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netcore", "netcore", "{D3232950-1EAE-40E6-98DB-D4CF22BF893F}"
 EndProject
@@ -73,11 +76,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Internal.Inte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Internal.Demo", "example\AnyJob.Internal.Demo\AnyJob.Internal.Demo.csproj", "{3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Runner.NetCore.Wrapper", "src\AnyJob.Runner.NetCore.Wrapper\AnyJob.Runner.NetCore.Wrapper.csproj", "{3374EB89-5549-4283-BC38-8FA237546814}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.NetCore.Wrapper", "src\AnyJob.Runner.NetCore.Wrapper\AnyJob.Runner.NetCore.Wrapper.csproj", "{3374EB89-5549-4283-BC38-8FA237546814}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "java", "java", "{D58896F0-D79C-11EA-809F-C9D3A094A2C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyJob.Runner.Java.IntegrationTest", "test\AnyJob.Runner.Java.IntegrationTest\AnyJob.Runner.Java.IntegrationTest.csproj", "{83F2E320-0BFE-4220-84E9-F592C522DA22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Java.IntegrationTest", "test\AnyJob.Runner.Java.IntegrationTest\AnyJob.Runner.Java.IntegrationTest.csproj", "{83F2E320-0BFE-4220-84E9-F592C522DA22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -198,7 +201,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D58896F0-D79C-11EA-809F-C9D3A094A2C6} = {B03DEFA0-9B4F-4E7D-A298-CA733B693E39}
 		{144A3A46-DCC8-42B6-BB91-D2495A6DC474} = {7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}
 		{F798D9BD-EAB6-41CA-B1DC-5E86730E568E} = {7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}
 		{D795DDCB-B616-4369-A7A1-8183F76E695D} = {7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}
@@ -231,6 +233,7 @@ Global
 		{1B60F957-5182-466D-B89A-D5ADCA65CF99} = {4D2BE62D-6E8A-46D0-B5D7-68FE5337D8BB}
 		{3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A} = {AB642BE0-CF55-11EA-8FB7-27BC7BBA8417}
 		{3374EB89-5549-4283-BC38-8FA237546814} = {7E0DE3AA-869B-4B6D-8C29-B5B676FA91D7}
+		{D58896F0-D79C-11EA-809F-C9D3A094A2C6} = {B03DEFA0-9B4F-4E7D-A298-CA733B693E39}
 		{83F2E320-0BFE-4220-84E9-F592C522DA22} = {D58896F0-D79C-11EA-809F-C9D3A094A2C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
