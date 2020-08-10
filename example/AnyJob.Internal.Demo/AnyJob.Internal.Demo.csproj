@@ -6,8 +6,13 @@
 
   <ItemGroup>
       <ProjectReference Include="..\..\src\AnyJob.Engine\AnyJob.Engine.csproj" >
-          <PrivateAssets>all</PrivateAssets>
+        <Private>false</Private>
+        <ExcludeAssets>runtime</ExcludeAssets>
       </ProjectReference>
+
+      <!-- <PackageReference Include="AnyJob.Engine" Version="1.0.0">
+    <ExcludeAssets>runtime</ExcludeAssets>
+</PackageReference> -->
   </ItemGroup>
 
 </Project>

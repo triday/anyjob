@@ -4,6 +4,7 @@
    <OutputType>Exe</OutputType>
    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
    <AssemblyName>NetCore_Wrapper</AssemblyName>
+   <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="System.Text.Json" Version="4.7.2" />
