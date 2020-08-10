@@ -83,11 +83,19 @@ namespace AnyJob.Runner.NetCore.IntegrationTest
             var job = JobEngine.Start(mergeActionName, inputs);
             var result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
+            System.Console.WriteLine(ToJsonString(result));
             var fullResult = JsonConvert.SerializeObject(result.Result, Formatting.None, new JsonSerializerSettings
             {
                 ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
             });
             Assert.AreEqual("[{\"id\":1001,\"name\":\"zhangsan\"},{\"id\":1002,\"name\":\"lisi\"}]", fullResult);
+        }
+        private string ToJsonString(object result)
+        {
+            return JsonConvert.SerializeObject(result, Formatting.None, new JsonSerializerSettings
+            {
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+            });
         }
     }
 }
