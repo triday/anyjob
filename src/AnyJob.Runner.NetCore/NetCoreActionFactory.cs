@@ -21,7 +21,15 @@ namespace AnyJob.Runner.NetCore
         {
             _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
             var entryInfo = ParseEntryInfo(actionContext.MetaInfo.EntryPoint);
-            return new NetCoreAction(entryInfo, netCoreOptions);
+            if (string.IsNullOrEmpty(netCoreOptions.DockerImage))
+            {
+                return new NetCoreAction(entryInfo, netCoreOptions);
+            }
+            else
+            {
+                return new DockerNetCoreAction(entryInfo, netCoreOptions);
+            }
+
         }
 
         private NetCoreEntryInfo ParseEntryInfo(string entry)
