@@ -55,6 +55,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netcore", "netcore", "{D3232950-1EAE-40E6-98DB-D4CF22BF893F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.NetCore.IntegrationTest", "test\AnyJob.Runner.NetCore.IntegrationTest\AnyJob.Runner.NetCore.IntegrationTest.csproj", "{44413635-97BC-418A-A6DC-5401DDE033F1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{839C9BED-7034-4205-A258-2DEB84078150} = {839C9BED-7034-4205-A258-2DEB84078150}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.NetCore.Demo", "example\AnyJob.NetCore.Demo\AnyJob.NetCore.Demo.csproj", "{839C9BED-7034-4205-A258-2DEB84078150}"
 EndProject

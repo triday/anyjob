@@ -24,5 +24,11 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\AnyJob.Runner.NetCore\AnyJob.Runner.NetCore.csproj" />
     </ItemGroup>
-
+    <Target Name="Copy" BeforeTargets="PreBuildEvent">
+        <ItemGroup>
+            <DemoFiles Include="$(SolutionDir)\example\AnyJob.NetCore.Demo\bin\Debug\netstandard2.1\*" />
+        </ItemGroup>
+        <Copy SourceFiles="@(DemoFiles)" DestinationFolder="$(ProjectDir)\netcorepack\0.0.1" ContinueOnError="false" />
+        <Message Text="Copy demo files success..." />
+    </Target>
 </Project>

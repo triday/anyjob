@@ -177,6 +177,9 @@
   <data name="E20005" xml:space="preserve">
     <value>动作"{0}"已经被禁用。</value>
   </data>
+  <data name="E20006" xml:space="preserve">
+    <value>Download file '{0}' error, the remote url is '{1}'.</value>
+  </data>
   <data name="InvalidActionName" xml:space="preserve">
     <value>Invalid action name "{0}".</value>
   </data>
