@@ -11,6 +11,6 @@ namespace AnyJob.Runner.NetCore
     {
         public string DockerImage { get; set; } = "mcr.microsoft.com/dotnet/core/runtime:3.1";
         public string DotnetPath { get; set; } = "dotnet";
-        public string WrapperPath { get; set; } = "global/netcore/3.1/NetCore_Wrapper.dll";
+        public string WrapperPath { get; set; } = "global/netcore/netcoreapp3.1/NetCore_Wrapper.dll";
     }
 }
