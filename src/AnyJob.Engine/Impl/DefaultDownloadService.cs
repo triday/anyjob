@@ -45,7 +45,6 @@ namespace AnyJob.Engine.Impl
             }
             catch (System.Exception ex)
             {
-                HttpUtility.UrlEncode("abc");
                 throw Errors.DownLoadFileError(downloadInfo.LocalFilePath, downloadInfo.FileUrl, ex);
             }
         }

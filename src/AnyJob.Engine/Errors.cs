@@ -73,7 +73,7 @@ namespace AnyJob
         {
             return FromErrorMessage(nameof(ErrorCodes.E20005), name);
         }
-        public static ActionException DownLoadFileError(string fileName, string fileUrl,Exception exception)
+        public static ActionException DownLoadFileError(string fileName, string fileUrl, Exception exception)
         {
             return FromErrorMessage(nameof(ErrorCodes.E20006), exception, fileName, fileUrl);
         }
