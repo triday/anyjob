@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AnyJob.Runner.Java\AnyJob.Runner.Java.csproj" />
@@ -14,5 +14,12 @@
   <ItemGroup>
       <PackageReference Include="YS.Knife.Test" Version="1.2.9" />
   </ItemGroup>
-  
+    <Target Name="CopyDemo" BeforeTargets="PreBuildEvent">
+        <Exec Command="mvn install -f $(SolutionDir)example\AnyJob.Java.Demo\pom.xml" />
+        <ItemGroup>
+            <JarFiles Include="$(SolutionDir)example\AnyJob.Java.Demo\target\*.jar" />
+        </ItemGroup>
+        <Copy SourceFiles="@(JarFiles)" DestinationFolder="$(ProjectDir)\javapack\0.0.1\" ContinueOnError="false" />
+        <Message Text="Copy wrapper files success..."/>
+    </Target>
 </Project>
