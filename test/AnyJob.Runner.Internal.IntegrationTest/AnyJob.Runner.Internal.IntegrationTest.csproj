@@ -18,5 +18,11 @@
     <ProjectReference Include="..\..\src\AnyJob.Engine\AnyJob.Engine.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.Internal\AnyJob.Runner.Internal.csproj" />
   </ItemGroup>
-
+    <Target Name="Copy" BeforeTargets="PreBuildEvent">
+        <ItemGroup>
+            <DemoFiles Include="$(SolutionDir)\example\AnyJob.Internal.Demo\bin\Debug\netstandard2.0\*" />
+        </ItemGroup>
+        <Copy SourceFiles="@(DemoFiles)" DestinationFolder="$(ProjectDir)\internalpack\0.0.1" ContinueOnError="false" />
+        <Message Text="Copy demo files success..." />
+    </Target>
 </Project>

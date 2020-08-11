@@ -73,6 +73,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "internal", "internal", "{4D2BE62D-6E8A-46D0-B5D7-68FE5337D8BB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Runner.Internal.IntegrationTest", "test\AnyJob.Runner.Internal.IntegrationTest\AnyJob.Runner.Internal.IntegrationTest.csproj", "{1B60F957-5182-466D-B89A-D5ADCA65CF99}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A} = {3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyJob.Internal.Demo", "example\AnyJob.Internal.Demo\AnyJob.Internal.Demo.csproj", "{3DF8BE5B-5545-47AF-A01B-A1EFFD53C76A}"
 EndProject
