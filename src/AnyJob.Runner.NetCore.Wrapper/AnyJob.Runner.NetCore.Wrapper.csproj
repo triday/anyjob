@@ -27,7 +27,7 @@
         <ItemGroup>
             <WrapperFiles Include="$(TargetDir)\*" />
         </ItemGroup>
-        <Copy SourceFiles="@(WrapperFiles)" DestinationFolder="$(ProjectDir)\..\AnyJob.Runner.NetCore\global\netcore\$(TargetFramework)" ContinueOnError="false" />
+        <Copy SourceFiles="@(WrapperFiles)" DestinationFolder="$(ProjectDir)../AnyJob.Runner.NetCore/global/netcore/$(TargetFramework)" ContinueOnError="false" />
         <Message Text="Copy wrapper files success..."/>
     </Target>
 </Project>

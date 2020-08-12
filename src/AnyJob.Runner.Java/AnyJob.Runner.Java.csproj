@@ -8,9 +8,9 @@
     <ItemGroup>
         <ProjectReference Include="..\AnyJob.Runner.Process\AnyJob.Runner.Process.csproj" />
     </ItemGroup>
-    <Target Name="CopyWarpper" BeforeTargets="PreBuildEvent">
-        <Exec Command="mvn install -f $(ProjectDir)..\AnyJob.Runner.Java.Wrapper\pom.xml" />
-        <Copy SourceFiles="$(ProjectDir)..\AnyJob.Runner.Java.Wrapper\target\java_warpper-1.0.jar" DestinationFolder="$(ProjectDir)\global\java\jar_libs\" ContinueOnError="false" />
+    <Target Name="CopyWarpper" BeforeTargets="DispatchToInnerBuilds">
+        <Exec Command="mvn install -f $(ProjectDir)../AnyJob.Runner.Java.Wrapper/pom.xml" />
+        <Copy SourceFiles="$(ProjectDir)../AnyJob.Runner.Java.Wrapper/target/java_warpper-1.0.jar" DestinationFolder="$(ProjectDir)global/java/jar_libs/" ContinueOnError="false" />
         <Message Text="Copy wrapper files success..."/>
 </Target>
 </Project>
