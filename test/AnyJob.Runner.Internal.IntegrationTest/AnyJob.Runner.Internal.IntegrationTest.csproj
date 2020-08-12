@@ -24,5 +24,6 @@
         </ItemGroup>
         <Copy SourceFiles="@(DemoFiles)" DestinationFolder="$(ProjectDir)\internalpack\0.0.1" ContinueOnError="false" />
         <Message Text="Copy demo files success..." />
+        <RemoveDir Directories="$(OutDir)actions" />
     </Target>
 </Project>

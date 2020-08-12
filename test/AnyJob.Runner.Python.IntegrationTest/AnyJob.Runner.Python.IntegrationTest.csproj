@@ -11,5 +11,7 @@
     <PackageReference Include="YS.Knife.Hosting" Version="1.2.9" />
     <PackageReference Include="YS.Knife.Test" Version="1.2.9" />
   </ItemGroup>
-
+    <Target Name="RemoveActions" BeforeTargets="PreBuildEvent">
+        <RemoveDir Directories="$(OutDir)actions" />
+    </Target>
 </Project>

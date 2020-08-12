@@ -15,4 +15,7 @@
    <ProjectReference Include="..\..\src\AnyJob.Runner.Workflow\AnyJob.Runner.Workflow.csproj" />
    <ProjectReference Include="..\..\src\AnyJob.Runner.Python\AnyJob.Runner.Python.csproj" />
  </ItemGroup>
+    <Target Name="RemoveActions" BeforeTargets="PreBuildEvent">
+        <RemoveDir Directories="$(OutDir)actions" />
+    </Target>
 </Project>

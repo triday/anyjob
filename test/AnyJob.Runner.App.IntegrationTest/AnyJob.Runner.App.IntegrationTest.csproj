@@ -18,6 +18,8 @@
     <ProjectReference Include="..\..\src\AnyJob.Runner.App\AnyJob.Runner.App.csproj" />
   </ItemGroup>
 
-
+    <Target Name="RemoveActions" BeforeTargets="PreBuildEvent">
+        <RemoveDir Directories="$(OutDir)actions" />
+    </Target>
 
 </Project>
