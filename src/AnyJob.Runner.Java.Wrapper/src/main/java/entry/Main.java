@@ -8,14 +8,14 @@ import java.io.*;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
-import java.nio.charset.Charset;
 import java.util.*;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
         if (args.length != 4) {
-            throw new RuntimeException ("Usage: java_warpper {className} {funcName} {inputFile} {outputFile}.");
+            throw new RuntimeException("Usage: java_warpper {className} {funcName} {inputFile} {outputFile}.");
         }
         String className = args[0];
         String funcName = args[1];
@@ -69,7 +69,7 @@ public class Main {
                 results.put("result", obj);
             }
             String content = JSONObject.toJSONString(results);
-            FileUtils.writeStringToFile(new File(outputFile),content,"utf-8");
+            FileUtils.writeStringToFile(new File(outputFile), content, "utf-8");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -98,15 +98,24 @@ public class Main {
         try {
             int modifier = method.getModifiers();
             if (Modifier.isStatic(modifier)) {
-                return method.invoke(null, args);
+                return getActualResult(method.invoke(null, args));
             } else {
                 Object instance = cls.newInstance();
-                return method.invoke(instance, args);
+                return getActualResult(method.invoke(instance, args));
             }
         } catch (Exception ex) {
             throw new RuntimeException("Invoke method error.", ex);
         }
     }
 
-
+    private static Object getActualResult(Object value) {
+        try {
+            if (Future.class.isInstance(value)) {
+                return ((Future) value).get();
+            }
+            return value;
+        } catch (Exception ex) {
+            throw new RuntimeException("Get future result error.", ex);
+        }
+    }
 }

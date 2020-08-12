@@ -1,0 +1,14 @@
+﻿{
+    "enabled": true,
+    "description": "hello action",
+    "entrypoint": "demo.Static,hello",
+    "kind": "java",
+    "inputs": {
+        "name": {
+            "type": "string"
+        }
+    },
+    "output": {
+        "type": "null"
+    }
+}

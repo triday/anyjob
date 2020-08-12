@@ -1,0 +1,17 @@
+﻿{
+    "enabled": true,
+    "description": "add from node",
+    "entrypoint": "demo.Static,concat",
+    "kind": "java",
+    "inputs": {
+        "a": {
+            "type": "string"
+        },
+        "b": {
+            "type": "string"
+        }
+    },
+    "output": {
+        "type": "string"
+    }
+}

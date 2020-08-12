@@ -1,0 +1,17 @@
+﻿{
+    "enabled": true,
+    "description": "add from node",
+    "entrypoint": "demo.Static,add",
+    "kind": "java",
+    "inputs": {
+        "num1": {
+            "type": "number"
+        },
+        "num2": {
+            "type": "number"
+        }
+    },
+    "output": {
+        "type": "number"
+    }
+}

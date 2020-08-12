@@ -10,9 +10,8 @@ namespace AnyJob.Runner.Java.IntegrationTest
     {
         [DataTestMethod]
         [DataRow("javapack.add")]
-        //[DataRow("javapack.add_static")]
-        //[DataRow("javapack.add_task")]
-        //[DataRow("javapack.add_valuetask")]
+        [DataRow("javapack.add_static")]
+        [DataRow("javapack.add_task")]
         public void ShouldInvokeSuccessWhenAddTwoArgument(string addActionName)
         {
             var inputs = new Dictionary<string, object>()
@@ -28,9 +27,8 @@ namespace AnyJob.Runner.Java.IntegrationTest
 
         [DataTestMethod]
         [DataRow("javapack.concat")]
-        //[DataRow("javapack.concat_static")]
-        //[DataRow("javapack.concat_task")]
-        //[DataRow("javapack.concat_valuetask")]
+        [DataRow("javapack.concat_static")]
+        [DataRow("javapack.concat_task")]
         public void ShouldSuccessWhenConcatLargeStrings(string concatActionName)
         {
             var arg1 = string.Join("\n", Enumerable.Range(1, 1000000).Select(p => $"{p:d8}"));
@@ -49,9 +47,8 @@ namespace AnyJob.Runner.Java.IntegrationTest
 
         [DataTestMethod]
         [DataRow("javapack.hello")]
-        //[DataRow("javapack.hello_static")]
-        //[DataRow("javapack.hello_task")]
-        //[DataRow("javapack.hello_valuetask")]
+        [DataRow("javapack.hello_static")]
+        [DataRow("javapack.hello_task")]
         public void ShouldSuccessWhenHelloActionCalled(string helloActionName)
         {
             var inputs = new Dictionary<string, object>()
@@ -66,9 +63,8 @@ namespace AnyJob.Runner.Java.IntegrationTest
         }
         [DataTestMethod]
         [DataRow("javapack.merge")]
-        //[DataRow("javapack.merge_static")]
-        //[DataRow("javapack.merge_task")]
-        //[DataRow("javapack.merge_valuetask")]
+        [DataRow("javapack.merge_static")]
+        [DataRow("javapack.merge_task")]
         public void ShouldSuccessWhenMergeComplexObject(string mergeActionName)
         {
             var inputs = new Dictionary<string, object>()
