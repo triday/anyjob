@@ -2,6 +2,7 @@ package entry;
 
 import com.alibaba.fastjson.*;
 import com.alibaba.fastjson.util.TypeUtils;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.lang.reflect.Method;
@@ -14,9 +15,7 @@ import java.util.stream.Collectors;
 public class Main {
     public static void main(String[] args) {
         if (args.length != 4) {
-            System.out.println("Usage: java_warpper {className} {funcName} {inputFile} {outputFile}.");
-            System.exit(1);
-            return;
+            throw new RuntimeException ("Usage: java_warpper {className} {funcName} {inputFile} {outputFile}.");
         }
         String className = args[0];
         String funcName = args[1];
@@ -26,20 +25,18 @@ public class Main {
             Class cls = Class.forName(className);
             Method method = getMethod(cls, funcName);
             JSONObject inputs = readFromInputFile(inputFile);
-            if(inputs==null) inputs = new JSONObject();
+            if (inputs == null) inputs = new JSONObject();
             Object[] actionArgs = parseArgument(inputs, method);
             Object result = invokeMethod(method, cls, actionArgs);
             writeToOutputFile(outputFile, result);
-            System.exit(0);
         } catch (Exception exception) {
             writeToOutputFile(outputFile, exception);
-            System.exit(1);
         }
     }
 
     private static JSONObject readFromInputFile(String inputFile) {
         try {
-            String content = readFileContent(inputFile);
+            String content = FileUtils.readFileToString(new File(inputFile), "utf-8");
             return JSONObject.parseObject(content);
         } catch (Exception ex) {
             throw new RuntimeException("Read input file error.", ex);
@@ -50,7 +47,7 @@ public class Main {
         Parameter[] parameters = method.getParameters();
         Object[] args = new Object[parameters.length];
         for (int i = 0; i < parameters.length; i++) {
-            if(!parameters[i].isNamePresent()) {
+            if (!parameters[i].isNamePresent()) {
                 throw new IllegalArgumentException("Parameter names are not present, please compile with '-parameters' arguments.");
             }
             if (jsonObject.containsKey(parameters[i].getName())) {
@@ -72,7 +69,7 @@ public class Main {
                 results.put("result", obj);
             }
             String content = JSONObject.toJSONString(results);
-            writeContentToFile(outputFile, content);
+            FileUtils.writeStringToFile(new File(outputFile),content,"utf-8");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -111,23 +108,5 @@ public class Main {
         }
     }
 
-    private static String readFileContent(String fileName) throws IOException {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName),
-                Charset.forName("UTF-8")))) {
-            StringBuilder sb = new StringBuilder(1024);
-            char[] buffer = new char[16 * 1024];
-            while (br.read(buffer) != -1) {
-                sb.append(buffer);
-            }
-            return sb.toString();
-        }
-    }
 
-    private static void writeContentToFile(String file, String str) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,
-                false),
-                Charset.forName("UTF-8")));) {
-            bw.write(str);
-        }
-    }
 }

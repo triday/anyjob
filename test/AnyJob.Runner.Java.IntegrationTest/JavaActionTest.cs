@@ -33,8 +33,8 @@ namespace AnyJob.Runner.Java.IntegrationTest
         //[DataRow("javapack.concat_valuetask")]
         public void ShouldSuccessWhenConcatLargeStrings(string concatActionName)
         {
-            var arg1 = string.Join("\n", Enumerable.Range(1, 2).Select(p => $"{p:d8}"));
-            var arg2 = string.Join("\n", Enumerable.Range(100000000, 2).Select(p => $"{p:d8}"));
+            var arg1 = string.Join("\n", Enumerable.Range(1, 1000000).Select(p => $"{p:d8}"));
+            var arg2 = string.Join("\n", Enumerable.Range(100000000, 1000000).Select(p => $"{p:d8}"));
             var inputs = new Dictionary<string, object>()
             {
                 { "a" ,arg1 },
