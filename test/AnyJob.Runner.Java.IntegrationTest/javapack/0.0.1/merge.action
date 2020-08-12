@@ -1,7 +1,7 @@
 ﻿{
     "enabled": true,
     "description": "merge complex objects",
-    "entrypoint": "AnyJob.Java.Demo-1.0.jar,demo.Instance.merge",
+    "entrypoint": "demo.Instance,merge",
     "kind": "java",
     "inputs": {
         "persons": {

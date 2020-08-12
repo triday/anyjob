@@ -1,7 +1,7 @@
 ﻿{
     "enabled": true,
     "description": "add from node",
-    "entrypoint": "AnyJob.Java.Demo-1.0.jar/demo.Instance.concat",
+    "entrypoint": "demo.Instance,concat",
     "kind": "java",
     "inputs": {
         "a": {

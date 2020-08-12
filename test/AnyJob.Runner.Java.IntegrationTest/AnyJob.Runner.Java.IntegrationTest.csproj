@@ -15,9 +15,9 @@
       <PackageReference Include="YS.Knife.Test" Version="1.2.9" />
   </ItemGroup>
     <Target Name="CopyDemo" BeforeTargets="PreBuildEvent">
-        <Exec Command="mvn install -f $(SolutionDir)example/AnyJob.Java.Demo/pom.xml" />
+        <Exec Command="mvn install -f $(ProjectDir)../../example/AnyJob.Java.Demo/pom.xml" />
         <ItemGroup>
-            <JarFiles Include="$(SolutionDir)example\AnyJob.Java.Demo\target\*.jar" />
+            <JarFiles Include="$(ProjectDir)../../example/AnyJob.Java.Demo/target/*.jar" />
         </ItemGroup>
         <Copy SourceFiles="@(JarFiles)" DestinationFolder="$(ProjectDir)javapack/0.0.1/" ContinueOnError="false" />
         <Message Text="Copy wrapper files success..."/>

@@ -18,20 +18,21 @@ namespace AnyJob.Runner.Java
 
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
-            string classPaths = CombinClassPath(context);
-            string wrapperPath = Path.GetFullPath(javaOptions.WrapperPath);
+            string classPaths = CombinClassPath(context.RuntimeInfo.WorkingDirectory, Path.GetFullPath(javaOptions.GlobalJarLibsPath));
+
             return new ProcessExecInput
             {
                 FileName = javaOptions.JavaPath,
                 WorkingDir = context.RuntimeInfo.WorkingDirectory,
-                Arguments = new string[] { "-cp", classPaths, "-jar", wrapperPath, javaEntryInfo.ClassFullName, javaEntryInfo.MethodName, inputFile, outputFile },
+                Arguments = new string[] { "-cp", classPaths, javaOptions.EntryClass, javaEntryInfo.ClassFullName, javaEntryInfo.MethodName, inputFile, outputFile },
                 Envs = new Dictionary<string, string>()
             };
         }
-        private string CombinClassPath(IActionContext context)
+        private string CombinClassPath(string packJarLibsPath, string globalJarLibsPath)
         {
-            var jars = Directory.GetFiles(context.RuntimeInfo.WorkingDirectory, "*.jar", SearchOption.AllDirectories);
-            var allpaths = new string[] { "." }.Concat(jars);
+            var pack_jars = Directory.GetFiles(packJarLibsPath, "*.jar", SearchOption.AllDirectories);
+            var global_jars = Directory.GetFiles(globalJarLibsPath, "*.jar", SearchOption.AllDirectories);
+            var allpaths = new string[] { "." }.Concat(pack_jars).Concat(global_jars);
             return JoinEnvironmentPaths(false, allpaths.ToArray());
         }
 
