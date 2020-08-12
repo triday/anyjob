@@ -6,7 +6,7 @@
     "inputs": {
         "a": {
             "type": "string"
-        },Í
+        },
         "b": {
             "type": "string"
         }

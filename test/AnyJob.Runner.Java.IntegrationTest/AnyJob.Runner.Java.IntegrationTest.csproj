@@ -21,5 +21,6 @@
         </ItemGroup>
         <Copy SourceFiles="@(JarFiles)" DestinationFolder="$(ProjectDir)javapack/0.0.1/" ContinueOnError="false" />
         <Message Text="Copy wrapper files success..."/>
+        <RemoveDir Directories="$(OutDir)actions" />
     </Target>
 </Project>

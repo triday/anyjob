@@ -3,16 +3,16 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
-namespace AnyJob.Runner.NetCore.IntegrationTest
+namespace AnyJob.Runner.Java.IntegrationTest
 {
     [TestClass]
-    public class NetCoreActionTest
+    public class JavaActionTest
     {
         [DataTestMethod]
-        [DataRow("netcorepack.add")]
-        [DataRow("netcorepack.add_static")]
-        [DataRow("netcorepack.add_task")]
-        [DataRow("netcorepack.add_valuetask")]
+        [DataRow("javapack.add")]
+        //[DataRow("javapack.add_static")]
+        //[DataRow("javapack.add_task")]
+        //[DataRow("javapack.add_valuetask")]
         public void ShouldInvokeSuccessWhenAddTwoArgument(string addActionName)
         {
             var inputs = new Dictionary<string, object>()
@@ -27,14 +27,14 @@ namespace AnyJob.Runner.NetCore.IntegrationTest
         }
 
         [DataTestMethod]
-        [DataRow("netcorepack.concat")]
-        [DataRow("netcorepack.concat_static")]
-        [DataRow("netcorepack.concat_task")]
-        [DataRow("netcorepack.concat_valuetask")]
+        [DataRow("javapack.concat")]
+        //[DataRow("javapack.concat_static")]
+        //[DataRow("javapack.concat_task")]
+        //[DataRow("javapack.concat_valuetask")]
         public void ShouldSuccessWhenConcatLargeStrings(string concatActionName)
         {
-            var arg1 = string.Join("\n", Enumerable.Range(1, 1000000).Select(p => $"{p:d8}"));
-            var arg2 = string.Join("\n", Enumerable.Range(100000000, 1000000).Select(p => $"{p:d8}"));
+            var arg1 = string.Join("\n", Enumerable.Range(1, 2).Select(p => $"{p:d8}"));
+            var arg2 = string.Join("\n", Enumerable.Range(100000000, 2).Select(p => $"{p:d8}"));
             var inputs = new Dictionary<string, object>()
             {
                 { "a" ,arg1 },
@@ -48,10 +48,10 @@ namespace AnyJob.Runner.NetCore.IntegrationTest
         }
 
         [DataTestMethod]
-        [DataRow("netcorepack.hello")]
-        [DataRow("netcorepack.hello_static")]
-        [DataRow("netcorepack.hello_task")]
-        [DataRow("netcorepack.hello_valuetask")]
+        [DataRow("javapack.hello")]
+        //[DataRow("javapack.hello_static")]
+        //[DataRow("javapack.hello_task")]
+        //[DataRow("javapack.hello_valuetask")]
         public void ShouldSuccessWhenHelloActionCalled(string helloActionName)
         {
             var inputs = new Dictionary<string, object>()
@@ -65,10 +65,10 @@ namespace AnyJob.Runner.NetCore.IntegrationTest
             Assert.AreEqual("Hello,Bob", result.Logger.Trim());
         }
         [DataTestMethod]
-        [DataRow("netcorepack.merge")]
-        [DataRow("netcorepack.merge_static")]
-        [DataRow("netcorepack.merge_task")]
-        [DataRow("netcorepack.merge_valuetask")]
+        [DataRow("javapack.merge")]
+        //[DataRow("javapack.merge_static")]
+        //[DataRow("javapack.merge_task")]
+        //[DataRow("javapack.merge_valuetask")]
         public void ShouldSuccessWhenMergeComplexObject(string mergeActionName)
         {
             var inputs = new Dictionary<string, object>()
@@ -83,7 +83,6 @@ namespace AnyJob.Runner.NetCore.IntegrationTest
             var job = JobEngine.Start(mergeActionName, inputs);
             var result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
-
             Assert.AreEqual("[{\"id\":1001,\"name\":\"zhangsan\"},{\"id\":1002,\"name\":\"lisi\"}]", ToJsonString(result.Result));
         }
         private string ToJsonString(object result)
