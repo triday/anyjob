@@ -10,9 +10,9 @@ namespace AnyJob.CLI.Commands
     public class AddProvider : ICommand
     {
 
-        [Option("name", Required = true, HelpText = "provider name")]
+        [Value(1, MetaName = "name", Required = true, HelpText = "provider name")]
         public string Name { get; set; }
-        [Option("address", Required = true, HelpText = "provider url address.")]
+        [Value(2, MetaName = "address", Required = true, HelpText = "provider url address.")]
         public string Address { get; set; }
         public int Run()
         {

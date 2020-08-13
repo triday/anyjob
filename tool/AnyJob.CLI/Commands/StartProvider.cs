@@ -1,4 +1,5 @@
-﻿using AnyJob.CLI.Utils;
+﻿using System.IO;
+using AnyJob.CLI.Utils;
 using CommandLine;
 
 namespace AnyJob.CLI.Commands
@@ -15,7 +16,8 @@ namespace AnyJob.CLI.Commands
         public string ContainerName { get; set; } = "anyjob-package-provider";
         public int Run()
         {
-            return Shell.Exec("docker", $"run --rm --name {ContainerName} -d -p {ServicePort}:80 -v {RootFolder}:/anyjob/packs anyjob/anyjob-file-provider:latest");
+            string fullPath = Path.GetFullPath(RootFolder);
+            return Shell.Exec("docker", $"run --rm --name {ContainerName} -d -p {ServicePort}:80 -v \"{fullPath}\":/anyjob/packs anyjob/anyjob-file-provider:latest");
         }
     }
 }
