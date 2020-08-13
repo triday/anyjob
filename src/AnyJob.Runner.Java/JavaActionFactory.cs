@@ -18,7 +18,15 @@ namespace AnyJob.Runner.Java
         public IAction CreateAction(IActionContext actionContext)
         {
             var entryInfo = ParseEntryInfo(actionContext.MetaInfo.EntryPoint);
-            return new JavaAction(javaOptions, entryInfo);
+            if (string.IsNullOrEmpty(javaOptions.DockerImage))
+            {
+                return new JavaAction(javaOptions, entryInfo);
+            }
+            else
+            {
+                return new DockerJavaAction(javaOptions, entryInfo);
+            }
+
         }
 
         private JavaEntryInfo ParseEntryInfo(string entry)
