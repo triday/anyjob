@@ -21,7 +21,4 @@
       <LastGenOutput>ErrorCodes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Internal\" />
-  </ItemGroup>
 </Project>

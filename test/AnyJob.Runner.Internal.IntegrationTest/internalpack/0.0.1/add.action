@@ -1,0 +1,17 @@
+﻿{
+
+    "description": "add from node",
+    "entrypoint": "AnyJob.Runner.Internal.IntegrationTest.Actions.Add,AnyJob.Runner.Internal.IntegrationTest",
+    "kind": "internal",
+    "inputs": {
+        "num1": {
+            "type": "number"
+        },
+        "num2": {
+            "type": "number"
+        }
+    },
+    "output": {
+        "type": "number"
+    }
+}

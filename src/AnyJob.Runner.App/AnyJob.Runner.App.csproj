@@ -1,8 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\AnyJob.Runner.Process\AnyJob.Runner.Process.csproj" />
+    <Compile Remove="global\**" />
+    <EmbeddedResource Remove="global\**" />
+    <None Remove="global\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="global\app\bin\" />
+    <ProjectReference Include="..\AnyJob.Runner.Process\AnyJob.Runner.Process.csproj" />
   </ItemGroup>
 </Project>

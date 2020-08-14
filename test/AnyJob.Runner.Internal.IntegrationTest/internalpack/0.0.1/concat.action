@@ -1,0 +1,17 @@
+﻿{
+
+    "description": "add from node",
+    "entrypoint": "AnyJob.Runner.Internal.IntegrationTest.Actions.Concat,AnyJob.Runner.Internal.IntegrationTest",
+    "kind": "internal",
+    "inputs": {
+        "a": {
+            "type": "string"
+        },
+        "b": {
+            "type": "string"
+        }
+    },
+    "output": {
+        "type": "string"
+    }
+}
