@@ -206,10 +206,10 @@ namespace AnyJob.Impl
         protected virtual void OnCheckPremission(IActionContext actionContext)
         {
             _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
-            if (!actionContext.MetaInfo.Enabled)
-            {
-                throw Errors.ActionIsDisabled(actionContext.Name.ToString());
-            }
+            //if (!actionContext.MetaInfo.Enabled)
+            //{
+            //    throw Errors.ActionIsDisabled(actionContext.Name.ToString());
+            //}
         }
         protected virtual void OnValidInputs(IActionContext actionContext)
         {

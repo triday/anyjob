@@ -1,5 +1,5 @@
 ﻿{
-    "enabled": true,
+
     "description": "concat from node",
     "entrypoint": "concat.js",
     "kind": "node",

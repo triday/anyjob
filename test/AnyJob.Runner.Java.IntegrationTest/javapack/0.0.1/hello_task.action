@@ -1,5 +1,5 @@
 ﻿{
-    "enabled": true,
+
     "description": "hello action",
     "entrypoint": "demo.Task,hello",
     "kind": "java",

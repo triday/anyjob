@@ -52,7 +52,6 @@ namespace AnyJob.Impl
             {
                 Kind = metaInfo.Kind,
                 Description = metaInfo.Description,
-                Enabled = metaInfo.Enabled,
                 EntryPoint = metaInfo.EntryPoint,
                 Tags = metaInfo.Tags,
                 Inputs = inputList.ToDictionary(p => p.Key, p => new JsonSchemaType(p.Value) as IActionType),
@@ -69,8 +68,6 @@ namespace AnyJob.Impl
             public string Description { get; set; }
 
             public string EntryPoint { get; set; }
-
-            public bool Enabled { get; set; }
 
             public List<string> Tags { get; set; }
 

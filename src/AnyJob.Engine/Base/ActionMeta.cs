@@ -12,8 +12,6 @@ namespace AnyJob
 
         public string EntryPoint { get; set; }
 
-        public bool Enabled { get; set; }
-
         public IReadOnlyList<string> Tags { get; set; }
 
         public IDictionary<string, IActionType> Inputs { get; set; }

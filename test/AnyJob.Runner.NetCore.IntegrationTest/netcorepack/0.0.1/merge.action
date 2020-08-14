@@ -1,5 +1,5 @@
 ﻿{
-    "enabled": true,
+
     "description": "merge complex objects",
     "entrypoint": "AnyJob.NetCore.Demo.dll,AnyJob.NetCore.Demo.Instance,Merge",
     "kind": "netcore",

@@ -1,5 +1,5 @@
 ﻿{
-    "enabled": true,
+
     "description": "add from node",
     "entrypoint": "demo.Task,add",
     "kind": "java",

@@ -1,5 +1,5 @@
 ﻿{
-    "enabled": true,
+
     "description": "add from node",
     "entrypoint": "add.js",
     "kind": "node",

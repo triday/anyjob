@@ -20,10 +20,6 @@ namespace AnyJob
         /// </summary>
         string EntryPoint { get; }
         /// <summary>
-        /// 获取一个值，表示动作是否启用
-        /// </summary>
-        bool Enabled { get; }
-        /// <summary>
         /// 获取动作关联的标签项
         /// </summary>
         IReadOnlyList<string> Tags { get; }

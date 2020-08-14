@@ -1,5 +1,5 @@
 ﻿{
-    "enabled": true,
+
     "entrypoint": "abc.json",
     "kind": "app",
     "output": {

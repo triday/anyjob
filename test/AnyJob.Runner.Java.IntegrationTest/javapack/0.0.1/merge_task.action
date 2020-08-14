@@ -1,5 +1,5 @@
 ﻿{
-    "enabled": true,
+
     "description": "merge complex objects",
     "entrypoint": "demo.Task,merge",
     "kind": "java",
