@@ -1,8 +1,8 @@
 ﻿{
 
     "description": "add from node",
-    "entrypoint": "AnyJob.Internal.Demo.Concat,AnyJob.Internal.Demo.dll",
-    "kind": "internal",
+    "entrypoint": "AnyJob.Advance.Demo.Concat,AnyJob.Advance.Demo.dll",
+    "kind": "advance",
     "inputs": {
         "a": {
             "type": "string"

@@ -6,7 +6,7 @@ services:
     ports:
       - "${PROVIDER_PORT:-80}:80"
     volumes:
-      - ./internalpack:/anyjob/packs/internalpack
+      - ./advancepack:/anyjob/packs/advancepack
 
   wait-compose-ready:
     image: ysknife/wait-compose-ready

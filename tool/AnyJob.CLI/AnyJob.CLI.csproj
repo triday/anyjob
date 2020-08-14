@@ -19,7 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\AnyJob.Engine\AnyJob.Engine.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.App\AnyJob.Runner.App.csproj" />
-    <ProjectReference Include="..\..\src\AnyJob.Runner.Internal\AnyJob.Runner.Internal.csproj" />
+    <ProjectReference Include="..\..\src\AnyJob.Runner.Internal\AnyJob.Runner.Advance.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.Java\AnyJob.Runner.Java.csproj" />
     <ProjectReference Include="..\..\src\AnyJob.Runner.NetCore\AnyJob.Runner.NetCore.csproj" />
       <ProjectReference Include="..\..\src\AnyJob.Runner.Node\AnyJob.Runner.Node.csproj" />

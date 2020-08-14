@@ -1,8 +1,8 @@
 ﻿{
 
     "description": "hello action",
-    "entrypoint": "AnyJob.Internal.Demo.Hello,AnyJob.Internal.Demo.dll",
-    "kind": "internal",
+    "entrypoint": "AnyJob.Advance.Demo.Hello,AnyJob.Advance.Demo.dll",
+    "kind": "advance",
     "inputs": {
         "name": {
             "type": "string"

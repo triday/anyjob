@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-namespace AnyJob.Internal.Demo
+namespace AnyJob.Advance.Demo
 {
     public class Concat : IAction
     {

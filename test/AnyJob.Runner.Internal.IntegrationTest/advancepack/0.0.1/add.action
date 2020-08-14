@@ -1,8 +1,8 @@
 ﻿{
 
     "description": "add from node",
-    "entrypoint": "AnyJob.Internal.Demo.Add,AnyJob.Internal.Demo.dll",
-    "kind": "internal",
+    "entrypoint": "AnyJob.Advance.Demo.Add,AnyJob.Advance.Demo.dll",
+    "kind": "advance",
     "inputs": {
         "num1": {
             "type": "number"

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Runtime.Loader;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-namespace AnyJob.Runner.Internal
+namespace AnyJob.Runner.Advance
 {
-    public class InternalAction : IAction
+    public class AdvanceAction : IAction
     {
-        private readonly InternalEntryInfo entryInfo;
+        private readonly AdvanceEntryInfo entryInfo;
 
-        public InternalAction(InternalEntryInfo entryInfo)
+        public AdvanceAction(AdvanceEntryInfo entryInfo)
         {
             this.entryInfo = entryInfo;
         }

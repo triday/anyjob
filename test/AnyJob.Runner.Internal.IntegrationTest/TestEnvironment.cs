@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using YS.Knife.Test;
 
-namespace AnyJob.Runner.NetCore.IntegrationTest
+namespace AnyJob.Runner.Advance.IntegrationTest
 {
     [TestClass]
     public class TestEnvironment

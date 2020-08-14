@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-namespace AnyJob.Internal.Demo
+namespace AnyJob.Advance.Demo
 {
     public class Merge : IAction
     {

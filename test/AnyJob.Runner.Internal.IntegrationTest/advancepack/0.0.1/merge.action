@@ -1,8 +1,8 @@
 ﻿{
 
     "description": "merge complex objects",
-    "entrypoint": "AnyJob.Internal.Demo.Merge,AnyJob.Internal.Demo.dll",
-    "kind": "internal",
+    "entrypoint": "AnyJob.Advance.Demo.Merge,AnyJob.Advance.Demo.dll",
+    "kind": "advance",
     "inputs": {
         "persons": {
             "type": "array",

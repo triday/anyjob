@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnyJob.Runner.Internal
+namespace AnyJob.Runner.Advance
 {
-    public class InternalEntryInfo
+    public class AdvanceEntryInfo
     {
         public string AssemblyFile { get; set; }
         public string TypeName { get; set; }

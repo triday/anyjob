@@ -3,10 +3,10 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
-namespace AnyJob.Runner.Internal.IntegrationTest
+namespace AnyJob.Runner.Advance.IntegrationTest
 {
     [TestClass]
-    public class InternalAction
+    public class AdvanceActionTest
     {
         [TestMethod]
         public void ShouldInvokeSuccessWhenAddTwoArgument()
@@ -16,7 +16,7 @@ namespace AnyJob.Runner.Internal.IntegrationTest
                 { "num1" , 100 },
                 { "num2" , 200 }
             };
-            var job = JobEngine.Start("internalpack.add", inputs);
+            var job = JobEngine.Start("advancepack.add", inputs);
             var result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(300.0, result.Result);
@@ -32,7 +32,7 @@ namespace AnyJob.Runner.Internal.IntegrationTest
                 { "a" ,arg1 },
                 { "b" ,arg2 }
             };
-            var job = JobEngine.Start("internalpack.concat", inputs);
+            var job = JobEngine.Start("advancepack.concat", inputs);
             var result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
             var resultText = result.Result as string;
@@ -46,7 +46,7 @@ namespace AnyJob.Runner.Internal.IntegrationTest
             {
                 { "name" ,"Bob" }
             };
-            var job = JobEngine.Start("internalpack.hello", inputs);
+            var job = JobEngine.Start("advancepack.hello", inputs);
             var result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(null, result.Result);
@@ -64,7 +64,7 @@ namespace AnyJob.Runner.Internal.IntegrationTest
 
                 { "other", new { id=1002,name="lisi" } }
             };
-            var job = JobEngine.Start("internalpack.merge", inputs);
+            var job = JobEngine.Start("advancepack.merge", inputs);
             var result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
             var fullResult = JsonConvert.SerializeObject(result.Result, Formatting.None, new JsonSerializerSettings

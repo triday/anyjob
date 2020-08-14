@@ -3,14 +3,14 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AnyJob.Runner.Internal
+namespace AnyJob.Runner.Advance
 {
 
     [YS.Knife.ServiceClass(Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton)]
-    [YS.Knife.DictionaryKey("internal")]
-    public class InternalActionFactory : IActionFactoryService
+    [YS.Knife.DictionaryKey("advance")]
+    public class AdvanceActionFactory : IActionFactoryService
     {
-        public InternalActionFactory(IConvertService convertService)
+        public AdvanceActionFactory(IConvertService convertService)
         {
             this.convertService = convertService;
         }
