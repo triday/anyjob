@@ -1,0 +1,30 @@
+﻿{
+    "description": "ForEach迭代",
+    "entrypoint": "AnyJob.Runner.Workflow.Actions.ForeachAction,AnyJob.Runner.Workflow",
+    "kind": "workflow.special",
+    "inputs": {
+        "itemName": {
+            "type": "string",
+            "description": "循环变量",
+            "default": "it"
+        },
+        "source*": {
+            "type": "array",
+            "description": "数据源"
+        },
+        "concurrent": {
+            "type": "boolean",
+            "default": false,
+            "descripiton": "是否并发执行"
+        },
+        "ignoreStepError": {
+            "type": "boolean",
+            "default": false,
+            "descripiton": "是否忽略单次执行过程中的异常"
+        }
+    },
+    "output": {
+        "type": "null",
+        "descripiton": "返回空"
+    }
+}

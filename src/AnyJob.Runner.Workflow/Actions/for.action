@@ -1,0 +1,40 @@
+﻿{
+    "description": "For循环",
+    "entrypoint": "AnyJob.Runner.Workflow.Actions.ForAction,AnyJob.Runner.Workflow",
+    "kind": "workflow.special",
+    "inputs": {
+        "itemName": {
+            "type": "string",
+            "description": "循环变量",
+            "default": "i"
+        },
+        "startValue": {
+            "type": "integer",
+            "default": 0,
+            "descripiton": "起始值"
+        },
+        "count*": {
+            "type": "integer",
+            "descripiton": "循环次数"
+        },
+        "stepValue": {
+            "type": "integer",
+            "default": 1,
+            "descripiton": "步长"
+        },
+        "concurrent": {
+            "type": "boolean",
+            "default": false,
+            "descripiton": "是否并发执行"
+        },
+        "ignoreStepError": {
+            "type": "boolean",
+            "default": false,
+            "descripiton": "是否忽略单次执行过程中的异常"
+        }
+    },
+    "output": {
+        "type": "null",
+        "descripiton": "返回空"
+    }
+}

@@ -1,0 +1,12 @@
+﻿{
+    "description": "分组动作",
+    "entrypoint": "AnyJob.Runner.Workflow.Actions.GroupAction,AnyJob.Runner.Workflow",
+    "kind": "workflow.special",
+    "inputs": {
+
+    },
+    "output": {
+        "type": "null",
+        "descripiton": "返回空"
+    }
+}
