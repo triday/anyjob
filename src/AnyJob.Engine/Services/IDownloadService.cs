@@ -8,16 +8,18 @@ namespace AnyJob
     }
     public class DownloadInfo
     {
+        public long FileSize { get; set; }
         public string FileHash { get; set; }
         public string FileUrl { get; set; }
         public string LocalFilePath { get; set; }
     }
     public static class DownloadServiceExtensions
     {
-        public static Task DownLoadFile(this IDownloadService downloadService, string fileUrl, string LocalFilePath, string fileHash)
+        public static Task DownLoadFile(this IDownloadService downloadService, string fileUrl, string LocalFilePath, long fileSize, string fileHash)
         {
             return downloadService.DownLoadFile(new DownloadInfo
             {
+                FileSize = fileSize,
                 FileHash = fileHash,
                 FileUrl = fileUrl,
                 LocalFilePath = LocalFilePath,

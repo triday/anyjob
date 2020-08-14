@@ -54,6 +54,7 @@ namespace AnyJob.Impl
                 var packFiles = packageProviderService.GetAllPackageFiles(actionName.Provider, actionName.Pack, actionName.Version);
                 var downLoadInfos = packFiles.Select(p => new DownloadInfo
                 {
+                    FileSize = p.FileSize,
                     FileHash = p.FileHash,
                     FileUrl = p.FileUrl,
                     LocalFilePath = Path.Combine(WorkingDirectory, p.Path)

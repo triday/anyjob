@@ -1,5 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using AnyJob.Config;
@@ -21,6 +25,10 @@ namespace AnyJob.Engine.Impl
         {
             try
             {
+                if (!NeedDownLoad(downloadInfo))
+                {
+                    return;
+                }
                 string cacheFile = Path.Combine(packOption.DownLoadCacheDir, downloadInfo.FileHash);
 
                 if (File.Exists(cacheFile))
@@ -49,6 +57,31 @@ namespace AnyJob.Engine.Impl
             }
         }
 
+        private bool NeedDownLoad(DownloadInfo downloadInfo)
+        {
+            if (File.Exists(downloadInfo.LocalFilePath) &&
+                GetFileSize(downloadInfo.LocalFilePath) == downloadInfo.FileSize &&
+                string.Equals(GetFileHash(downloadInfo.LocalFilePath), downloadInfo.FileHash, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return false;
+            }
+            return true;
+        }
+        private long GetFileSize(string filePath)
+        {
+            return new FileInfo(filePath).Length;
+        }
+        private string GetFileHash(string filePath)
+        {
+            using (var hash = SHA256.Create())
+            {
+                using (var stream = new FileStream(filePath, FileMode.Open))
+                {
+                    var bytes = hash.ComputeHash(stream);
+                    return string.Join("", bytes.Select(p => p.ToString("X2", CultureInfo.InvariantCulture)).ToArray());
+                }
+            }
+        }
         private void CopyToTarget(string source, string targetFile)
         {
             var directoryName = Path.GetDirectoryName(targetFile);
@@ -64,8 +97,6 @@ namespace AnyJob.Engine.Impl
             {
                 source.CopyTo(fileStream);
             }
-
-
         }
     }
 }
