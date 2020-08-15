@@ -7,27 +7,17 @@ namespace AnyJob.Runner.Python
 {
     public class PythonAction : TypedProcessAction2
     {
-        public PythonAction(PythonOption pythonOption, string entryFile)
+        public PythonAction(PythonOption pythonOption, PythonEntryInfo pythonEntryInfo)
         {
             this.pythonOption = pythonOption;
-            this.entryFile = entryFile;
+            this.pythonEntryInfo = pythonEntryInfo;
         }
 
         private PythonOption pythonOption;
-        private string entryFile;
+        private readonly PythonEntryInfo pythonEntryInfo;
 
 
-        private string GetEntryModuleName(string entryFile)
-        {
-            //.py or .pyc
-            string extName = System.IO.Path.GetExtension(entryFile);
-            //.py or .pyc
-            string nameWithOutExt = System.IO.Path.GetFileNameWithoutExtension(entryFile);
-
-            return nameWithOutExt.Replace('/', '.')
-                    .Replace('\\', '.')
-                    .Trim('.');
-        }
+        
         protected IDictionary<string, string> OnGetEnvironment(IActionContext context, bool inDocker)
         {
             _ = context ?? throw new ArgumentNullException(nameof(context));
@@ -50,13 +40,13 @@ namespace AnyJob.Runner.Python
         private ProcessExecInput CreateLocalInputInfo(IActionContext context, string _, string inputFile, string outputFile)
         {
             string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
-            string entryModule = this.GetEntryModuleName(this.entryFile);
+           
             return new ProcessExecInput
             {
                 WorkingDir = context.RuntimeInfo.WorkingDirectory,
                 FileName = pythonOption.PythonPath,
                 StandardInput = string.Empty,
-                Arguments = new string[] { wrapperPath, entryModule, inputFile, outputFile },
+                Arguments = new string[] { wrapperPath, pythonEntryInfo.Module, pythonEntryInfo.Method, inputFile, outputFile },
                 Envs = this.OnGetEnvironment(context, false),
             };
         }
@@ -72,12 +62,11 @@ namespace AnyJob.Runner.Python
             string outputFileInDocker = System.IO.Path.Combine(exchangePathInDocker, Path.GetFileName(outputFile)).ToUnixPath();
 
             string wrapperPathInLocal = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
-            string entryModule = this.GetEntryModuleName(this.entryFile);
             string packNodeModulesPathInDocker = System.IO.Path.Combine(PackageDirInDocker, pythonOption.PackPythonLibPath).ToUnixPath();
 
             return ProcessExecuter.BuildDockerProcess(
                 pythonOption.DockerImage,
-                new string[] { pythonOption.PythonPath, wrapperPathInDocker, entryModule, inputFileInDocker, outputFileInDocker },
+                new string[] { pythonOption.PythonPath, wrapperPathInDocker, pythonEntryInfo.Module,pythonEntryInfo.Method, inputFileInDocker, outputFileInDocker },
                 PackageDirInDocker,
                 new Dictionary<string, string>
                 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Extensions.Options;
 
 namespace AnyJob.Runner.Python
@@ -15,11 +16,27 @@ namespace AnyJob.Runner.Python
         public IAction CreateAction(IActionContext actionContext)
         {
             _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
-            var entryFile = actionContext.MetaInfo.EntryPoint;
-            this.AssertEntryFileExits(entryFile, actionContext);
-            return new PythonAction(option.Value, entryFile);
+            //var entryFile = actionContext.MetaInfo.EntryPoint;
+            var entryInfo = ParseEntryInfo(actionContext.MetaInfo.EntryPoint);
+           // this.AssertEntryFileExits(entryFile, actionContext);
+            return new PythonAction(option.Value, entryInfo);
         }
-
+        private PythonEntryInfo ParseEntryInfo(string entry)
+        {
+            var items = entry.Split(',').Select(p => p.Trim()).ToArray();
+            if (items.Length == 2)
+            {
+                return new PythonEntryInfo
+                {
+                    Module = GetEntryModuleName(items[0]),
+                    Method = items[1]
+                };
+            }
+            else
+            {
+                throw new Exception("Invalid entry format.");
+            }
+        }
         private void AssertEntryFileExits(string entryFile, IActionContext actionContext)
         {
             if (System.IO.Path.IsPathRooted(entryFile))
@@ -31,6 +48,15 @@ namespace AnyJob.Runner.Python
             {
 
             }
+        }
+        private string GetEntryModuleName(string entryModule)
+        {
+            //.py or .pyc
+            string nameWithOutExt = System.IO.Path.GetFileNameWithoutExtension(entryModule);
+
+            return nameWithOutExt.Replace('/', '.')
+                    .Replace('\\', '.')
+                    .Trim('.');
         }
 
     }
