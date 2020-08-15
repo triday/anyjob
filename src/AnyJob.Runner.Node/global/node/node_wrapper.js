@@ -1,8 +1,8 @@
 (function () {
     var fs = require('fs');
-    var [_, _, entry, input, output] = process.argv;
+    var [_, _, entry, method, input, output] = process.argv;
     var text = fs.readFileSync(input, "utf-8");
-    var result = runAction(entry, stripBOM(text));
+    var result = runAction(entry,method, stripBOM(text));
     fs.writeFileSync(output, JSON.stringify(result));
     function stripBOM(content) {
         if (content.charCodeAt(0) === 0xFEFF) {
@@ -15,11 +15,11 @@
      * @param {String} entry
      * @param {String} argsText
      */
-    function runAction(entry, argsText) {
+    function runAction(entry,method, argsText) {
         try {
             var args = JSON.parse(argsText);
             var module = require(entry);
-            var fun = module.run;
+            var fun = module[method];
             if (typeof fun !== "function") {
                 throw "Can not find run function.";
             }

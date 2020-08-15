@@ -1,7 +1,7 @@
 ﻿{
 
     "description": "concat from node",
-    "entrypoint": "concat.py",
+    "entrypoint": "concat,run",
     "kind": "python",
     "inputs": {
         "a": {

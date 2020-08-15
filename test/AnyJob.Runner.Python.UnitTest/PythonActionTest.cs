@@ -16,7 +16,7 @@ namespace AnyJob.Runner.Python
                 { "num1" , 100 },
                 { "num2" , 200 }
             });
-            PythonAction pythonAction = new PythonAction(option, "add.py");
+            PythonAction pythonAction = new PythonAction(option, new PythonEntryInfo { Module = "add", Method = "run" });
             object res = pythonAction.Run(context);
             Assert.AreEqual(300, Convert.ToInt32(res));
         }

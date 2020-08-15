@@ -17,7 +17,7 @@ namespace AnyJob.Runner.Python
         private readonly PythonEntryInfo pythonEntryInfo;
 
 
-        
+
         protected IDictionary<string, string> OnGetEnvironment(IActionContext context, bool inDocker)
         {
             _ = context ?? throw new ArgumentNullException(nameof(context));
@@ -40,7 +40,7 @@ namespace AnyJob.Runner.Python
         private ProcessExecInput CreateLocalInputInfo(IActionContext context, string _, string inputFile, string outputFile)
         {
             string wrapperPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, pythonOption.WrapperPath));
-           
+
             return new ProcessExecInput
             {
                 WorkingDir = context.RuntimeInfo.WorkingDirectory,
@@ -66,7 +66,7 @@ namespace AnyJob.Runner.Python
 
             return ProcessExecuter.BuildDockerProcess(
                 pythonOption.DockerImage,
-                new string[] { pythonOption.PythonPath, wrapperPathInDocker, pythonEntryInfo.Module,pythonEntryInfo.Method, inputFileInDocker, outputFileInDocker },
+                new string[] { pythonOption.PythonPath, wrapperPathInDocker, pythonEntryInfo.Module, pythonEntryInfo.Method, inputFileInDocker, outputFileInDocker },
                 PackageDirInDocker,
                 new Dictionary<string, string>
                 {

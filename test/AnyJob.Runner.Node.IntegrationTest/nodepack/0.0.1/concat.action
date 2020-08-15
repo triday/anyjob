@@ -1,7 +1,7 @@
 ﻿{
 
     "description": "concat from node",
-    "entrypoint": "concat.js",
+    "entrypoint": "concat.js,run",
     "kind": "node",
     "inputs": {
         "num1": {

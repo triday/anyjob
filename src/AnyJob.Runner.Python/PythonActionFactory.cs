@@ -18,7 +18,7 @@ namespace AnyJob.Runner.Python
             _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
             //var entryFile = actionContext.MetaInfo.EntryPoint;
             var entryInfo = ParseEntryInfo(actionContext.MetaInfo.EntryPoint);
-           // this.AssertEntryFileExits(entryFile, actionContext);
+            // this.AssertEntryFileExits(entryFile, actionContext);
             return new PythonAction(option.Value, entryInfo);
         }
         private PythonEntryInfo ParseEntryInfo(string entry)

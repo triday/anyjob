@@ -1,7 +1,7 @@
 ﻿{
 
     "description": "add from node",
-    "entrypoint": "add.js",
+    "entrypoint": "add,run",
     "kind": "node",
     "inputs": {
         "num1": {

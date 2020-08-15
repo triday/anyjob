@@ -7,14 +7,14 @@ namespace AnyJob.Runner.Node
 {
     public class DockerNodeAction : TypedProcessAction2
     {
-        public DockerNodeAction(NodeOption nodeOption, string entryFile)
+        public DockerNodeAction(NodeOptions nodeOption, NodeEntryInfo entryInfo)
         {
-            this.Option = nodeOption;
-            this.EntryFile = entryFile;
+            this.nodeOptions = nodeOption;
+            this.entryInfo = entryInfo;
         }
 
-        public string EntryFile { get; private set; }
-        public NodeOption Option { get; private set; }
+        private readonly NodeEntryInfo entryInfo;
+        private readonly NodeOptions nodeOptions;
 
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context, string exchangePath, string inputFile, string outputFile)
         {
@@ -27,19 +27,19 @@ namespace AnyJob.Runner.Node
             string RootDirInDocker = "/anyjob";
             string PackageDirInDocker = System.IO.Path.Combine(RootDirInDocker, "packs", context.Name.Pack).ToUnixPath();
             string wrapperPathInDocker = System.IO.Path.Combine(RootDirInDocker, "node_wrapper.js").ToUnixPath();
-            string globalLibDirInLocal = System.IO.Path.GetFullPath(Option.GlobalNodeModulesPath);
-            string globalLibDirInDocker = System.IO.Path.Combine(RootDirInDocker, Option.GlobalNodeModulesPath).ToUnixPath();
+            string globalLibDirInLocal = System.IO.Path.GetFullPath(nodeOptions.GlobalNodeModulesPath);
+            string globalLibDirInDocker = System.IO.Path.Combine(RootDirInDocker, nodeOptions.GlobalNodeModulesPath).ToUnixPath();
             string exchangePathInDocker = System.IO.Path.Combine(RootDirInDocker, "exchange").ToUnixPath();
             string inputFileInDocker = System.IO.Path.Combine(exchangePathInDocker, Path.GetFileName(inputFile)).ToUnixPath();
             string outputFileInDocker = System.IO.Path.Combine(exchangePathInDocker, Path.GetFileName(outputFile)).ToUnixPath();
 
-            string wrapperPathInLocal = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, Option.WrapperPath));
-            string entryModule = Path.Combine(PackageDirInDocker, this.EntryFile).ToUnixPath();
-            string packNodeModulesPathInDocker = System.IO.Path.Combine(PackageDirInDocker, Option.PackNodeModulesPath).ToUnixPath();
+            string wrapperPathInLocal = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, nodeOptions.WrapperPath));
+            string entryModule = Path.Combine(PackageDirInDocker, this.entryInfo.Module).ToUnixPath();
+            string packNodeModulesPathInDocker = System.IO.Path.Combine(PackageDirInDocker, nodeOptions.PackNodeModulesPath).ToUnixPath();
 
             return ProcessExecuter.BuildDockerProcess(
-                Option.DockerImage,
-                new string[] { Option.NodePath, wrapperPathInDocker, entryModule, inputFileInDocker, outputFileInDocker },
+                nodeOptions.DockerImage,
+                new string[] { nodeOptions.NodePath, wrapperPathInDocker, entryModule, this.entryInfo.Method, inputFileInDocker, outputFileInDocker },
                 PackageDirInDocker,
                 new Dictionary<string, string>
                 {

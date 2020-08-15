@@ -1,7 +1,7 @@
 ﻿namespace AnyJob.Runner.Node
 {
     [YS.Knife.OptionsClass("node")]
-    public class NodeOption
+    public class NodeOptions
     {
         public string DockerImage { get; set; } = "node:14.5";
         public string NodePath { get; set; } = "node";

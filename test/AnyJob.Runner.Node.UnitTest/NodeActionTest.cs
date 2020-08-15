@@ -16,14 +16,14 @@ namespace AnyJob.Runner.Node
                 { "num1" , 100 },
                 { "num2" , 200 }
             });
-            NodeAction nodeAction = new NodeAction(option, "add.js");
+            NodeAction nodeAction = new NodeAction(option, new NodeEntryInfo { Module = "add.js", Method = "run" });
             object res = nodeAction.Run(context);
             Assert.AreEqual(300, Convert.ToInt32(res));
         }
 
-        private NodeOption CreateOption()
+        private NodeOptions CreateOption()
         {
-            return new NodeOption()
+            return new NodeOptions()
             {
             };
         }
