@@ -20,10 +20,15 @@ namespace AnyJob.Runner.App
         public IAction CreateAction(IActionContext actionContext)
         {
             _ = actionContext ?? throw new ArgumentNullException(nameof(actionContext));
-            string entryPoint = actionContext.MetaInfo.EntryPoint;
-            string entryFile = System.IO.Path.GetFullPath(System.IO.Path.Combine(actionContext.RuntimeInfo.WorkingDirectory, entryPoint));
-            AppInfo appInfo = fileStoreService.GetObject<AppInfo>(entryFile);
+            AppInfo appInfo = ParseAppEntryInfo(actionContext.MetaInfo.EntryPoint);
             return new AppAction(appInfo, appOption.Value);
+        }
+        private AppInfo ParseAppEntryInfo(string entry)
+        {
+            return new AppInfo
+            {
+                Command = entry
+            };
         }
     }
 }

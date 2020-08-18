@@ -1,0 +1,13 @@
+﻿{
+    "enabled": true,
+    "entrypoint": "hello ${name}",
+    "kind": "app",
+    "inputs": {
+        "name": {
+            "type": "string"
+        }
+    },
+    "output": {
+        "type": "string"
+    }
+}

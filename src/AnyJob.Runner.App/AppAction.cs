@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -21,8 +22,16 @@ namespace AnyJob.Runner.App
         public override object Run(IActionContext context)
         {
             _ = context ?? throw new ArgumentNullException(nameof(context));
-            this.CheckPlatforms(this.AppInfo, context);
             return base.Run(context);
+        }
+        protected override object OnParseResult(IActionContext context, ProcessExecInput input, ProcessExecOutput output)
+        {
+            return new AppResult
+            {
+                ExitCode = output.ExitCode,
+                Output = output.StandardOutput
+            };
+
         }
 
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
@@ -31,18 +40,27 @@ namespace AnyJob.Runner.App
             var command = this.AppInfo.Command.Trim();
             var firstIndex = command.IndexOfAny(new[] { ' ', '\t' });
             var (app, args) = firstIndex <= 0 ? (command, string.Empty) : (command.Substring(0, firstIndex), command.Substring(firstIndex + 1));
-            var fileName = this.FindAppFullPath(context, app);
             var translatedArgs = Translate(args, context.Parameters.Arguments);
+            Dictionary<string, string> envs = new Dictionary<string, string>(this.AppInfo.Envs ?? new Dictionary<string, string>());
+            envs["PATH"] = GetPathValue(context);
             return new ProcessExecInput
             {
                 WorkingDir = context.RuntimeInfo.WorkingDirectory,
                 StandardInput = string.Empty,
-                FileName = fileName,
+                FileName = app,
                 Arguments = new string[] { translatedArgs },
-                Envs = this.AppInfo.Envs ?? new Dictionary<string, string>()
+                Envs = envs
             };
         }
-
+        private string GetPathValue(IActionContext context)
+        {
+            string originValue = Environment.GetEnvironmentVariable("PATH");
+            return string.Join(System.IO.Path.PathSeparator.ToString(), new[] {
+                context.RuntimeInfo.WorkingDirectory,
+                Path.GetFullPath(AppOption.PackBinPath),
+                Path.GetFullPath(AppOption.GlobalBinPath)
+            });
+        }
 
         private string Translate(string item, IDictionary<string, object> input)
         {
@@ -55,93 +73,6 @@ namespace AnyJob.Runner.App
                 }
                 return m.Value;
             });
-        }
-        private void CheckPlatforms(AppInfo appInfo, IActionContext context)
-        {
-            var currentPlatform = context.RuntimeInfo.OSPlatForm.ToString();
-            var supportPlatforms = (appInfo.SupportPlatforms ?? Array.Empty<string>());
-            if (!supportPlatforms.Contains(currentPlatform, StringComparer.InvariantCultureIgnoreCase))
-            {
-                throw new ActionException($"The app action '{context.Name}' not support platform '{currentPlatform}.'");
-            }
-
-        }
-
-
-        private string FindAppFullPath(IActionContext context, string appName)
-        {
-            if (System.IO.Path.IsPathRooted(appName))
-            {
-                //绝对路径
-                return appName;
-            }
-            string[] searchDirs = new string[] {
-                context.RuntimeInfo.WorkingDirectory,
-                System.IO.Path.Combine(context.RuntimeInfo.WorkingDirectory,AppOption.PackBinPath),
-                System.IO.Path.GetFullPath(AppOption.GlobalBinPath)
-            };
-            if (context.RuntimeInfo.OSPlatForm == OSPlatform.Windows)
-            {
-                return FindWindowsAppFullName(searchDirs, appName);
-            }
-            else
-            {
-                return FindOtherOSAppFullName(searchDirs, appName);
-            }
-
-
-        }
-        private string FindWindowsAppFullName(string[] searchDirs, string appName)
-        {
-            if (System.IO.Path.HasExtension(appName))
-            {
-                if (SearchAppFullName(searchDirs, appName, out string appFullName))
-                {
-                    return appFullName;
-                }
-                else
-                {
-                    return appName;
-                }
-            }
-            else
-            {
-                foreach (var ext in new string[] { ".com", ".exe", ".bat" })
-                {
-                    if (SearchAppFullName(searchDirs, System.IO.Path.ChangeExtension(appName, ext), out string appFullName))
-                    {
-                        return appFullName;
-                    }
-                }
-                return appName;
-            }
-        }
-
-        private bool SearchAppFullName(string[] searchDirs, string appName, out string appFullName)
-        {
-            foreach (var baseDir in searchDirs)
-            {
-                string fullName = System.IO.Path.GetFullPath(System.IO.Path.Combine(baseDir, appName));
-                if (System.IO.File.Exists(fullName))
-                {
-                    appFullName = fullName;
-                    return true;
-                }
-            }
-            appFullName = appName;
-            return false;
-        }
-
-        private string FindOtherOSAppFullName(string[] searchDirs, string appName)
-        {
-            if (SearchAppFullName(searchDirs, appName, out string appFullName))
-            {
-                return appFullName;
-            }
-            else
-            {
-                return appName;
-            }
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿{
-
-    "entrypoint": "dotversion.json",
+    "entrypoint": "dotnet --version",
     "kind": "app",
     "inputs": {
     },
