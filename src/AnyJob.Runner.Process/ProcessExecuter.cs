@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -8,6 +9,8 @@ namespace AnyJob.Runner.Process
 {
     public static class ProcessExecuter
     {
+        private static string PathValue = Environment.GetEnvironmentVariable("PATH");
+
 
         public static ProcessExecInput BuildDockerProcess(string imageName, string[] args, string workingDir = null, IDictionary<string, string> volumeMaps = null, IDictionary<string, string> envs = null, string standardInput = null)
         {
@@ -52,6 +55,7 @@ namespace AnyJob.Runner.Process
         {
             _ = input ?? throw new ArgumentNullException(nameof(input));
             var args = string.Join(" ", input.Arguments ?? Array.Empty<string>());
+            SetCurrentProcessAppPath(input.AppPaths);
             ProcessStartInfo startInfo = new ProcessStartInfo(input.FileName, args)
             {
                 WorkingDirectory = input.WorkingDir,
@@ -68,6 +72,7 @@ namespace AnyJob.Runner.Process
                     startInfo.Environment.Add(env);
                 }
             }
+
             StringBuilder outTextBuilder = new StringBuilder();
             using (var process = System.Diagnostics.Process.Start(startInfo))
             {
@@ -141,6 +146,19 @@ namespace AnyJob.Runner.Process
                 process.StandardInput.Close();
             }
         }
+        private static void SetCurrentProcessAppPath(List<string> appPaths)
+        {
+            if (appPaths == null)
+            {
+                Environment.SetEnvironmentVariable("PATH", PathValue);
+            }
+            else
+            {
+                string newPathValue = string.Join(Path.PathSeparator.ToString(),
+                    new[] { PathValue }.Concat(appPaths));
+                Environment.SetEnvironmentVariable("path", newPathValue);
+            }
+        }
     }
     public class ProcessExecInput
     {
@@ -150,6 +168,7 @@ namespace AnyJob.Runner.Process
         public string[] Arguments { get; set; }
         public string StandardInput { get; set; }
         public IDictionary<string, string> Envs { get; set; }
+        public List<string> AppPaths { get; set; }
     }
 
     public class ProcessExecOutput

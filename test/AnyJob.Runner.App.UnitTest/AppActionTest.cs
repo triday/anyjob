@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using AnyJob.Runner.App.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyJob.Runner.App.UnitTest
@@ -25,9 +24,10 @@ namespace AnyJob.Runner.App.UnitTest
                 {"count",1}
             };
             var context = this.CreateActionContext(inputs);
-            object res = appAction.Run(context);
+            AppResult res = appAction.Run(context) as AppResult;
             Assert.IsNotNull(res);
-            Assert.AreEqual(0, res);
+            Assert.AreEqual(0, res.ExitCode);
+            Assert.IsNotNull(res.Output);
         }
         [TestMethod]
         public void TestEchoAbc()
@@ -43,9 +43,10 @@ namespace AnyJob.Runner.App.UnitTest
                 {"text","abc"}
             };
             var context = this.CreateActionContext(inputs);
-            object res = appAction.Run(context);
+            AppResult res = appAction.Run(context) as AppResult;
             Assert.IsNotNull(res);
-            Assert.AreEqual(0, res);
+            Assert.AreEqual(0, res.ExitCode);
+            Assert.AreEqual("abc", res.Output.Trim());
         }
 
         private IActionContext CreateActionContext(IDictionary<string, object> inputs)

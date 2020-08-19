@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using AnyJob.Runner.App.Model;
 using AnyJob.Runner.Process;
 
 namespace AnyJob.Runner.App
@@ -31,7 +30,6 @@ namespace AnyJob.Runner.App
                 ExitCode = output.ExitCode,
                 Output = output.StandardOutput
             };
-
         }
 
         protected override ProcessExecInput OnCreateExecInputInfo(IActionContext context)
@@ -41,27 +39,21 @@ namespace AnyJob.Runner.App
             var firstIndex = command.IndexOfAny(new[] { ' ', '\t' });
             var (app, args) = firstIndex <= 0 ? (command, string.Empty) : (command.Substring(0, firstIndex), command.Substring(firstIndex + 1));
             var translatedArgs = Translate(args, context.Parameters.Arguments);
-            Dictionary<string, string> envs = new Dictionary<string, string>(this.AppInfo.Envs ?? new Dictionary<string, string>());
-            envs["PATH"] = GetPathValue(context);
+
             return new ProcessExecInput
             {
                 WorkingDir = context.RuntimeInfo.WorkingDirectory,
                 StandardInput = string.Empty,
                 FileName = app,
                 Arguments = new string[] { translatedArgs },
-                Envs = envs
+                AppPaths = new List<string>
+                {
+                   context.RuntimeInfo.WorkingDirectory,
+                   Path.Combine(context.RuntimeInfo.WorkingDirectory, AppOption.PackBinPath),
+                   Path.GetFullPath(AppOption.GlobalBinPath),
+                }
             };
         }
-        private string GetPathValue(IActionContext context)
-        {
-            string originValue = Environment.GetEnvironmentVariable("PATH");
-            return string.Join(System.IO.Path.PathSeparator.ToString(), new[] {
-                context.RuntimeInfo.WorkingDirectory,
-                Path.GetFullPath(AppOption.PackBinPath),
-                Path.GetFullPath(AppOption.GlobalBinPath)
-            });
-        }
-
         private string Translate(string item, IDictionary<string, object> input)
         {
             return Regex.Replace(item, "\\$\\{(?<name>\\w+)\\}", (m) =>

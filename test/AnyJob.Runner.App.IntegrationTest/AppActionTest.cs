@@ -6,6 +6,7 @@ namespace AnyJob.Runner.App.IntegrationTest
     [TestClass]
     public class AppActionTest
     {
+        private bool IsWindows = (int)(System.Environment.OSVersion.Platform) < 4;
         [TestMethod]
         public void ShouldInvokeDotnetVersionSuccess()
         {
@@ -14,9 +15,11 @@ namespace AnyJob.Runner.App.IntegrationTest
 
             };
             var job = JobEngine.Start("apppack.dotversion", inputs);
-            dynamic result = job.Task.Result;
+            ExecuteResult result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(0, result.Result.ExitCode);
+            Assert.IsTrue(result.Result is AppResult);
+            var appResult = result.Result as AppResult;
+            Assert.AreEqual(0, appResult.ExitCode);
         }
         [TestMethod]
         public void ShouldInvokeHelloSuccess()
@@ -25,10 +28,13 @@ namespace AnyJob.Runner.App.IntegrationTest
             {
                 ["name"] = "zhangsan"
             };
-            var job = JobEngine.Start("apppack.hello", inputs);
+            var job = JobEngine.Start(IsWindows ? "apppack.hello_win" : "apppack.hello", inputs);
             dynamic result = job.Task.Result;
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(0, result.Result.ExitCode);
+            Assert.IsTrue(result.Result is AppResult);
+            var appResult = result.Result as AppResult;
+            Assert.AreEqual(0, appResult.ExitCode);
+            Assert.IsTrue(appResult.Output.Contains("hello,zhangsan"));
         }
     }
 }

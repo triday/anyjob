@@ -1,6 +1,6 @@
 ﻿{
     "enabled": true,
-    "entrypoint": "hello ${name}",
+    "entrypoint": "hello.sh ${name}",
     "kind": "app",
     "inputs": {
         "name": {
@@ -8,6 +8,16 @@
         }
     },
     "output": {
-        "type": "string"
+        "type": "object",
+        "properties": {
+            "output": {
+                "type": "string",
+                "description": "The process output content."
+            },
+            "exitCode": {
+                "type": "integer",
+                "description": "The process exit code. Nonzero return when has error."
+            }
+        }
     }
 }

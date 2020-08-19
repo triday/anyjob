@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace AnyJob.Runner.App.Model
+namespace AnyJob.Runner.App
 {
     public class AppInfo
     {

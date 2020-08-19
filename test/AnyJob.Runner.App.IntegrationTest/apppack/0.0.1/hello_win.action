@@ -1,7 +1,11 @@
 ﻿{
-    "entrypoint": "dotnet --version",
+    "enabled": true,
+    "entrypoint": "hello_win.cmd ${name}",
     "kind": "app",
     "inputs": {
+        "name": {
+            "type": "string"
+        }
     },
     "output": {
         "type": "object",
