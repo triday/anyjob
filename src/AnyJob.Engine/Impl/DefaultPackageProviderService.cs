@@ -10,16 +10,18 @@ namespace AnyJob.Impl
     {
         readonly PackOption packOption;
         readonly ISerializeService serializeService;
-        public DefaultPackageProviderService(PackOption packOption, ISerializeService serializeService)
+        readonly IHttpClientFactory httpClientFactory;
+        public DefaultPackageProviderService(PackOption packOption, ISerializeService serializeService, IHttpClientFactory httpClientFactory)
         {
             this.packOption = packOption;
             this.serializeService = serializeService;
+            this.httpClientFactory = httpClientFactory;
         }
         public List<PackageFileInfo> GetAllPackageFiles(string provider, string package, string version)
         {
             var baseUrl = GetServiceBaseUrl(provider);
             var baseUri = new Uri(baseUrl);
-            using (var client = new HttpClient())
+            using (var client = httpClientFactory.CreateClient())
             {
                 var fullUrl = new Uri(baseUri, $"packages/{package}/{version}/files");
                 var content = client.GetStringAsync(fullUrl).GetAwaiter().GetResult();
@@ -36,7 +38,7 @@ namespace AnyJob.Impl
         {
             var baseUrl = GetServiceBaseUrl(provider);
             var baseUri = new Uri(baseUrl);
-            using (var client = new HttpClient())
+            using (var client = httpClientFactory.CreateClient())
             {
                 var fullUrl = new Uri(baseUri, $"packages/{package}/versions/latest");
                 var content = client.GetStringAsync(fullUrl).GetAwaiter().GetResult();

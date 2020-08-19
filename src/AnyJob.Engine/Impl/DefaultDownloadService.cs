@@ -16,10 +16,12 @@ namespace AnyJob.Engine.Impl
     {
         readonly PackOption packOption;
         readonly ILogger logger;
-        public DefaultDownloadService(PackOption packOption, ILogger<DefaultDownloadService> logger)
+        readonly IHttpClientFactory httpClientFactory;
+        public DefaultDownloadService(PackOption packOption, ILogger<DefaultDownloadService> logger, IHttpClientFactory httpClientFactory)
         {
             this.packOption = packOption;
             this.logger = logger;
+            this.httpClientFactory = httpClientFactory;
         }
         public async Task DownLoadFile(DownloadInfo downloadInfo)
         {
@@ -38,8 +40,7 @@ namespace AnyJob.Engine.Impl
                 }
                 else
                 {
-                    // TODO 需要优化为IHttpClientFactory
-                    using (var client = new HttpClient())
+                    using (var client = httpClientFactory.CreateClient())
                     {
                         var stream = await client.GetStreamAsync(downloadInfo.FileUrl);
                         CopyToTarget(stream, downloadInfo.LocalFilePath);
