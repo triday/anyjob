@@ -8,7 +8,7 @@
         <ProjectReference Include="..\..\src\AnyJob.Runner.Python\AnyJob.Runner.Python.csproj" />
     </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="YS.Knife.Hosting" Version="1.2.9" />
+    <PackageReference Include="YS.Knife.Hosting" Version="1.3.3" />
     <PackageReference Include="YS.Knife.Test" Version="1.2.9" />
   </ItemGroup>
     <Target Name="RemoveActions" BeforeTargets="PreBuildEvent">
