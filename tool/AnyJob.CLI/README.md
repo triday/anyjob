@@ -2,7 +2,7 @@
 
 如何安装
 ```shell
-dotnet install tool -g anyjob
+dotnet tool install -g AnyJob.CLI
 ```
 
 如何使用
