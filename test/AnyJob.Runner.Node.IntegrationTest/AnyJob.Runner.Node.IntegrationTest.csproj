@@ -8,7 +8,7 @@
   </PropertyGroup>
 
  <ItemGroup>
-    <PackageReference Include="YS.Knife.Hosting" Version="1.2.9" />
+    <PackageReference Include="YS.Knife.Hosting" Version="2.0.2" />
     <PackageReference Include="YS.Knife.Test" Version="1.2.9" />
   </ItemGroup>
 
